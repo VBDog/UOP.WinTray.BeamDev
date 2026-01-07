@@ -14213,7 +14213,8 @@ namespace UOP.WinTray.UI.BusinessLogic
                 dxfDisplaySettings dsp = dxfDisplaySettings.Null("SLOTS", dxxColors.ByLayer, dxfLinetypes.Continuous);
                 Image.Layers.Add(dsp.LayerName, dxxColors.LightGrey);
 
-                bool rotated = bForFunctional && !Assy.DesignFamily.IsDividedWallDesignFamily();
+                bool rotated = bForFunctional && Assy.DesignFamily.IsStandardDesignFamily();
+                if (rotated && Assy.HasAlternateDeckParts) rotated = false;
                 dxfBlock aBlk = null;
                 string bname = "ECMDSLOT";
                 //rotated = false;
@@ -14235,8 +14236,9 @@ namespace UOP.WinTray.UI.BusinessLogic
                 dxfBlock block = new dxfBlock( $"{Assy.TrayName().Replace("-","_").ToUpper()}_SLOTS");
                 block.Entities.Add(slotinsert);
                 block = Image.Blocks.Add(block);
-
-                Image.Draw.aInsert(block.Name ,uopVector.Zero,!rotated ?0 :180, aDisplaySettings:dsp );
+                double? yscale = null;
+               // if (rotated) yscale = -1;
+                Image.Draw.aInsert(block.Name ,uopVector.Zero,!rotated ?0 :180, aDisplaySettings:dsp,aScaleFactor:1, aYScale: yscale );
 
             }
 
