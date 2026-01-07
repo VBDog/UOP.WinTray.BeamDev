@@ -1,0 +1,15 @@
+﻿<Window x:Class="UOP.WinTray.UI.Views.Windows.SelectDowncomerMaterialView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:local="clr-namespace:UOP.WinTray.UI.Views.Windows"
+        Style="{StaticResource PopUpWindowTheme}"
+        mc:Ignorable="d"
+        xmlns:userControl="clr-namespace:UOP.WinTray.UI.Views.UserControls"
+        Title="Select Downcomer Material" Width="330" Height="180" WindowStartupLocation="CenterScreen" >
+    <Grid>
+        <userControl:SelectDowncomerMaterialView/>
+    </Grid>
+</Window>

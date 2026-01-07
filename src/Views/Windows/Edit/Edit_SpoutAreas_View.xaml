@@ -1,0 +1,335 @@
+﻿<Window x:Class="UOP.WinTray.UI.Views.Edit_SpoutAreas_View"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:behaviors="clr-namespace:UOP.WinTray.UI.Behaviors"  
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        xmlns:conv="clr-namespace:UOP.WinTray.UI.Converters"
+        xmlns:local="clr-namespace:UOP.WinTray.UI.Views.Windows"
+        xmlns:autolocator="clr-namespace:UOP.WinTray.UI"
+        xmlns:waitIndicator="clr-namespace:UOP.WinTray.UI.CustomControls.AdornerControl"
+        xmlns:dxfgraphiccontrol="clr-namespace:UOP.DXFGraphicsControl;assembly=UOP.DXFGraphicsControl"
+         xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels" 
+         d:DataContext="{d:DesignInstance Type=viewmodels:Edit_SpoutAreas_ViewModel}"
+        mc:Ignorable="d"
+        md:DialogServiceViews.IsRegistered="True"
+        
+        autolocator:ViewModelLocator.IsAutomaticLocator="True"             
+        Height="940.5" 
+        Width="1080.5" 
+        Title="{Binding Title}"
+        Style="{StaticResource PopUpWindowTheme}" 
+        WindowStartupLocation="CenterOwner"
+        
+         Loaded="Window_Loaded"
+        Closing="Window_Closing"
+        Unloaded="Window_Unloaded"
+        KeyDown="Window_KeyDown"
+        KeyUp="Window_KeyUp"
+          >
+    <Window.Resources>
+
+
+        <Style TargetType="TextBlock" x:Key="LegendText">
+            <Setter Property="FontFamily" Value="Arial" />
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Margin" Value="10,2,0,0"/>
+        </Style>
+    </Window.Resources>
+
+
+
+    <Grid  
+        Height="Auto" 
+        VerticalAlignment="Stretch" 
+        HorizontalAlignment="Stretch"
+        >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2"/>
+            <ColumnDefinition Width="250*"/>
+            <ColumnDefinition Width="2"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2"/>
+            <!-- Image -->
+            <RowDefinition Height="556*"/>
+
+            <!-- Grid View -->
+            <RowDefinition Height="250*"/>
+            <!-- buttons -->
+            <RowDefinition Height="85*"/>
+            <!-- status bar -->
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+        <!-- ROW 1 Viewer -->
+        <dxfgraphiccontrol:DXFViewer  
+            Name ="cadfxViewer"
+            Grid.Row="1" 
+            Grid.RowSpan="1" 
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Background="Gray"
+            BorderBrush="Black"
+            BorderThickness="1"
+            Margin="5,5,5,5"
+            HorizontalAlignment="Stretch" 
+            VerticalContentAlignment="Stretch"
+            Loaded="cadfxViewer_Loaded" 
+           Panel.ZIndex="0"
+           >
+
+            <UserControl.ContextMenu>
+                <ContextMenu ItemsSource="{Binding MenuItems}" >
+                </ContextMenu>
+            </UserControl.ContextMenu>
+
+            
+        </dxfgraphiccontrol:DXFViewer>
+
+        <!-- LEGEND -->
+        <StackPanel
+            VerticalAlignment="Top"
+            Orientation="Vertical"
+            Grid.Row="1"
+            Grid.Column="1"
+            HorizontalAlignment="Left" Margin="0,10,10,0" Width="Auto"
+            >
+            <TextBlock Text="Legend:" Style="{StaticResource LegendText}" Margin="5,0,0,0"/>
+            <TextBlock Text="Unconstrained"  Style="{StaticResource LegendText}"  Foreground="Black" />
+            <TextBlock Text="Ideal"   Style="{StaticResource LegendText}" FontWeight="Bold" Foreground="{Binding Ideal_Color}"/>
+            <TextBlock Text="Group A" Style="{StaticResource LegendText}" Foreground="{Binding Group1_Color}"  Visibility="{Binding Visibility_Group1}"/>
+            <TextBlock Text="Group B" Style="{StaticResource LegendText}" Foreground="{Binding Group2_Color}"  Visibility="{Binding Visibility_Group2}"/>
+            <TextBlock Text="Group C" Style="{StaticResource LegendText}" Foreground="{Binding Group3_Color}"  Visibility="{Binding Visibility_Group3}"/>
+            <TextBlock Text="Group D" Style="{StaticResource LegendText}" Foreground="{Binding Group4_Color}"  Visibility="{Binding Visibility_Group4}"/>
+            <TextBlock Text="Group E" Style="{StaticResource LegendText}" Foreground="{Binding Group5_Color}"  Visibility="{Binding Visibility_Group5}"/>
+            <TextBlock Text="Group F" Style="{StaticResource LegendText}" Foreground="{Binding Group6_Color}"  Visibility="{Binding Visibility_Group6}"/>
+            <TextBlock Text="Group G" Style="{StaticResource LegendText}" Foreground="{Binding Group7_Color}"  Visibility="{Binding Visibility_Group7}"/>
+            <TextBlock Text="Group H" Style="{StaticResource LegendText}" Foreground="{Binding Group8_Color}"  Visibility="{Binding Visibility_Group8}"/>
+            <TextBlock Text="Group I" Style="{StaticResource LegendText}" Foreground="{Binding Group9_Color}"  Visibility="{Binding Visibility_Group9}"/>
+            <TextBlock Text="Group J" Style="{StaticResource LegendText}" Foreground="{Binding Group10_Color}"  Visibility="{Binding Visibility_Group10}"/>
+            <TextBlock Text="Group K" Style="{StaticResource LegendText}" Foreground="{Binding Group11_Color}"  Visibility="{Binding Visibility_Group11}"/>
+            <TextBlock Text="Group L" Style="{StaticResource LegendText}" Foreground="{Binding Group12_Color}"  Visibility="{Binding Visibility_Group12}"/>
+            <TextBlock Text="Group M" Style="{StaticResource LegendText}" Foreground="{Binding Group13_Color}"  Visibility="{Binding Visibility_Group13}"/>
+
+            <!--<ItemsControl ItemsSource="{Binding LegendLabels, Mode=OneWay}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>-->
+        </StackPanel>
+
+
+        <!--<xceed:BusyIndicator 
+            Grid.Row="2" 
+            IsBusy="{Binding IsBusyVisible,Mode=TwoWay}" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="3" 
+            Grid.RowSpan="1" Margin="0,0,0,26">-->
+        <!--<xceed:BusyIndicator.BusyContent>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="5,0">
+                        <waitIndicator:LoadingWait/>
+                        <TextBlock Text="{Binding BusyMessage, Mode=TwoWay}" FontSize="20" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </xceed:BusyIndicator.BusyContent>
+            <xceed:BusyIndicator.OverlayStyle>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Fill" Value="Black" />
+                    <Setter Property="Opacity" Value="0.3" />
+                </Style>
+            </xceed:BusyIndicator.OverlayStyle>
+            <xceed:BusyIndicator.ProgressBarStyle>
+                <Style TargetType="ProgressBar">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </xceed:BusyIndicator.ProgressBarStyle>
+
+
+        </xceed:BusyIndicator>-->
+
+        <!-- ROW 3 DataGrid  -->
+        <!-- BUTTON BAR -->
+        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3"  Style="{StaticResource GlobalBorderStyle}" VerticalAlignment="Stretch" Height="Auto" MinHeight="250" >
+
+            <!--<Grid 
+              >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2"/>
+                    <ColumnDefinition Width="341*"/>
+                    <ColumnDefinition Width="2"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="350*"/>
+                </Grid.RowDefinitions>-->
+
+
+            <!--<ScrollViewer 
+                    Grid.Row="0" 
+                    Grid.Column="0"
+                      Grid.ColumnSpan="3"
+                    VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch"
+                    >-->
+            <DataGrid 
+                     Grid.Row="0" 
+                    Grid.Column="1"
+                
+                    Name="GridData" 
+                    FontSize="11" 
+                    ItemsSource="{Binding DataTableCollection}" 
+                    CanUserSortColumns="False" 
+                    AutoGenerateColumns="True" 
+                    SelectionUnit="Cell" 
+                    CurrentCellChanged="GridData_CurrentCellChanged" 
+                    IsReadOnly="True" 
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Background="LightGray"
+                    VerticalScrollBarVisibility="Visible"
+                    HorizontalScrollBarVisibility="Auto"
+                    EnableRowVirtualization="False" 
+                    EnableColumnVirtualization="False"
+                    />
+            <!--</ScrollViewer>-->
+            <!--</Grid>-->
+        </Border>
+
+
+
+        <!-- BUTTON BAR -->
+        <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3"  Style="{StaticResource GlobalBorderStyle}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button 
+                    x:Name="CancelButton" 
+                    Content="Cancel" Grid.Column="0" Grid.Row="1" 
+                    ToolTip="Cancel Operations" 
+                    Command="{Binding  Command_Cancel}" Style="{StaticResource GlobalButtonStyle}" 
+                    IsCancel="True" 
+                    IsEnabled="{Binding IsEnabled}"
+                    />
+                <Button 
+                        x:Name="btnClear" 
+                    Style="{StaticResource GlobalButtonStyle}"
+                        Content="Clear" 
+                        Grid.Column="1" 
+                        Grid.Row="1"
+                        ToolTip="Clear All Constraints"
+                        Command="{Binding Command_Clear}"
+                    IsEnabled="{Binding IsEnabled}"
+                     />
+                <Button 
+                        x:Name="btnReset" 
+                    Style="{StaticResource GlobalButtonStyle}"
+                        Content="Reset" 
+                        Grid.Column="2" 
+                        Grid.Row="1"
+                    ToolTip="Reset To Currently Saved Constraints"
+                        Command="{Binding Command_Reset}"
+                    IsEnabled="{Binding IsEnabled}"
+                     />
+                <Button 
+                    x:Name="btnRefresh" 
+                    Style="{StaticResource GlobalButtonStyle}"
+                    Content="Refresh" 
+                    Grid.Column="3" 
+                    Grid.Row="1"
+                    Visibility= "{Binding VisibilityDeveloper}"
+                    ToolTip="Update The Display"
+                    Command="{Binding Command_Refresh}"
+                    IsEnabled="{Binding IsEnabled}"
+                   
+                />
+                <ToggleButton 
+                         CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                        Style="{StaticResource UnitsToggleButtonStyle_Small}"  
+                        IsChecked="{Binding IsEnglishSelected,Mode=TwoWay }"
+                        Height="20"
+                        FontSize="8"
+                        HorizontalAlignment="Center" 
+                        Grid.Column="4"
+                        IsEnabled="{Binding IsEnabled}"
+                        />
+
+                <Button 
+                    x:Name="OKButton" 
+                    Content="OK" Grid.Column="4" Grid.Row="1" 
+                    ToolTip="Accept Current Constraints" 
+                    Command="{Binding Command_Ok}" 
+                    Style="{StaticResource GlobalButtonStyle}"  
+                    IsEnabled="{Binding IsOkBtnEnable}" />
+
+                <TextBox 
+                      Style="{StaticResource TextBoxStyle}"
+                        Grid.Row="0"
+                        Grid.Column="0" 
+                        Text="{Binding Dof}" 
+                        Background="{Binding BColor}" 
+                        IsReadOnly="True" 
+                        Width="Auto" 
+                        HorizontalAlignment="Center"
+                        Margin="10,0,0,0"
+                    />
+                <TextBox 
+                         Style="{StaticResource TextBoxStyle}"
+                        Grid.Row="0"
+                        Grid.Column="1" 
+                        Text="{Binding Converged}" 
+                        Background="{Binding BColor}" 
+                        IsReadOnly="True" 
+                        Width="Auto" 
+                        HorizontalAlignment="Center"
+                        Margin="10,0,0,0"
+                     />
+                <StackPanel Orientation="Horizontal" Grid.Column="2" HorizontalAlignment="Center" Visibility="{Binding Visibility_MultiMatrices}">
+                    <RadioButton  
+                         Content="Zone 1"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding Zone1Selected, Mode=TwoWay}"
+                        />
+                    <RadioButton  
+                         Content="Zone 2"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding Zone2Selected, Mode=TwoWay}"
+                        />
+
+                </StackPanel>
+            </Grid>
+
+        </Border>
+
+        <!-- ROW Status Bar -->
+        <Border MinHeight="35"  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"  Style="{StaticResource GlobalBorderStyle}" Visibility="{Binding Visibility_Progress}">
+            <Grid x:Name="grdStatus" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="250" />
+                </Grid.ColumnDefinitions>
+
+                <Label  Name="rightStatusBarLabel" Grid.Column="0" Margin="0,0,5,0" Content="{Binding StatusText}" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+                <ProgressBar  Name="progressBar" Grid.Column="1" Margin="0,0,3,0" IsIndeterminate="True" HorizontalAlignment="Right" MinWidth="250"/>
+            </Grid>
+        </Border>
+
+
+    </Grid>
+
+</Window>

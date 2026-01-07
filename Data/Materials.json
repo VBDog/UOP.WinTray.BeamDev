@@ -1,0 +1,81 @@
+{
+  "Material": [
+    {
+      "FamilyName": "304L Stainless",
+      "Density": 0.28611,
+      "IsStainlessSteel": true
+    },
+    {
+      "FamilyName": "304 Stainless",
+      "Density": 0.28611,
+      "IsStainlessSteel": true
+    },
+    {
+      "FamilyName": "316 Stainless",
+      "Density": 0.28611,
+      "IsStainlessSteel": true
+    },
+    {
+      "FamilyName": "316L Stainless",
+      "Density": 0.28611,
+      "IsStainlessSteel": true
+    },
+    {
+      "FamilyName": "410 Stainless",
+      "Density": 0.28611,
+      "IsStainlessSteel": true
+    },
+    {
+      "FamilyName": "Carbon Steel",
+      "Density": 0.29039,
+      "IsStainlessSteel": true
+    },
+    {
+      "FamilyName": "Killed Carbon Steel",
+      "Density": 0.29039,
+      "IsStainlessSteel": true
+    }
+  ],
+  "Gage": [
+    {
+      "GageName": "10 ga.",
+      "Thickness": 0.135,
+      "IsMetricMaterial": true
+    },
+    {
+      "GageName": "12 ga.",
+      "Thickness": 0.105,
+      "IsMetricMaterial": true
+    },
+    {
+      "GageName": "14 ga.",
+      "Thickness": 0.075,
+      "IsMetricMaterial": true
+    },
+    {
+      "GageName": "2 mm",
+      "Thickness": 0.07874,
+      "IsMetricMaterial": true
+    },
+    {
+      "GageName": "2.5 mm",
+      "Thickness": 0.09843,
+      "IsMetricMaterial": true
+    },
+    {
+      "GageName": "2.7 mm",
+      "Thickness": 0.1063,
+      "IsMetricMaterial": true
+    },
+    {
+      "GageName": "3 mm",
+      "Thickness": 0.11811,
+      "IsMetricMaterial": true
+    },
+    {
+      "GageName": "3.5 mm",
+      "Thickness": 0.1378,
+      "IsMetricMaterial": true
+    }
+  ]
+}

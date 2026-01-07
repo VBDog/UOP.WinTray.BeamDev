@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="UOP.WinTray.UI.Views.UserControls.CADfx.Questions.NumericValueQuestionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UOP.WinTray.UI.Views.UserControls.CADfx.Questions"
+             xmlns:questions="clr-namespace:UOP.WinTray.UI.ViewModels.UserControls.CADfx.Questions"
+            d:DataContext="{d:DesignInstance Type=questions:NumericValueQuestionViewModel}"
+
+             xmlns:behaviors=" UOP.WinTray.UI.Behaviors"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800"
+             Loaded="UserControl_Loaded">
+    <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Margin="15,5">
+        <Label Content="{Binding LabelText}"></Label>
+        <TextBox  
+            x:Name="textBox" 
+            Text="{Binding TextBoxText, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding ToolTip, Mode=OneWay}">
+        </TextBox>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{600D5885-2AC5-4E0C-963D-4DA42B13C525}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UOP.WinTray.Projects</RootNamespace>
+    <AssemblyName>UOP.WinTray.Projects</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <LangVersion>8.0</LangVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ardalis.SmartEnum, Version=8.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ardalis.SmartEnum.8.1.0\lib\netstandard2.0\Ardalis.SmartEnum.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.101.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\ClosedXML.0.101.0\lib\netstandard2.0\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DeepCloner, Version=0.10.0.0, Culture=neutral, PublicKeyToken=dc0b95cf99bf4e99, processorArchitecture=MSIL">
+      <HintPath>packages\DeepCloner.0.10.3\lib\net40\DeepCloner.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.12.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>packages\log4net.2.0.12\lib\net45\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Configuration.ConfigurationManager.6.0.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Drawing.Primitives.4.3.0\lib\net45\System.Drawing.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.AccessControl, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.IO.FileSystem.AccessControl.5.0.0\lib\net461\System.IO.FileSystem.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=8.0.0.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.IO.Packaging.8.0.1\lib\net462\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.AccessControl, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.AccessControl.6.0.0\lib\net461\System.Security.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Permissions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Permissions.6.0.0\lib\net461\System.Security.Permissions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.RegularExpressions, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Text.RegularExpressions.4.3.1\lib\net463\System.Text.RegularExpressions.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Container">
+      <HintPath>..\..\packages\Unity.Container.5.11.10\lib\net48\Unity.Container.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="mdSpoutAreaMatrix.cs" />
+    <Compile Include="mdStartupSpouts.cs" />
+    <Compile Include="mdStartupZone.cs" />
+    <Compile Include="src\Base Classes\mdBoxSubPart.cs" />
+    <Compile Include="src\Base Classes\uopCaseOwners.cs" />
+    <Compile Include="src\Base Classes\uopDocument.cs" />
+    <Compile Include="src\Base Classes\uopHardware.cs" />
+    <Compile Include="src\Base Classes\uopMaterial.cs" />
+    <Compile Include="src\Base Classes\uopPart.cs" />
+    <Compile Include="src\Base Classes\uopParts.cs" />
+    <Compile Include="src\Base Classes\uopProject.cs" />
+    <Compile Include="src\Base Classes\uopTrayAssembly.cs" />
+    <Compile Include="src\Base Classes\uopTrayRange.cs" />
+    <Compile Include="src\Constants\GlobalConstants.cs" />
+    <Compile Include="src\Constants\mdGlobals.cs" />
+    <Compile Include="src\Constants\uopGlobals.cs" />
+    <Compile Include="src\Documents\uopDocCalculation.cs" />
+    <Compile Include="src\Documents\uopDocDrawing.cs" />
+    <Compile Include="src\Documents\uopDocReport.cs" />
+    <Compile Include="src\Documents\uopDocReportPage.cs" />
+    <Compile Include="src\Documents\uopDocWarning.cs" />
+    <Compile Include="src\Enums\uopEnumHelper.cs" />
+    <Compile Include="src\Enums\uopEnums.cs" />
+    <Compile Include="src\Events\EventAggregator\DisposableObject.cs" />
+    <Compile Include="src\Events\EventAggregator\EventAggregator.cs" />
+    <Compile Include="src\Events\EventAggregator\IEventAggregator.cs" />
+    <Compile Include="src\Events\EventAggregator\IEventSubscriber.cs" />
+    <Compile Include="src\Events\EventAggregator\Messages.cs" />
+    <Compile Include="src\Events\EventAggregator\Subscriber.cs" />
+    <Compile Include="src\Events\uopEvents.cs" />
+    <Compile Include="src\Generators\mdBlocks.cs" />
+    <Compile Include="src\Generators\mdPanelGenerator.cs" />
+    <Compile Include="src\Generators\mdPartGenerator.cs" />
+    <Compile Include="src\Generators\mdPolygons.cs" />
+    <Compile Include="src\Generators\mdSectionGenerator.cs" />
+    <Compile Include="src\Generators\mdSection_Generator.cs" />
+    <Compile Include="src\Generators\mdSlotting.cs" />
+    <Compile Include="src\Generators\mdSpacingData.cs" />
+    <Compile Include="src\Generators\mdSplicing.cs" />
+    <Compile Include="src\Generators\mdStartUps.cs" />
+    <Compile Include="src\Generators\uopBlocks.cs" />
+    <Compile Include="src\Generators\uopGridPoints.cs" />
+    <Compile Include="src\Generators\uopPolygons.cs" />
+    <Compile Include="src\Generators\uopReportGenerator.cs" />
+    <Compile Include="src\Interfaces\iArcRec.cs" />
+    <Compile Include="src\Interfaces\iCase.cs" />
+    <Compile Include="src\Interfaces\iCaseOwner.cs" />
+    <Compile Include="src\Interfaces\iSegment.cs" />
+    <Compile Include="src\Interfaces\iuopBeam.cs" />
+    <Compile Include="src\Materials\uopHardwareMaterial.cs" />
+    <Compile Include="src\Materials\uopMaterialFamily.cs" />
+    <Compile Include="src\Materials\uopMaterialGage.cs" />
+    <Compile Include="src\Materials\uopMaterials.cs" />
+    <Compile Include="src\Materials\uopMaterialSpec.cs" />
+    <Compile Include="src\Materials\uopMaterialSpecs.cs" />
+    <Compile Include="src\Materials\uopSheetMetal.cs" />
+    <Compile Include="src\Materials\uopTubeMaterial.cs" />
+    <Compile Include="src\mdFeedZone.cs" />
+    <Compile Include="src\mdSlot.cs" />
+    <Compile Include="src\mdSlotGrid.cs" />
+    <Compile Include="src\mdSlotZone.cs" />
+    <Compile Include="src\mdSlotZones.cs" />
+    <Compile Include="src\mdSpoutArea.cs" />
+    <Compile Include="src\mdSpoutGrid.cs" />
+    <Compile Include="src\mdSpoutZones.cs" />
+    <Compile Include="src\mdStage.cs" />
+    <Compile Include="src\mdStartupLine.cs" />
+    <Compile Include="src\Models\User.cs" />
+    <Compile Include="src\Models\UserEntry.cs" />
+    <Compile Include="src\Models\UserInfo.cs" />
+    <Compile Include="src\mdSpoutZone.cs" />
+    <Compile Include="src\Parts\Collections\colMDChimneyTrays.cs" />
+    <Compile Include="src\Parts\Collections\colMDConstraints.cs" />
+    <Compile Include="src\Parts\Collections\colMDDeckPanels.cs" />
+    <Compile Include="src\Parts\Collections\colMDDistributors.cs" />
+    <Compile Include="src\Parts\Collections\colMDDowncomers.cs" />
+    <Compile Include="src\Parts\Collections\colMDSpoutGroups.cs" />
+    <Compile Include="src\Parts\Collections\colMDStages.cs" />
+    <Compile Include="src\Parts\Collections\colUOPFlanges.cs" />
+    <Compile Include="src\Parts\Collections\colUOPParts.cs" />
+    <Compile Include="src\Parts\Collections\colUOPPipes.cs" />
+    <Compile Include="src\Parts\Collections\colUOPRingSpecs.cs" />
+    <Compile Include="src\Parts\Collections\colUOPTrayRanges.cs" />
+    <Compile Include="src\Parts\Collections\mdDeckSections.cs" />
+    <Compile Include="src\Parts\Collections\mdPartArray.cs" />
+    <Compile Include="src\Parts\Collections\mdPartMatrix.cs" />
+    <Compile Include="src\Parts\Collections\mdStartupLines.cs" />
+    <Compile Include="src\Parts\Collections\uopDocuments.cs" />
+    <Compile Include="src\Parts\Collections\uopPartArray.cs" />
+    <Compile Include="src\Parts\Collections\uopPartList.cs" />
+    <Compile Include="src\Parts\Collections\uopPartMatrix.cs" />
+    <Compile Include="src\Parts\hdwCarriageBolt.cs" />
+    <Compile Include="src\Parts\hdwFlatWasher.cs" />
+    <Compile Include="src\Parts\hdwHexBolt.cs" />
+    <Compile Include="src\Parts\hdwHexNut.cs" />
+    <Compile Include="src\Parts\hdwHoldDownWasher.cs" />
+    <Compile Include="src\Parts\hdwLockWasher.cs" />
+    <Compile Include="src\Parts\hdwSetScrew.cs" />
+    <Compile Include="src\Parts\hdwStud.cs" />
+    <Compile Include="src\Parts\mdAPPan.cs" />
+    <Compile Include="src\Parts\mdBaffle.cs" />
+    <Compile Include="src\Parts\mdBeam.cs" />
+    <Compile Include="src\Parts\mdBeamSupport.cs" />
+    <Compile Include="src\Parts\mdChimneyTray.cs" />
+    <Compile Include="src\Parts\mdChimneyTrayCase.cs" />
+    <Compile Include="src\Parts\mdConstraint.cs" />
+    <Compile Include="src\Parts\mdCrossBrace.cs" />
+    <Compile Include="src\Parts\mdDeck.cs" />
+    <Compile Include="src\Parts\mdDeckPanel.cs" />
+    <Compile Include="src\Parts\mdDeckSection.cs" />
+    <Compile Include="src\Parts\mdDesignOptions.cs" />
+    <Compile Include="src\Parts\mdDistributor.cs" />
+    <Compile Include="src\Parts\mdDistributorCase.cs" />
+    <Compile Include="src\Parts\mdDowncomer.cs" />
+    <Compile Include="src\Parts\mdDowncomerBox.cs" />
+    <Compile Include="src\Parts\mdEndAngle.cs" />
+    <Compile Include="src\Parts\mdEndPlate.cs" />
+    <Compile Include="src\Parts\mdEndSupport.cs" />
+    <Compile Include="src\Parts\mdFingerClip.cs" />
+    <Compile Include="src\Parts\mdProject.cs" />
+    <Compile Include="src\Parts\mdShelfAngle.cs" />
+    <Compile Include="src\Parts\mdSpliceAngle.cs" />
+    <Compile Include="src\Parts\mdSpoutGroup.cs" />
+    <Compile Include="src\Parts\mdStartupSpout.cs" />
+    <Compile Include="src\Parts\mdStiffener.cs" />
+    <Compile Include="src\Parts\mdSupplementalDeflector.cs" />
+    <Compile Include="src\Parts\mdTrayAssembly.cs" />
+    <Compile Include="src\Parts\mdTrayRange.cs" />
+    <Compile Include="src\Parts\uopColumn.cs" />
+    <Compile Include="src\Parts\uopCustomer.cs" />
+    <Compile Include="src\Parts\uopManwayClamp.cs" />
+    <Compile Include="src\Parts\uopManwayClip.cs" />
+    <Compile Include="src\Parts\uopManwayClipWasher.cs" />
+    <Compile Include="src\Parts\uopRing.cs" />
+    <Compile Include="src\Parts\uopRingClip.cs" />
+    <Compile Include="src\Tables\uopTable.cs" />
+    <Compile Include="src\Tables\uopTableCell.cs" />
+    <Compile Include="src\uopArc.cs" />
+    <Compile Include="src\uopArcRecs.cs" />
+    <Compile Include="src\uopBendLine.cs" />
+    <Compile Include="src\uopCompoundShape.cs" />
+    <Compile Include="src\uopDeckSplice.cs" />
+    <Compile Include="src\uopDeckSplices.cs" />
+    <Compile Include="src\uopDetail.cs" />
+    <Compile Include="src\uopElevation.cs" />
+    <Compile Include="src\uopEventHandler.cs" />
+    <Compile Include="src\uopFlange.cs" />
+    <Compile Include="src\uopFlangeLine.cs" />
+    <Compile Include="src\uopGraph.cs" />
+    <Compile Include="src\uopGrid.cs" />
+    <Compile Include="src\uopGridLine.cs" />
+    <Compile Include="src\uopHole.cs" />
+    <Compile Include="src\uopHoleArray.cs" />
+    <Compile Include="src\uopHoles.cs" />
+    <Compile Include="src\uopLine.cs" />
+    <Compile Include="src\uopLinePair.cs" />
+    <Compile Include="src\uopLines.cs" />
+    <Compile Include="src\uopMatrix.cs" />
+    <Compile Include="src\uopMatrixCell.cs" />
+    <Compile Include="src\uopMatrixRow.cs" />
+    <Compile Include="src\uopNozzle.cs" />
+    <Compile Include="src\uopObject.cs" />
+    <Compile Include="src\uopPanelSectionShape.cs" />
+    <Compile Include="src\uopPipe.cs" />
+    <Compile Include="src\uopProjectSpecs.cs" />
+    <Compile Include="src\uopProperties.cs" />
+    <Compile Include="src\uopProperty.cs" />
+    <Compile Include="src\uopRectangle.cs" />
+    <Compile Include="src\uopRectangles.cs" />
+    <Compile Include="src\uopRingClipSegment.cs" />
+    <Compile Include="src\uopRingRange.cs" />
+    <Compile Include="src\uopRingSpec.cs" />
+    <Compile Include="src\uopSectionShape.cs" />
+    <Compile Include="src\uopSectionShapes.cs" />
+    <Compile Include="src\uopSegments.cs" />
+    <Compile Include="src\uopShape.cs" />
+    <Compile Include="src\uopShapeArray.cs" />
+    <Compile Include="src\uopShapes.cs" />
+    <Compile Include="src\uopStructures.cs" />
+    <Compile Include="src\uopUnit.cs" />
+    <Compile Include="src\uopUnits.cs" />
+    <Compile Include="src\uopVector.cs" />
+    <Compile Include="src\uopVectorProperties.cs" />
+    <Compile Include="src\uopVectors.cs" />
+    <Compile Include="src\Utilities\ExtensionMethods\DowncomerBoxExtensionMethods.cs" />
+    <Compile Include="src\Utilities\ExtensionMethods\EnumExtensionMethods.cs" />
+    <Compile Include="src\Utilities\ILoggerManager.cs" />
+    <Compile Include="src\Utilities\LoggerManager.cs" />
+    <Compile Include="src\Utilities\mdFreeBubblingAreas.cs" />
+    <Compile Include="src\Utilities\mdTables.cs" />
+    <Compile Include="src\Utilities\mdUtilities.cs" />
+    <Compile Include="src\Utilities\mdUtils.cs" />
+    <Compile Include="src\Utilities\mzEnums.cs" />
+    <Compile Include="src\Utilities\mzList.cs" />
+    <Compile Include="src\Utilities\mzQuestion.cs" />
+    <Compile Include="src\Utilities\mzQuestions.cs" />
+    <Compile Include="src\Utilities\mzUtils.cs" />
+    <Compile Include="src\Utilities\mzValues.cs" />
+    <Compile Include="src\Utilities\PInvoker.cs" />
+    <Compile Include="src\Utilities\uopCryption.cs" />
+    <Compile Include="src\Utilities\uopFreeBubblingArea.cs" />
+    <Compile Include="src\Utilities\uopInstance.cs" />
+    <Compile Include="src\Utilities\uopInstances.cs" />
+    <Compile Include="src\Utilities\uopUtils.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="src\uopPanelSectionShapes.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UOP.WinTray.DXFGraphics\UOP.DXFGraphics.vbproj">
+      <Project>{5690b7f2-423c-4d98-96c6-ba37377ee7ea}</Project>
+      <Name>UOP.DXFGraphics</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
+  </Target>
+</Project>

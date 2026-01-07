@@ -1,0 +1,14 @@
+
+bin/
+.vs/
+.VS/
+
+obj/
+
+packages/
+
+HoneywellUOPdxfGraphics.vbproj.user
+
+*.rej
+
+*.user

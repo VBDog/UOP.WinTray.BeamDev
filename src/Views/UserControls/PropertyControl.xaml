@@ -1,0 +1,163 @@
+﻿<UserControl x:Class="UOP.WinTray.UI.Views.PropertyControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:CC="clr-namespace:UOP.WinTray.UI.CustomControls"
+             xmlns:local="clr-namespace:UOP.WinTray.UI.Views"
+               xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:PropertyControlViewModel}"
+             mc:Ignorable="d" 
+             DataContextChanged="UserControl_DataContextChanged"
+             Tag="{Binding Tag}"
+             >
+    <UserControl.Resources>
+        <Style x:Key="caption" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+            <Setter Property="FontSize" Value="12"/>
+           
+        </Style>
+        <Style x:Key="unitlabel" TargetType="{x:Type Label}" >
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property ="Width" Value="Auto" />
+            <Setter Property ="HorizontalAlignment" Value="Left" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="MinWidth" Value="15" />
+          
+            <Setter Property="Visibility" Value="Visible" />
+          
+        </Style>
+        <Style x:Key="inputCombo" TargetType="{x:Type ComboBox}" >
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property ="Width" Value="Auto" />
+            <Setter Property ="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="MinWidth" Value="50" />
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <!--SpaceOverride Numeric text Box Style-->
+        <Style x:Key="inputbox" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="1,1,5,1"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="MinWidth" Value="65"/>
+            <Setter Property="FontSize" Value="12"/>
+            <!--<Setter Property="ValidatesOnDataErrors" Value="True"/>-->
+            <!--<Setter Property="UpdateSourceTrigger" Value="LostFocus"/>-->
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#FFD500"/>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+    </UserControl.Resources>
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="50*"/>
+        
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+            
+                <StackPanel x:Name="MainStack" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Right">
+            <TextBlock x:Name="Caption" Grid.Column="0" Text="{Binding DisplayName}" Style="{StaticResource caption}"  Height="{Binding ElementName=InputBox, Path=Height}" />
+            <TextBlock x:Name="Colon" Grid.Column="0" Text= "{Binding Seperator, Mode = OneWay}" Visibility="{Binding Visibility_Seperator, Mode=OneWay}"  Style="{StaticResource caption}"  Margin="2"  Height="{Binding ElementName=InputBox, Path=Height}"/>
+        </StackPanel>
+        
+       
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+
+            </Grid.ColumnDefinitions>
+           
+                
+            <CC:NumericTextBox  x:Name="ReadOnlyBox" Grid.Column="0"
+                                    Text="{Binding DisplayUnitValueString, Mode=OneWay }"
+                                    PrecisionLimit="{Binding DisplayUnitPrecision, Mode=OneWay}" 
+                                    Style="{StaticResource inputbox}" 
+                                    IsReadOnly="True"
+                                    FreeForm="True"
+                                    ToolTip="{Binding ToolTip, Mode=OneWay}"
+                                    ZerosAsNullString= "{Binding ZerosAsNullString, Mode=OneWay}"
+                                    NullValueReplacer="{Binding NullValueReplacer, Mode=OneWay}"
+                                    BorderBrush="Transparent"
+                                    TextAlignment="Center"
+                                    HighlightOnFocus="False"
+                                   MinWidth="30"
+                                    Width="Auto"
+                              
+                                    Tag="{Binding Tag}"
+                                   HorizontalAlignment="Stretch"
+                                    Visibility="{Binding Visibility_ReadOnly, Mode=OneWay}" 
+                                    GotFocus="Property_GotFocus"
+                                    MouseDoubleClick="Property_MouseDoubleClick"
+                                    Height="{Binding ElementName=InputBox, Path=Height}"
+                                    />
+            <CC:NumericTextBox  x:Name="InputBox" Grid.Column="0"
+                                    Text="{Binding DisplayUnitValueString, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                    PrecisionLimit="{Binding DisplayUnitPrecision, Mode=OneWay}"
+                                    Style="{StaticResource inputbox}" 
+                                    IsReadOnly="{Binding IsReadOnly, Mode=OneWay}" 
+                                    FreeForm="{Binding FreeForm, Mode=OneWay}"
+                                     ZerosAsNullString= "{Binding ZerosAsNullString, Mode=OneWay}"
+                                    NullValueReplacer="{Binding NullValueReplacer, Mode=OneWay}"
+                                Tag="{Binding Tag}"
+                                 HighlightOnFocus="True"
+                                    MinWidth="100"
+                                 Width="Auto"
+                                Height="Auto"
+                                 MaxLength="{Binding MaxLength, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                    ToolTip="{Binding ToolTip}"
+                                    HorizontalAlignment="Stretch"
+                                    Visibility="{Binding Visibility_Input, Mode=OneWay}"
+                                LostFocus="InputBox_LostFocus"
+                                GotFocus="Property_GotFocus"
+                                MouseDoubleClick="Property_MouseDoubleClick"
+                                VerticalContentAlignment="Center"
+                                    />
+            <ComboBox x:Name="InputChoiceList" Grid.Column="0"
+                      Visibility="{Binding Visibility_ChoiceList, Mode=OneWay}"
+                      Style="{StaticResource inputCombo}"
+                    
+                      ItemsSource="{Binding Choices, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedValue="{Binding ChoiceSelectedValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      IsReadOnly="{Binding IsReadOnly, Mode=OneWay}"
+                      Tag="{Binding Tag}"
+                      MouseDoubleClick="Property_MouseDoubleClick"
+                      SelectionChanged="InputChoiceList_SelectionChanged"
+                      GotFocus="Property_GotFocus"
+                      VerticalContentAlignment="Center"
+                        
+             />
+
+            <CheckBox  x:Name="PropertyCheckBox" Grid.Column="0"
+                                    ToolTip="{Binding ToolTip}"
+                                     Tag="{Binding Tag}"
+                                    IsEnabled="{Binding IsEnabled}"
+                                    Style="{StaticResource YesNoSlider}"  
+                                    IsChecked="{Binding  YesNo, Mode=TwoWay }"
+                                    Visibility="{Binding Visibility_YesNo, Mode=OneWay}"
+                                    MouseDoubleClick="Property_MouseDoubleClick"
+                                     GotFocus ="Property_GotFocus"
+                                    Checked="PropertyCheckBox_Checked"
+                       
+                                />
+            <Label  Content = "{Binding DisplayUnitLabel}"  Grid.Column="1" Style="{StaticResource unitlabel}"  Visibility="Visible"  FontSize="{Binding ElementName=Caption, Path=FontSize}"/>
+        </Grid>
+        <!--</StackPanel>-->
+
+    </Grid>
+</UserControl>

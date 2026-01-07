@@ -1,0 +1,141 @@
+﻿<Window x:Class="UOP.WinTray.UI.Views.UserControls.Edit_Materials_View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"       
+             md:DialogServiceViews.IsRegistered="True"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UOP.WinTray.UI.Views.UserControls"
+             mc:Ignorable="d" 
+            xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels"
+            d:DataContext="{d:DesignInstance Type=viewmodels:Edit_Materials_ViewModel}"
+        
+             xmlns:CC="clr-namespace:UOP.WinTray.UI.CustomControls"
+             xmlns:waitIndicator="clr-namespace:UOP.WinTray.UI.CustomControls.AdornerControl"
+             xmlns:conv="clr-namespace:UOP.WinTray.UI.Converters"
+             Title="{Binding MaterialTitle}" 
+            Style="{StaticResource PopUpWindowTheme}" 
+             WindowStartupLocation="CenterOwner"
+            SizeToContent="Height"
+             Width="380">
+    <Window.Resources>
+        <conv:BooleanToVisibilityConverter x:Key="visibiliyConverter" ></conv:BooleanToVisibilityConverter>
+        <Style x:Key="Local_TextBlockStyle" TargetType="TextBlock">
+            <Setter Property="Width" Value="70"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="Local_TextBlock" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+        </Style>
+
+ 
+        <Style x:Key="Local_CheckBox" TargetType="{x:Type CheckBox}">
+            <Setter Property="Width" Value="17" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,5,10,5"/>
+        </Style>
+    </Window.Resources>
+    <!--<xceed:BusyIndicator IsBusy="{Binding IsBusyVisible,Mode=TwoWay}" Grid.Column="0">
+        <xceed:BusyIndicator.BusyContent>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="5,0">
+                    <waitIndicator:LoadingWait/>
+                    <TextBlock Text="{Binding BusyMessage, Mode=TwoWay}" FontSize="20" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </xceed:BusyIndicator.BusyContent>
+        <xceed:BusyIndicator.OverlayStyle>
+            <Style TargetType="Rectangle">
+                <Setter Property="Fill" Value="Black" />
+                <Setter Property="Opacity" Value="0.3" />
+            </Style>
+        </xceed:BusyIndicator.OverlayStyle>-->
+        <!--<GroupBox Style="{StaticResource GlobalGroupBoxStyle}" BorderThickness="2" Margin="2">-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+
+            <Border Grid.Row="0" Style="{StaticResource GlobalBorderStyle}" Visibility="{Binding IsSheetMetal, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource visibiliyConverter}}">
+
+                <StackPanel Orientation="Vertical"
+>                    <StackPanel Orientation="Horizontal" Margin="10,10,0,10">
+                        <TextBlock Text="Select Material Family : " Style="{StaticResource GlobalUnitsCaption}"  />
+                        <ComboBox Style="{StaticResource ComboBoxStyle}" Width="100"
+                                  DisplayMemberPath="Name" 
+                                  ItemsSource="{Binding MaterialFamilies, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedValue="{Binding SelectedMaterialFamily, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="16,0,0,0">
+                    <TextBlock Text="Select Material Gage : " Style="{StaticResource GlobalUnitsCaption}"  />
+                        <ComboBox Style="{StaticResource ComboBoxStyle}"  Width="100"
+                                  DisplayMemberPath="Gage" 
+                                  ItemsSource="{Binding MaterialGages,UpdateSourceTrigger=PropertyChanged}"
+                                   SelectedItem="{Binding SelectedMaterialGage, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="70,0,0,0">
+                        <Label Style="{StaticResource LabelStyle}" Content="Thickness :" />
+                        <TextBlock Text="{Binding MaterialThickness}" Style="{StaticResource GlobalUnitsCaption}" Grid.Row="3" Grid.Column="1"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" >
+                        <CheckBox Style="{StaticResource Local_CheckBox}" IsChecked="{Binding IsApplyToDeckNDowncomer, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="Apply to Both Deck and Downcomers?" Style="{StaticResource Local_TextBlock}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0" >
+                        <CheckBox Style="{StaticResource Local_CheckBox}" IsChecked="{Binding IsApplyToAllTrays, UpdateSourceTrigger=PropertyChanged}" />
+                        <TextBlock Text="Apply to All Tray Ranges ?" Style="{StaticResource Local_TextBlock}" />
+                    </StackPanel>
+                </StackPanel>
+              
+               
+            </Border>
+            <Border Grid.Row="1" Style="{StaticResource GlobalBorderStyle}" Visibility="{Binding IsHardware, UpdateSourceTrigger=PropertyChanged,Converter={StaticResource visibiliyConverter}}">
+                    <StackPanel Orientation="Vertical" >
+                        <StackPanel Orientation="Horizontal" Margin="0,5,0,0" >
+
+                        <Label Style="{StaticResource LabelStyle}" Content="Select Bolting Material : "/>
+                        <ComboBox Style="{StaticResource ComboBoxStyle}" Width="113" DisplayMemberPath="Name"  
+                              ItemsSource="{Binding BoltingMaterials, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                              SelectedIndex="{Binding SelectedBoltingMaterialIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                            />
+                        
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="10,0,0,0">
+                            <CheckBox Style="{StaticResource Local_CheckBox}" IsChecked="{Binding IsApplyToAllTrays, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="Apply to all Tray Ranges" Style="{StaticResource Local_TextBlock}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+                    
+                    <!-- BUTTON BAR -->
+                <Border Grid.Row="2" Style="{StaticResource GlobalBorderStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="CancelButton" Content="Cancel" Grid.Column="0" Command="{Binding  Command_Cancel}" Style="{StaticResource GlobalButtonStyle}" IsCancel="True" />
+                        <Button x:Name="OKButton" Content="OK" Grid.Column="3" Command="{Binding Command_Ok}" Style="{StaticResource GlobalButtonStyle}"  />
+
+                    </Grid>
+
+                </Border>
+                <!--<Grid Margin="5" Grid.Row="2">
+                <StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="0">
+                        <Button x:Name="CancelButton" Content="Cancel" Grid.Column="0" Command="{Binding  Command_Cancel}" Style="{StaticResource GlobalButtonStyle}" IsCancel="True" IsEnabled="{Binding IsEnabled}"/>
+                        <Button x:Name="OKButton" Content="OK" Grid.Column="3" Command="{Binding Command_Ok}" Style="{StaticResource GlobalButtonStyle}"  IsEnabled="{Binding IsOkBtnEnable}" />
+
+                     
+                </StackPanel>
+            </Grid>-->
+        </Grid>
+    <!--</GroupBox>-->
+    <!--</xceed:BusyIndicator>-->
+</Window>

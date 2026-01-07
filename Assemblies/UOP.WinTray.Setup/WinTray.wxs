@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?define ProductVersion = !(bind.FileVersion.UOP.WinTray.UI.exe)?>
+<?define ProductName = "UOP WinTray Beta $(var.ProductVersion)"?>
+<?define ProductDescription = "UOP WinTray Beta"?>
+<?define Honeywell.UOP.WinTray_TargetDir=$(var.UOP.WinTray.UI.TargetDir)?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"><?define UOP.WinTray.UI_TargetDir=$(var.UOP.WinTray.UI.TargetDir)?>
+  <!-- 
+  Restore the following to remove Beta version ability to coexist with release version
+  <Product Id="9E83B19B-9AFC-4004-8520-15BE1FAE6705" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="Honeywell\UOP LLC" UpgradeCode="041FD8DA-1D37-4E31-AB0B-1735AAA5DA75">
+  Also update ApplicationLicense.rtf and remove "Beta" everywhere found in this file.
+  -->
+  <Product Id="1464B54C-D5B4-4D56-A64B-94C23CB4FC28" Name="$(var.ProductName)" Language="1033" Version="$(var.ProductVersion)" Manufacturer="Honeywell\UOP LLC" UpgradeCode="8124CFDD-F290-41EB-AC16-9B6D06160AE4">
+    <Package Description="$(var.ProductName)" Comments="$(var.ProductName)" InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated" AdminImage="yes" />
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed. If you are sure you want to downgrade, remove the existing installation via Programs and Features." />
+    <Media Id="1" Cabinet="simple.cab" EmbedCab="yes" />
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Name="UOP" Id="UOP">
+          <Directory Name="UOP Wintray Beta" Id="INSTALLFOLDER">
+            
+            <Component Id="Irony.dll" DiskId="1" Guid="8590F5DC-BD5F-47F0-AEFF-96769D31C1DE">
+              <File Id="Irony.dll" Name="Irony.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Irony.dll" />
+            </Component>
+            
+            <Component Id="Ookii.Dialogs.WinForms.dll" DiskId="1" Guid="AAF64E57-F200-42FD-8468-F0436B84036F">
+              <File Id="Ookii.Dialogs.WinForms.dll" Name="Ookii.Dialogs.WinForms.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Ookii.Dialogs.WinForms.dll" />
+            </Component>
+            
+            
+            <Component Id="CLOSEDXML.DLL" DiskId="1" Guid="250CF2E7-185F-48FA-9425-5074C45376DC">
+              <File Id="CLOSEDXML.DLL" Name="ClosedXML.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)ClosedXML.dll" />
+            </Component>
+            
+            
+            
+            
+            
+            
+            
+            
+            <Component Id="System.Buffers.DLL" DiskId="1" Guid="D7A99ED0-2FBF-4063-96FA-B7DFCE579735">
+              <File Id="System.Buffers.DLL" Name="System.Buffers.DLL" Source="$(var.Honeywell.UOP.WinTray_TargetDir)System.Buffers.DLL" />
+            </Component>
+            <Component Id="System.Memory.DLL" DiskId="1" Guid="D9D65FC1-4797-430E-811A-74583DD56F3A">
+              <File Id="System.Memory.DLL" Name="System.Memory.DLL" Source="$(var.Honeywell.UOP.WinTray_TargetDir)System.Memory.DLL" />
+            </Component>
+            
+            <Component Id="System.Numerics.Vectors.DLL" DiskId="1" Guid="D90857D5-ADA3-475E-A937-7E7666F92F25">
+              <File Id="System.Numerics.Vectors.DLL" Name="System.Numerics.Vectors.DLL" Source="$(var.Honeywell.UOP.WinTray_TargetDir)System.Numerics.Vectors.DLL" />
+            </Component>
+
+            
+            
+            <Component Id="Vanara.PInvoke.User32.DLL" DiskId="1" Guid="95F0F803-4894-4C5C-B334-F98F967B065A">
+              <File Id="Vanara.PInvoke.User32.DLL" Name="Vanara.PInvoke.User32.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.PInvoke.User32.dll" />
+            </Component>
+            <!--<Component Id="Vanara.PInvoke.User32.XML" DiskId="1" Guid="77EBA435-FFA4-4CB9-A65D-445305138FAC">
+              <File Id="Vanara.PInvoke.User32.XML" Name="Vanara.PInvoke.User32.XML" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.PInvoke.User32.XML" />
+            </Component>-->
+            <Component Id="Vanara.PInvoke.Shared.DLL" DiskId="1" Guid="5852375F-E25F-41E2-A8DA-2F3CCE2E1C06">
+              <File Id="Vanara.PInvoke.Shared.DLL" Name="Vanara.PInvoke.Shared.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.PInvoke.Shared.dll" />
+            </Component>
+            
+            <Component Id="Vanara.PInvoke.Gdi32.DLL" DiskId="1" Guid="E83FF5FD-DAE1-4565-8363-4334B212FCA6">
+              <File Id="Vanara.PInvoke.Gdi32.DLL" Name="Vanara.PInvoke.Gdi32.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.PInvoke.Gdi32.dll" />
+            </Component>
+            <!--<Component Id="Vanara.PInvoke.Gdi32.XML" DiskId="1" Guid="313207B6-EA1B-4859-9B9B-4B90DA7A8347">
+              <File Id="Vanara.PInvoke.Gdi32.XML" Name="Vanara.PInvoke.Gdi32.XML" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.PInvoke.Gdi32.XML" />
+            </Component>-->
+            <Component Id="Vanara.PInvoke.Kernel32.DLL" DiskId="1" Guid="1C86C9E0-D038-4D74-88DA-42222763587E">
+              <File Id="Vanara.PInvoke.Kernel32.DLL" Name="Vanara.PInvoke.Kernel32.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.PInvoke.Kernel32.dll" />
+            </Component>
+            <!--<Component Id="Vanara.PInvoke.Kernel32.XML" DiskId="1" Guid ="3F6BE4C1-7D6E-4B31-8311-0A3EEDCFFAE2">
+              <File Id="Vanara.PInvoke.Kernel32.XML" Name="Vanara.PInvoke.Kernel32.XML" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.PInvoke.Kernel32.XML" />
+            </Component>-->
+            <Component Id="Vanara.Core.DLL" DiskId="1" Guid="C5031257-407E-4111-AB02-6751DD69BE14">
+              <File Id="Vanara.Core.DLL" Name="Vanara.Core.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.Core.dll" />
+            </Component>
+            <!--<Component Id="Vanara.Core.XML" DiskId="1" Guid ="CA965C16-0532-4A3E-BE32-F8E8234AC87C">
+              <File Id="Vanara.Core.XML" Name="Vanara.Core.XML" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Vanara.Core.XML" />
+            </Component>-->
+            <Component Id="DEEPCLONER.DLL" DiskId="1" Guid="23A5862A-DD6A-472E-AE5F-D9C65922B1DC">
+              <File Id="DEEPCLONER.DLL" Name="DeepCloner.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)DeepCloner.dll" />
+            </Component>
+            
+            
+            <Component Id="DotNetProjects.Wpf.Extended.Toolkit.DLL" DiskId="1" Guid="05ED010E-B6CD-4C19-AC2E-9C0DB8AF7B9B">
+              <File Id="DotNetProjects.Wpf.Extended.Toolkit.DLL" Name="DotNetProjects.Wpf.Extended.Toolkit.DLL" Source="$(var.Honeywell.UOP.WinTray_TargetDir)DotNetProjects.Wpf.Extended.Toolkit.dll" />
+            </Component>
+            
+            <Component Id="WW.dll" DiskId="1" Guid="ECB04AB2-F9E5-4D84-A937-C6AF492B7407">
+              <File Id="WW.dll" Name="WW.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)WW.dll" />
+            </Component>
+            
+            
+            <Component Id="DOCUMENTFORMAT.OPENXML.DLL" DiskId="1" Guid="737E628E-00E6-4241-B84E-D49908F13D94">
+              <File Id="DOCUMENTFORMAT.OPENXML.DLL" Name="DocumentFormat.OpenXml.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)DocumentFormat.OpenXml.dll" />
+            </Component>
+            
+            
+            <Component Id="EXCELNUMBERFORMAT.DLL" DiskId="1" Guid="E6E26530-A74E-4F8D-BB02-B9A0C0A1E48D">
+              <File Id="EXCELNUMBERFORMAT.DLL" Name="ExcelNumberFormat.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)ExcelNumberFormat.dll" />
+            </Component>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Component Id="LOG4NET.DLL" DiskId="1" Guid="C5C0437E-5EA3-470F-8007-8D6037428EBD">
+              <File Id="LOG4NET.DLL" Name="log4net.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)log4net.dll" />
+            </Component>
+            
+            
+            
+            
+            
+            <Component Id="ITEXT.IO.DLL" DiskId="1" Guid="D93742FB-0598-44F9-877F-3ECA9EEE12DF">
+              <File Id="ITEXT.IO.DLL" Name="itext.io.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)itext.io.dll" />
+            </Component>
+            
+            <Component Id="ITEXT.KERNEL.DLL" DiskId="1" Guid="A9BD39FE-C2B7-42D2-8A3D-59B6AE4A187D">
+              <File Id="ITEXT.KERNEL.DLL" Name="itext.kernel.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)itext.kernel.dll" />
+            </Component>
+            
+            <Component Id="ITEXT.LAYOUT.DLL" DiskId="1" Guid="DDFCA330-4F35-4F1E-82BC-4C4F97E72DD0">
+              <File Id="ITEXT.LAYOUT.DLL" Name="itext.layout.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)itext.layout.dll" />
+            </Component>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <Component Id="MDXFICON.ICO" DiskId="1" Guid="FAE4FC0B-635F-41B3-88A5-A7EBBB27A64D">
+              <File Id="MDXFICON.ICO" Name="MDXFIcon.ico" Source="$(var.Honeywell.UOP.WinTray_TargetDir)MDXFIcon.ico" />
+            </Component>
+            <Component Id="MICROSOFT.EXPRESSION.INTERACTIONS.DLL" DiskId="1" Guid="C28C3723-06D9-4A9D-B58F-8866B184F9DC">
+              <File Id="MICROSOFT.EXPRESSION.INTERACTIONS.DLL" Name="Microsoft.Expression.Interactions.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Microsoft.Expression.Interactions.dll" />
+            </Component>
+            
+            <Component Id="MVVMDIALOGS.DLL" DiskId="1" Guid="D0C7F07F-2DB2-4875-A432-9FF858194F25">
+              <File Id="MVVMDIALOGS.DLL" Name="MvvmDialogs.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)MvvmDialogs.dll" />
+            </Component>
+            
+            <Component Id="NEWTONSOFT.JSON.DLL" DiskId="1" Guid="CFE33D1B-1557-49CE-962C-3E23BFE6FC9A">
+              <File Id="NEWTONSOFT.JSON.DLL" Name="Newtonsoft.Json.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Newtonsoft.Json.dll" />
+            </Component>
+            
+            <!--<Component Id="SHAPECONTROL.DLL" DiskId="1" Guid="A38A786E-EC78-4E3C-8975-AA2C417A51CC">
+              <File Id="SHAPECONTROL.DLL" Name="ShapeControl.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)ShapeControl.dll" />
+            </Component>-->
+            <Component Id="SYSTEM.IO.PACKAGING.DLL" DiskId="1" Guid="EBC64B20-A678-49D7-B131-DDA56C0F55B9">
+              <File Id="SYSTEM.IO.PACKAGING.DLL" Name="System.IO.Packaging.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)System.IO.Packaging.dll" />
+            </Component>
+            <Component Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL" DiskId="1" Guid="820668F0-96E2-4CE4-BD02-2893B50C1E4E">
+              <File Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)System.Runtime.CompilerServices.Unsafe.dll" />
+            </Component>
+            
+            <Component Id="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" DiskId="1" Guid="2AEF7632-FD0C-4032-B420-AF53E9D83705">
+              <File Id="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" Name="System.Threading.Tasks.Extensions.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)System.Threading.Tasks.Extensions.dll" />
+            </Component>
+            
+            <Component Id="SYSTEM.WINDOWS.INTERACTIVITY.DLL" DiskId="1" Guid="A192053B-9A24-4E64-A91C-C185C9166119">
+              <File Id="SYSTEM.WINDOWS.INTERACTIVITY.DLL" Name="System.Windows.Interactivity.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)System.Windows.Interactivity.dll" />
+            </Component>
+            
+            <Component Id="UNITY.ABSTRACTIONS.DLL" DiskId="1" Guid="C2DD99E6-82D6-4AFA-87E5-A714ED2D37E0">
+              <File Id="UNITY.ABSTRACTIONS.DLL" Name="Unity.Abstractions.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Unity.Abstractions.dll" />
+            </Component>
+            
+            <Component Id="UNITY.CONTAINER.DLL" DiskId="1" Guid="89CEF111-F8AB-47DA-B8C9-09CECDE6333F">
+              <File Id="UNITY.CONTAINER.DLL" Name="Unity.Container.dll" Source="$(var.Honeywell.UOP.WinTray_TargetDir)Unity.Container.dll" />
+            </Component>
+            
+            <Directory Id="DATA" Name="Data">
+              
+              
+              
+            </Directory>
+            <Directory Id="WINTRAYDB" Name="Database">
+              
+              
+              
+              
+              
+            </Directory>
+            <Directory Id="HELP" Name="Help">
+              
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+      <Directory Id="DesktopFolder" />
+      <Directory Id="ProgramMenuFolder" Name="Programs">
+        <Directory Id="ProgramMenuDir" Name="UOP Applications">
+          <Directory Id="AppMenuDir" Name="$(var.ProductName)">
+            <Component Id="StartMenuShortcuts" Guid="4EF9B2A2-5F60-4318-9D26-4BE3052F1ED0">
+              <RemoveFolder Id="AppMenuDir" Directory="AppMenuDir" On="uninstall" />
+              <RemoveFolder Id="RemoveProgramMenuDir" Directory="ProgramMenuDir" On="uninstall" />
+              <RegistryValue Root="HKCU" Key="Software\[Manufacturer]\[ProductName]" Type="string" Value="" />
+              <Shortcut Id="UninstallProduct" Name="Uninstall $(var.ProductName)" Description="Uninstalls the application" Target="[System64Folder]msiexec.exe" Arguments="/x [ProductCode]" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+    <Feature Id="DefaultFeature" Title="Main Feature" Level="1">
+      <ComponentRef Id="Ookii.Dialogs.WinForms.dll" />
+      <ComponentRef Id="CLOSEDXML.DLL" />
+      <!--<ComponentRef Id="CLOSEDXML.XML" />-->
+      <ComponentRef Id="DEEPCLONER.DLL" />
+      <ComponentRef Id="DotNetProjects.Wpf.Extended.Toolkit.DLL" />
+      <ComponentRef Id="DEEPCLONER.XML" />
+      <ComponentRef Id="DOCUMENTFORMAT.OPENXML.DLL" />
+      <ComponentRef Id="DOCUMENTFORMAT.OPENXML.XML" />
+      <ComponentRef Id="DYNAMITEY.DLL" />
+      <ComponentRef Id="EXCELNUMBERFORMAT.DLL" />
+      <ComponentRef Id="EXCELNUMBERFORMAT.XML" />
+      <ComponentRef Id="HONEYWELL.UOP.APPLICATIONLOGGER.DLL" />
+      <ComponentRef Id="HONEYWELL.UOP.APPLICATIONLOGGER.PDB" />
+      <ComponentRef Id="HONEYWELL.UOP.WINTRAY.BUSINESSLOGIC.DLL" />
+      <ComponentRef Id="HONEYWELL.UOP.WINTRAY.BUSINESSLOGIC.PDB" />
+      <ComponentRef Id="HONEYWELL.UOP.WINTRAY.EXE" />
+      <ComponentRef Id="HONEYWELL.UOP.WINTRAY.EXE.CONFIG" />
+      <ComponentRef Id="HONEYWELL.UOP.WINTRAY.PDB" />
+      <ComponentRef Id="APPLOGGER.CONFIG" />
+      <ComponentRef Id="LOG4NET.DLL" />
+      <ComponentRef Id="LOG4NET.XML" />
+      <ComponentRef Id="ITEXT.BARCODES.DLL" />
+      <ComponentRef Id="ITEXT.BARCODES.XML" />
+      <ComponentRef Id="ITEXT.FORMS.DLL" />
+      <ComponentRef Id="ITEXT.FORMS.XML" />
+      <ComponentRef Id="ITEXT.IO.DLL" />
+      <ComponentRef Id="ITEXT.IO.XML" />
+      <ComponentRef Id="ITEXT.KERNEL.DLL" />
+      <ComponentRef Id="ITEXT.KERNEL.XML" />
+      <ComponentRef Id="ITEXT.LAYOUT.DLL" />
+      <ComponentRef Id="ITEXT.LAYOUT.XML" />
+      <ComponentRef Id="ITEXT.PDFA.DLL" />
+      <ComponentRef Id="ITEXT.PDFA.XML" />
+      <ComponentRef Id="ITEXT.SIGN.DLL" />
+      <ComponentRef Id="ITEXT.SIGN.XML" />
+      <ComponentRef Id="ITEXT.STYLEDXMLPARSER.DLL" />
+      <ComponentRef Id="ITEXT.STYLEDXMLPARSER.XML" />
+      <ComponentRef Id="ITEXT.SVG.DLL" />
+      <ComponentRef Id="ITEXT.SVG.XML" />
+      <ComponentRef Id="MDXFICON.ICO" />
+      <ComponentRef Id="MICROSOFT.EXPRESSION.INTERACTIONS.DLL" />
+      <ComponentRef Id="MICROSOFT.EXPRESSION.INTERACTIONS.XML" />
+      <ComponentRef Id="MVVMDIALOGS.DLL" />
+      <ComponentRef Id="MVVMDIALOGS.XML" />
+      <ComponentRef Id="NEWTONSOFT.JSON.DLL" />
+      <ComponentRef Id="NEWTONSOFT.JSON.XML" />
+      <!--<ComponentRef Id="SHAPECONTROL.DLL" />-->
+      <ComponentRef Id="SYSTEM.IO.PACKAGING.DLL" />
+      <ComponentRef Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL" />
+      <ComponentRef Id="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.XML" />
+      <ComponentRef Id="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" />
+      <ComponentRef Id="SYSTEM.THREADING.TASKS.EXTENSIONS.XML" />
+      <ComponentRef Id="SYSTEM.WINDOWS.INTERACTIVITY.DLL" />
+      <ComponentRef Id="SYSTEM.WINDOWS.INTERACTIVITY.XML" />
+      <ComponentRef Id="UNITY.ABSTRACTIONS.DLL" />
+      <ComponentRef Id="dxfGraphicsNET.DLL" />
+      <ComponentRef Id="DXFGraphicControl.dll" />
+      <ComponentRef Id="WW.dll" />
+      <ComponentRef Id="UNITY.ABSTRACTIONS.PDB" />
+      <ComponentRef Id="UNITY.CONTAINER.DLL" />
+      <ComponentRef Id="UNITY.CONTAINER.PDB" />
+      <ComponentRef Id="MATERIALS.JSON" />
+      <ComponentRef Id="MATERIALS.XML" />
+      <ComponentRef Id="MATERIALS.XSD" />
+      <ComponentRef Id="CONTRACTOR.TXT" />
+      <ComponentRef Id="CUSTOMER.TXT" />
+      <ComponentRef Id="TRAYVENDORS.TXT" />
+      <ComponentRef Id="LICENSOR.TXT" />
+      <ComponentRef Id="SERVICE.TXT" />
+      <ComponentRef Id="WINTRAY.CHM" />
+      <ComponentRef Id="Vanara.Core.DLL" />
+      <ComponentRef Id="Vanara.PInvoke.Gdi32.DLL" />
+      <ComponentRef Id="Vanara.PInvoke.Kernel32.DLL" />
+      <ComponentRef Id="Vanara.PInvoke.Shared.DLL" />
+      <ComponentRef Id="Vanara.PInvoke.User32.DLL" />
+      <ComponentRef Id="Microsoft.VisualBasic.PowerPacks.Vs.DLL" />
+      <!--<ComponentRef Id="Vanara.Core.XML" />
+      <ComponentRef Id="Vanara.PInvoke.Gdi32.XML" />
+      <ComponentRef Id="Vanara.PInvoke.Kernel32.XML" />
+      <ComponentRef Id="Vanara.PInvoke.User32.XML" />-->
+      <ComponentRef Id="StartMenuShortcuts" />
+      <!--<ComponentRef Id="System.Buffers.DLL" />
+      <ComponentRef Id="System.Buffers.XML" />-->
+      <ComponentRef Id="dxfGraphicsNET.XML" />
+      <ComponentRef Id="System.Memory.DLL" />
+      <!--<ComponentRef Id="System.Numerics.Vectors.DLL" />
+      <ComponentRef Id="System.Numerics.Vectors.XML" />-->
+      <ComponentRef Id="System.ValueTuple.XML" />
+      <ComponentRef Id="System.ValueTuple.DLL" />
+      <ComponentRef Id="System.Configuration.ConfigurationManager.DLL" />
+      <ComponentRef Id="Irony.dll" />
+      <ComponentGroupRef Id="ProgramFilesFolder_files" />
+      <ComponentGroupRef Id="INSTALLFOLDER_files" />
+      <ComponentGroupRef Id="DATA_files" />
+    </Feature>
+    <UI />
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLFOLDER" />
+    <Icon Id="icon.ico" SourceFile="$(var.Honeywell.UOP.WinTray_TargetDir)MDXFIcon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    <Icon Id="DesktopIcon.exe" SourceFile="$(var.Honeywell.UOP.WinTray_TargetDir)Honeywell.UOP.WinTray.exe" />
+    <Icon Id="StartMenuIcon.exe" SourceFile="$(var.Honeywell.UOP.WinTray_TargetDir)Honeywell.UOP.WinTray.exe" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.Honeywell.UOP.WinTray_TargetDir)ApplicationLicense.rtf" />
+  </Product>
+  <Fragment>
+    <ComponentGroup Id="ProgramFilesFolder_files" Directory="ProgramFilesFolder">
+      <Component Id="ApplicationLicense.rtf" Guid="5991c636-0f49-49bf-b468-468fae63a472">
+        <File Id="ApplicationLicense.rtf" Name="ApplicationLicense.rtf" Source="$(var.UOP.WinTray.UI_TargetDir)ApplicationLicense.rtf" />
+      </Component>
+      <Component Id="SharpDX.dll" Guid="85f33d08-fbcc-4606-b9cc-324dba76851b">
+        <File Id="SharpDX.dll" Name="SharpDX.dll" Source="$(var.UOP.WinTray.UI_TargetDir)SharpDX.dll" />
+      </Component>
+      <Component Id="SharpDX.DXGI.dll" Guid="18a1d98e-cf53-4287-b2e2-34e708c9a575">
+        <File Id="SharpDX.DXGI.dll" Name="SharpDX.DXGI.dll" Source="$(var.UOP.WinTray.UI_TargetDir)SharpDX.DXGI.dll" />
+      </Component>
+      <Component Id="SharpDX.Direct2D1.dll" Guid="d08e06dc-9f29-4cb3-8c7c-af52d9369d1c">
+        <File Id="SharpDX.Direct2D1.dll" Name="SharpDX.Direct2D1.dll" Source="$(var.UOP.WinTray.UI_TargetDir)SharpDX.Direct2D1.dll" />
+      </Component>
+      <Component Id="Ardalis.SmartEnum.dll" Guid="28b9d4c4-13d7-47be-b7e2-1c9cdaababbe">
+        <File Id="Ardalis.SmartEnum.dll" Name="Ardalis.SmartEnum.dll" Source="$(var.UOP.WinTray.UI_TargetDir)Ardalis.SmartEnum.dll" />
+      </Component>
+      <Component Id="WW.License.dll" Guid="3cec8032-e11a-48ca-a3f5-20bac930759d">
+        <File Id="WW.License.dll" Name="WW.License.dll" Source="$(var.UOP.WinTray.UI_TargetDir)WW.License.dll" />
+      </Component>
+      <Component Id="WW.Cad.dll" Guid="3ad5ac47-42a7-4a2b-8864-80f4dc94a6f1">
+        <File Id="WW.Cad.dll" Name="WW.Cad.dll" Source="$(var.UOP.WinTray.UI_TargetDir)WW.Cad.dll" />
+      </Component>
+      <Component Id="UOP.WinTray.UI.Logger.dll" Guid="0f83fd73-7ab8-4969-8364-cbda1447fdb2">
+        <File Id="UOP.WinTray.UI.Logger.dll" Name="UOP.WinTray.UI.Logger.dll" Source="$(var.UOP.WinTray.UI_TargetDir)UOP.WinTray.UI.Logger.dll" />
+      </Component>
+      
+      <Component Id="UOP.DXFGraphics.dll" Guid="a402ec49-1627-403a-ba25-25b1ee341e49">
+        <File Id="UOP.DXFGraphics.dll" Name="UOP.DXFGraphics.dll" Source="$(var.UOP.WinTray.UI_TargetDir)UOP.DXFGraphics.dll" />
+      </Component>
+      <Component Id="UOP.WinTray.Projects.dll" Guid="9bd59735-9116-4cef-9ac9-2b10e49f2f0b">
+        <File Id="UOP.WinTray.Projects.dll" Name="UOP.WinTray.Projects.dll" Source="$(var.UOP.WinTray.UI_TargetDir)UOP.WinTray.Projects.dll" />
+      </Component>
+      <Component Id="PresentationFramework.dll" Guid="69ccd6d3-fe7f-4d32-a8a6-f99c67daf152">
+        <File Id="PresentationFramework.dll" Name="PresentationFramework.dll" Source="$(var.UOP.WinTray.UI_TargetDir)PresentationFramework.dll" />
+      </Component>
+      <Component Id="UOP.WinTray.UI.exe.config" Guid="573eeab5-6f71-40a4-8b50-da6edf2021d3">
+        <File Id="UOP.WinTray.UI.exe.config" Name="UOP.WinTray.UI.exe.config" Source="$(var.UOP.WinTray.UI_TargetDir)UOP.WinTray.UI.exe.config" />
+      </Component>
+      <Component Id="UOP.WinTray.UI.exe" Guid="7907dd78-0c64-4a9f-bc2b-b487c5adad25">
+        <File Id="UOP.WinTray.UI.exe" Name="UOP.WinTray.UI.exe" Source="$(var.UOP.WinTray.UI_TargetDir)UOP.WinTray.UI.exe" />
+      </Component>
+      <Component Id="UOP.DXFGraphicsControl.dll" Guid="2b8beeee-024c-4d22-af2b-49dbae7dee86">
+        <File Id="UOP.DXFGraphicsControl.dll" Name="UOP.DXFGraphicsControl.dll" Source="$(var.UOP.WinTray.UI_TargetDir)UOP.DXFGraphicsControl.dll" />
+      </Component>
+      
+      <Component Id="WW.GL.dll" Guid="275e5e20-e501-4dea-a177-bcec71a7f10c">
+        <File Id="WW.GL.dll" Name="WW.GL.dll" Source="$(var.UOP.WinTray.UI_TargetDir)WW.GL.dll" />
+      </Component>
+      
+      <Component Id="WW.Pdf.dll" Guid="9d85cb9a-8e83-45e5-ba08-1135795795f6">
+        <File Id="WW.Pdf.dll" Name="WW.Pdf.dll" Source="$(var.UOP.WinTray.UI_TargetDir)WW.Pdf.dll" />
+      </Component>
+      <Component Id="DocumentFormat.OpenXml.Framework.dll" Guid="ed8b0f5e-fa22-45ee-a628-a8425c04d530">
+        <File Id="DocumentFormat.OpenXml.Framework.dll" Name="DocumentFormat.OpenXml.Framework.dll" Source="$(var.UOP.WinTray.UI_TargetDir)DocumentFormat.OpenXml.Framework.dll" />
+      </Component>
+      <Component Id="System.ComponentModel.Annotations.dll" Guid="c3ea61f4-e216-48c2-a67d-cd1ee70e5743">
+        <File Id="System.ComponentModel.Annotations.dll" Name="System.ComponentModel.Annotations.dll" Source="$(var.UOP.WinTray.UI_TargetDir)System.ComponentModel.Annotations.dll" />
+      </Component>
+      <Component Id="COMMON.LOGGING.DLL" Guid="30921eff-57aa-47b1-92f0-fdeb13fce07b">
+        <File Id="COMMON.LOGGING.DLL" Name="Common.Logging.dll" Source="$(var.UOP.WinTray.UI_TargetDir)Common.Logging.dll" />
+      </Component>
+      <Component Id="COMMON.LOGGING.CORE.DLL" Guid="612ccfdf-bee3-4ba4-9ee5-e31e89421305">
+        <File Id="COMMON.LOGGING.CORE.DLL" Name="Common.Logging.Core.dll" Source="$(var.UOP.WinTray.UI_TargetDir)Common.Logging.Core.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="INSTALLFOLDER_files" Directory="INSTALLFOLDER">
+      <Component Id="fr_Vanara.Core.resources.dll" Guid="c14d8b68-3cca-4e36-bfa8-0a3840e75229">
+        <File Id="fr_Vanara.Core.resources.dll" Name="Vanara.Core.resources.dll" Source="$(var.UOP.WinTray.UI_TargetDir)fr\Vanara.Core.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="DATA_files" Directory="DATA">
+      <Component Id="Resources_acadlinetyes.txt" Guid="b75ab451-fbae-4d36-adb8-a537c05e8b46">
+        <File Id="Resources_acadlinetyes.txt" Name="acadlinetyes.txt" Source="$(var.UOP.WinTray.UI_TargetDir)Resources\acadlinetyes.txt" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

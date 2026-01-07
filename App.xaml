@@ -1,0 +1,20 @@
+﻿<Application x:Class="UOP.WinTray.UI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:local="clr-namespace:UOP.WinTray.UI"
+             DispatcherUnhandledException ="Application_DispatcherUnhandledException"   
+             StartupUri="WinTrayMain.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source ="Themes/MenuTheme.xaml"></ResourceDictionary>
+                <ResourceDictionary Source ="Themes/ExpanderTheme.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Themes/WindowTheme.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Themes/WinTrayCommonTheme.xaml"></ResourceDictionary>
+                <ResourceDictionary Source ="Themes/GroupBoxStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Themes/Resources/TreeViewStyle.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="Themes/ToggleButtonStyle.xaml"></ResourceDictionary>                
+            </ResourceDictionary.MergedDictionaries>          
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

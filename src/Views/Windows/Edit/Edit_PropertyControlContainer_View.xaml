@@ -1,0 +1,107 @@
+﻿<Window x:Class="UOP.WinTray.UI.Views.Edit_PropertyControlContainer_View"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UOP.WinTray.UI.Views.Windows"
+        xmlns:views="clr-namespace:UOP.WinTray.UI.Views"  
+        xmlns:conv="clr-namespace:UOP.WinTray.UI.Converters"
+        xmlns:autolocator ="clr-namespace:UOP.WinTray.UI"
+        xmlns:CustomProperty="clr-namespace:UOP.WinTray.UI.Behaviors"
+        xmlns:waitIndicator="clr-namespace:UOP.WinTray.UI.CustomControls.AdornerControl"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+         xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:Edit_PropertyControlContainer_ViewModel}"
+        md:DialogServiceViews.IsRegistered="True"
+        mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
+        MaxHeight="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"        
+        xmlns:data="clr-namespace:UOP.WinTray.UI.ViewModels"
+        xmlns:CC="clr-namespace:UOP.WinTray.UI.CustomControls"
+        xmlns:winTrayUI="clr-namespace:UOP.WinTray.UI" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        Title="{Binding Title}"
+        Style="{StaticResource PopUpWindowTheme}"
+        WindowStartupLocation="CenterOwner"
+        Activated="Window_Activated"
+         d:DesignHeight="350" d:DesignWidth="500"
+        >
+    <Window.Resources>
+        <conv:EnumToCollectionConverter x:Key="enumToCollectionConverter"/>
+
+    </Window.Resources>
+    <Grid Margin="5">
+        <!--Main Grid-->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0" Style="{StaticResource GlobalBorderStyle}">
+            <StackPanel Orientation="Vertical">
+                <Label x:Name="lblSectionName" Content="{Binding HeaderText}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15" FontWeight="Medium" Grid.Row="0"/>
+
+            </StackPanel>
+        </Border>
+        <Border Grid.Row="1" Style="{StaticResource GlobalBorderStyle}" Visibility="{Binding VisibilityErrorMessage}">
+            <Grid >
+                <TextBlock
+                            x:Name="ErrorMessage"
+                            Text="{Binding ErrorMessage, Mode=OneWay}"
+                           Style="{StaticResource GlobalErrorMessageStyle}"
+                        />
+            </Grid>
+        </Border>
+        <Border Grid.Row="2"  Style="{StaticResource GlobalBorderStyle}">
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <views:MDCaseView  x:Name="Props_Case" DataContext="{Binding Container}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="5" />
+
+            </Grid>
+
+        </Border>
+        <!-- BUTTON BAR -->
+        <Border Grid.Row="3" Style="{StaticResource GlobalBorderStyle}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Button x:Name="CancelButton" Content="Cancel" Grid.Column="0" Command="{Binding Command_Cancel}" Style="{StaticResource GlobalButtonStyle}" IsCancel="True" IsEnabled="{Binding IsEnabled}"/>
+                <Button x:Name="OKButton" Content="{Binding OKButtonText}" Grid.Column="3" Command="{Binding Command_Ok}" Style="{StaticResource GlobalButtonStyle}"  IsEnabled="{Binding IsOkBtnEnable}" />
+
+            </Grid>
+
+        </Border>
+        <!-- STATUS BAR -->
+
+        <Border  Grid.Row="4" Style="{StaticResource GlobalBorderStyle}">
+            <Grid >
+                <Label Content="{Binding GlobalProjectTitle}"  HorizontalAlignment="Left" Width="auto" />
+                <ToggleButton 
+                         CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                        Style="{StaticResource UnitsToggleButtonStyle_Small}"  
+                        IsChecked="{Binding IsEnglishSelected,Mode=TwoWay }"
+                        Height="20"
+                        FontSize="8"
+                        Visibility="{Binding Visibility_UnitToggle}"
+                        HorizontalAlignment="Right" 
+                            Margin="0,0,20,0"
+                        />
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

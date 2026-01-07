@@ -1,0 +1,186 @@
+﻿<Window x:Class="UOP.WinTray.UI.Views.Windows.Edit_MDStiffeners_View"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UOP.WinTray.UI.Views.Windows"
+         xmlns:waitIndicator="clr-namespace:UOP.WinTray.UI.CustomControls.AdornerControl"
+        xmlns:dxfgraphiccontrol="clr-namespace:UOP.DXFGraphicsControl;assembly=UOP.DXFGraphicsControl"
+         xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels"
+         xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        xmlns:CustomProperty="clr-namespace:UOP.WinTray.UI.Behaviors"
+            xmlns:autolocator ="clr-namespace:UOP.WinTray.UI" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        
+         md:DialogServiceViews.IsRegistered="True"
+        d:DataContext="{d:DesignInstance Type=viewmodels:Edit_MDStiffeners_ViewModel}"
+        mc:Ignorable="d"
+        Style="{StaticResource PopUpWindowTheme}"
+        WindowStartupLocation ="CenterOwner"
+        SizeToContent="WidthAndHeight"
+        MinWidth="800" MinHeight="1000"
+        MaxHeight="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"
+        Loaded="Window_Loaded"
+        Unloaded="Window_Unloaded"
+        Closing="Window_Closing"
+        KeyDown="Window_KeyDown"
+        Title="Edit Tray Stiffeners">
+    
+        <!--Closing="Window_Closing"-->
+     
+    <!--<xceed:BusyIndicator IsBusy="{Binding IsBusyVisible}">
+        <xceed:BusyIndicator.BusyContent>
+            <StackPanel Orientation="Horizontal">
+                <StackPanel Margin="5,0">
+                    <waitIndicator:LoadingWait/>
+                    <TextBlock Text="{Binding BusyMessage, Mode=TwoWay}" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </xceed:BusyIndicator.BusyContent>
+        <xceed:BusyIndicator.OverlayStyle>
+            <Style TargetType="Rectangle">
+                <Setter Property="Fill" Value="Black" />
+                <Setter Property="Opacity" Value="0.3" />
+            </Style>
+        </xceed:BusyIndicator.OverlayStyle>
+        <xceed:BusyIndicator.ProgressBarStyle>
+            <Style TargetType="ProgressBar">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </Style>
+        </xceed:BusyIndicator.ProgressBarStyle>-->
+        <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="40" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20*" />
+                <ColumnDefinition Width="80*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0" Orientation="Vertical">
+                <!-- Left side panel -->
+                <GroupBox Header="Tools"  Foreground="Blue" Margin="5" Padding="5" IsEnabled="{Binding IsEnabled, UpdateSourceTrigger=PropertyChanged}" >
+                    <!-- Tools group box -->
+                    <StackPanel Orientation="Vertical">
+                        <Border Margin="2">
+                            <Button x:Name="editDCStiffenersButton" Command="{Binding Command_EditDCStiffeners}" ToolTip="Edit Stiffener Locations on the Selected Downcomer">Edit DC Stiffeners</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="inputYValuesButton" Command="{Binding Command_InputYValues}" ToolTip="Manually Enter Stiffener Locations on Selected Downcomers">Input Y Values</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="setYButton" Command="{Binding Command_SetY}" ToolTip="Input Stiffener Location for the Selected Stiffener">Set Y</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="addButton" Command="{Binding Command_Add}" ToolTip="Add a Stiffener on Selected Downcomers">Add</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="deleteButton" Command="{Binding Command_Delete}" ToolTip="Delete the Selected Stiffener">Delete</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="uniformSpacingButton" Command="{Binding Command_UniformSpacing}" ToolTip="Generate Stiffeners By Entering a Space">Uniform Spacing</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="straddleDowncomersButton" Command="{Binding Command_StraddleDowncomers}" ToolTip="Generate Stiffeners By Entering a Offset Value">Straddle Downcomers</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="copyTrayStiffenersButton" Command="{Binding Command_CopyTrayStiffeners}" ToolTip="Copy Stiffener Locations From Another Tray in the Project">Copy Tray Stiffeners</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="enforceSymmetryButton" Command="{Binding Command_EnforceSymmetry}" IsEnabled="{Binding SymmetryIsEnabled}" ToolTip="Ensure Stiffeners Are Symmetric Across The Downcomer Centerlines">Enforce Symmetry</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="spacingButton" Command="{Binding Command_Spacing}" ToolTip="Increase/Decrease the Current Stiffner Spacing">Spacing +/-</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="undoButton" Command="{Binding Command_Undo}" ToolTip="Undo the Last Change">Undo</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="redoButton" Command="{Binding Command_Redo}" ToolTip="Redo the Last Undo">Redo</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="resetButton" Command="{Binding Command_Reset}" ToolTip="Reset to the Original Configuration" >Reset</Button>
+                        </Border>
+                        <Border Margin="2">
+                            <Button x:Name="redrawButton" Command="{Binding Command_Redraw}" ToolTip="Redraw The Image">Redraw</Button>
+                        </Border>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Downcomers Limits"  Foreground="Blue" Margin="5" Padding="5" IsEnabled="{Binding IsEnabled}">
+                    <!-- Downcomer Limits group box -->
+                    <DataGrid Name="downcomerLimitsDataGrid" ItemsSource="{Binding DowncomerLimits}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="" Binding="{Binding LimitId}"/>
+                            <DataGridTextColumn Header="Maximum Y" Binding="{Binding MaximumY}"/>
+                            <DataGridTextColumn Header="Minimum Y" Binding="{Binding MinimumY}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            </StackPanel>
+            <Grid Grid.Column="1">
+                <!-- Image section -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*" />
+                    <RowDefinition Height="90*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75*" />
+                    <ColumnDefinition Width="25*" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Row="0" Grid.Column="1" Grid.ZIndex="2" Orientation="Vertical">
+                    <!-- Check box overlay section -->
+                    <CheckBox x:Name="imageOverlayCheckbox" IsChecked="{Binding MaintainSymmetryIsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding SymmetryIsEnabled}">Maintain Symmetry</CheckBox>
+                    <Label Name="imageOverlayLocationLabel" Content="{Binding ImageOverlayLocationLabelText}" />
+                    <Label Name="imageOverlayTotalLabel" Content="{Binding ImageOverlayTotalLabelText}" />
+                </StackPanel>
+                <dxfgraphiccontrol:DXFViewer Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="2" Background="Gray" 
+                                             Grid.ZIndex="1" Name="cadfxDXFViewer"></dxfgraphiccontrol:DXFViewer>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <!-- Save and Close buttons area -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="70*" />
+                <ColumnDefinition Width="15*" />
+            </Grid.ColumnDefinitions>
+            <Button Name="cancleButton" 
+                    Grid.Column="0" 
+                    Margin="5,10,5,10" 
+                    IsCancel="True"
+                    IsEnabled="{Binding IsEnabled}"
+                    Command="{Binding Command_Cancel}">Cancel</Button>
+            <Button Name="saveButton" Grid.Column="2" IsEnabled="{Binding IsEnabled}" Margin="5,10,5,10" Command="{Binding Command_Save}" CommandParameter="{Binding}">Save</Button>
+        </Grid>
+        <Grid Grid.Row="2">
+            <!-- The status bar -->
+            <Grid.Resources>
+                <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="85*" />
+                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="15*" />
+                <ColumnDefinition Width="15*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Name="rightStatusBarLabel" Margin="5" Content="{Binding GlobalProjectTitle}" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+            <ToggleButton 
+                            Grid.Column="1"
+                             CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                            Style="{StaticResource UnitsToggleButtonStyle_Small}"  
+                            IsChecked="{Binding IsEnglishSelected,Mode=TwoWay }"
+                            Height="20"
+                            FontSize="8"
+                            HorizontalAlignment="Center" 
+                            IsEnabled="{Binding IsEnabled}"
+                            Visibility="{Binding IsEnabled, Converter={StaticResource booleanToVisibilityConverter}}"
+                            />
+            <Label Grid.Column="2" Name="leftStatusBarLabel" Margin="5" Content="{Binding RightStatusBarLabelText}" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+
+            <ProgressBar Grid.Column="3" Name="progressBar" Margin="5" Visibility="{Binding ShowProgress, Converter={StaticResource booleanToVisibilityConverter}}" IsIndeterminate="True"/>
+        </Grid>
+        </Grid>
+    <!--</xceed:BusyIndicator>-->
+</Window>

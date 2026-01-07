@@ -1,0 +1,17 @@
+Amine Absorber
+C2 Splitter
+C3 Splitter
+Confidential
+Debutanizer
+Deethanizer
+Deheptanizer
+Deisobutanizer
+Deisohexanizer
+Deisopentanizer
+Demethanizer
+Depropanizer
+EO Absorber
+Isoprene Column
+Raffinate Column
+Xylene Column
+Xylene Splitter

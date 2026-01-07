@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="MaterialsGages">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Materials">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Material">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="FamilyName" type="xs:string" />
+                    <xs:element name="Density" type="xs:string" />
+                    <xs:element name="IsStainlessSteel" type="xs:boolean" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Gages">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Gage">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="GageName" type="xs:string" />
+                    <xs:element name="Thickness" type="xs:decimal" />
+                    <xs:element name="IsMetricMaterial" type="xs:boolean" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

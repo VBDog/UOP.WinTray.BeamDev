@@ -1,0 +1,225 @@
+
+#Ignore thumbnails created by Windows
+Thumbs.db
+#Ignore files built by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+.vs/
+#Nuget packages folder
+packages/
+/build/tools/
+lcov.info
+opencover.xml
+/.sonarqube
+/build/.sonarqube
+/tools/
+**/BuildArtifacts/*
+/Modified Kernel/exe/vc16_amd64dll
+/artifacts
+dlls/
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfArc.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfEntity.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfEvent.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfHandleOwner.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfObject.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfPolyline.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfSettingObject.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfTable.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/dxfTableEntry.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/Interfaces/idxfReferenceForm.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/Interfaces/idxfSettingsObject.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/Interfaces/iHandleOwner.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/Interfaces/iLine.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Base Classes/Interfaces/iVector.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/colDXFBlocks.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/colDXFEntities.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/colDXFImages..vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/colDXFRectangles.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/colDXFVectors.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/dxfClasses.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/dxfDictionaries.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/dxfObjects.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/dxfVectors.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Collections/dxpHatchPatterns.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Dictionaries/dxoDictionaryEntries.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Dictionaries/dxoDictionaryEntry.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfAttributes.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfBitmap.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfBlock.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfBlockSource.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfColors.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfEvents.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfFile.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfGlobals.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfImage.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfPlane.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxfRectangle.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxoHandleGenerator.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxoInstances.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxoTableCells.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxpACAD.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/dxpEventHandler.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeArc.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeBezier.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeDimension.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeEllipse.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeHatch.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeHole.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeInsert.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeLeader.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeLine.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxePoint.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxePolygon.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxePolyline.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeShape.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeSolid.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeSymbol.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeTable.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxeText.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxoScreenEntity.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Entities/dxpDefPoints.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Events/dxfEventArguments.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Events/dxfEvents.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Events/EventAgreggator/DisposableObject.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Events/EventAgreggator/EventAggregator.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Events/EventAgreggator/IEventSubscriber.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Events/EventAgreggator/Subscriber.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Events/Messages.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmColorPicker.Designer.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmColorPicker.resx
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmColorPicker.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmDXFProperties.Designer.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmDXFProperties.resx
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmDXFProperties.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmFonts.Designer.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmFonts.resx
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmFonts.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmInput.Designer.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmInput.resx
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmInput.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmMessages.Designer.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmMessages.resx
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmMessages.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmTables.Designer.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmTables.resx
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Forms/frmTables.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Global/APIWrapper.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Global/dxfColors.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Global/dxfEnums.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Global/Extensions.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Objects/dxfObjects.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Properties/dxoProperties.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Properties/dxoProperty.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Properties/dxoPropertyArray.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Properties/dxoPropertyMatrix.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Properties/dxpProperties.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Screen/dxoDisplay.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Screen/dxoScreen.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Screen/dxoScreenEntities.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxfDisplaySettings.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxoSettingsDim.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxoSettingsDimOverrides.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxoSettingsSymbol.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxoSettingsTable.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxoSettingsText.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxsDimOverrides.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxsHeader.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxsLinetypes.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Settings/dxsSettings.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Shapes/dxoShape.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Shapes/dxoShapeArray.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Shapes/dxoShapes.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxfFonts.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxfStrings.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoCharacter.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoCharacters.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoCharBox.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoCharFormat.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoFont.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoFonts.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoFontStyle.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoPoint.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoPoints.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoString.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Strings/dxoSubStrings.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfBeziers.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfEntities.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfHandles.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfImages.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfInstances.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfListsAndValues.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfMatrix4.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfPensAndBrushed.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfPlanes.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfProperties.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfScreen.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfStringStructures.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfStructures.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfTables.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfTransforms.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Structures/dxfVectorStructures.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxfLinetypes.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoAPPID.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoAPPIDs.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoBlockRecord.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoBlockRecords.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoDimStyle.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoDimStyles.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoLayer.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoLayers.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoLinetype.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoLinetypes.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoStyle.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoStyles.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoTables.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoUCS.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoUCSs.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoView.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoViewPort.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoViewPorts.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tables/dxoViews.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tools/dxfDimTool.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tools/dxfImageTool.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tools/dxoDimTool.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tools/dxoDrawingTool.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tools/dxoEntityTool.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tools/dxoFileTool.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tools/dxoLeaderTool.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Tools/dxoSymbolTool.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfAcad.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfArrowheads.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfBreakTrimExtend.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfBytes.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfHatches.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfIntersections.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfMath.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfPaths.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfPrimatives.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfProjections.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfStyles.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Utilities/dxfUtils.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Vectors/dxfDirection.vb
+/Assemblies/UOP.WinTray.DXFGraphics/src - Copy/Vectors/dxfVector.vb

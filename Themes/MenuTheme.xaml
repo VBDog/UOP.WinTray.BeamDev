@@ -1,0 +1,37 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:resources="clr-namespace:UOP.WinTray.UI.Themes.Resources.Classes">
+        
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="AliceBlue" />
+    <Style x:Key="MLB_MenuItem" TargetType="{x:Type MenuItem}">
+        <Setter Property="MenuItem.Margin" Value="-32,-3,-130,-2.8" />
+        <Setter Property="MenuItem.Padding" Value="5,4,10,5" />
+        <Setter Property="MenuItem.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="MenuItem.HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="MenuItem.VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="MenuItem.VerticalAlignment" Value="Stretch" />
+        <Setter Property="MenuItem.Width" Value="Auto" />
+        <Setter Property="MenuItem.Foreground" Value="Black" />
+        <Setter Property="MenuItem.Background" Value="WhiteSmoke" />
+    </Style>
+    <resources:SeparatorStyleSelector x:Key="SeparatorStyleSelector" />
+
+    <!-- MenuItem Style -->
+    <Style TargetType="{x:Type MenuItem}" x:Key="separatorStyle">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type MenuItem}">
+                    <Separator  HorizontalAlignment="Stretch" IsEnabled="false"  Background="DarkGray">
+                        <Separator.BorderBrush>
+                            <LinearGradientBrush>
+                                <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}" Offset="0"/>
+                                <GradientStop Color="{x:Static SystemColors.InactiveCaptionColor}" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Separator.BorderBrush>
+                    </Separator>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="UOP.WinTray.UI.Views.MDCaseView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:CC="clr-namespace:UOP.WinTray.UI.CustomControls"
+             xmlns:views="clr-namespace:UOP.WinTray.UI.Views"
+             xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:MDCaseViewModel}"
+            
+             mc:Ignorable="d" 
+            
+             >
+    <UserControl.Resources>
+        <Style x:Key="propcontrol" TargetType="{x:Type views:PropertyControl}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value= "Left" />
+            <Setter Property="Margin" Value="5,0,5,0" />
+            <Setter Property="Visibility" Value="{Binding Visibility}" />
+            <!--<EventSetter Event="MouseDoubleClick" Handler="PropertyControl_MouseDoubleClick"/>
+            <EventSetter Event="GotFocus" Handler="PropertyControl_GotFocus" />-->
+        </Style>
+
+    </UserControl.Resources>
+        
+    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="gridDistribCaseProps"  Margin="5,5,5,0" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding Visibility_Distributor, Mode=OneWay}">
+          
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50*"/>
+                <ColumnDefinition Width="50*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <views:PropertyControl DataContext="{Binding OwnerDescription}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding Description}" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding LiquidRate}" Grid.Row="1" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding LiquidDensity}" Grid.Row="1" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding VaporRate}"  Grid.Row="2" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding VaporDensity}"  Grid.Row="2" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding LiquidFromAbove}"  Grid.Row="3" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding LiquidDensityFromAbove}" Grid.Row="3" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding VaporFromBelow}"  Grid.Row="4" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding VaporDensityFromBelow}"  Grid.Row="4" Grid.Column="1"  Style="{StaticResource propcontrol}"/>
+                  <views:PropertyControl DataContext="{Binding MinimumOperatingRange}"  Grid.Row="5" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding MaximumOperatingRange}"  Grid.Row="5" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding AdditionalTroughLiquidRate}"  Grid.Row="6" Grid.Column="0"  Style="{StaticResource propcontrol}"/>
+
+            </Grid>
+
+            <Grid x:Name="gridDistribCaseDependantProps" Margin="5,0,5,5" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding Visibility_DistributorDependantProperties, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+       
+                </Grid.RowDefinitions>
+                <views:PropertyControl DataContext="{Binding DesignRate}"  Grid.Row="0" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding FeedDensity}" Grid.Row="0" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding FeedLiquidVolumeRate}"  Grid.Row="1" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding FeedLiquidPercentage}" Grid.Row="1" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding FeedVaporVolumeRate}"  Grid.Row="2" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding FeedVaporPercentage}" Grid.Row="2" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding VaporPercentage}"  Grid.Row="3" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+            </Grid>
+            <Grid x:Name="gridCTCaseProps" Margin="5,0,5,0" Grid.Row="2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding Visibility_ChimneyTray, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <views:PropertyControl DataContext="{Binding OwnerDescription}"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding Description}"  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding LiquidDrawRate}"  Grid.Row="1" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding LiquidFromAbove}"  Grid.Row="2" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding LiquidDensity}" Grid.Row="2" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding VaporFromBelow}"  Grid.Row="3" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding VaporDensity}"  Grid.Row="3" Grid.Column="1"  Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding MinimumOperatingRange}"  Grid.Row="4" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding MaximumOperatingRange}"  Grid.Row="4" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+
+            </Grid>
+            <Grid x:Name="gridCTCaseDependantProps" Margin="5,0,5,5" Grid.Row="3" VerticalAlignment="Top" HorizontalAlignment="Stretch" Visibility="{Binding Visibility_ChimneyTrayDependantProperties, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <views:PropertyControl DataContext="{Binding DrawAmount}"  Grid.Row="0" Grid.Column="0" Style="{StaticResource propcontrol}"/>
+                <views:PropertyControl DataContext="{Binding LiquidToBelow}" Grid.Row="0" Grid.Column="1" Style="{StaticResource propcontrol}"/>
+               
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

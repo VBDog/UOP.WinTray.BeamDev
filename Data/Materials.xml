@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MaterialsGages xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Materials>
+    <Material>
+      <FamilyName>304L Stainless</FamilyName>
+      <Density>0.28611</Density>
+      <IsStainlessSteel>true</IsStainlessSteel>
+    </Material>
+    <Material>
+      <FamilyName>304 Stainless</FamilyName>
+      <Density>0.28611</Density>
+      <IsStainlessSteel>true</IsStainlessSteel>
+    </Material>
+    <Material>
+      <FamilyName>316 Stainless</FamilyName>
+      <Density>0.28611</Density>
+      <IsStainlessSteel>true</IsStainlessSteel>
+    </Material>
+    <Material>
+      <FamilyName>316L Stainless</FamilyName>
+      <Density>0.28611</Density>
+      <IsStainlessSteel>true</IsStainlessSteel>
+    </Material>
+    <Material>
+      <FamilyName>410 Stainless</FamilyName>
+      <Density>0.28611</Density>
+      <IsStainlessSteel>true</IsStainlessSteel>
+    </Material>
+    <Material>
+      <FamilyName>Carbon Steel</FamilyName>
+      <Density>0.29039</Density>
+      <IsStainlessSteel>true</IsStainlessSteel>
+    </Material>
+    <Material>
+      <FamilyName>Killed Carbon Steel</FamilyName>
+      <Density>0.29039</Density>
+      <IsStainlessSteel>false</IsStainlessSteel>
+    </Material>
+  </Materials>
+  <Gages>
+    <Gage>
+      <GageName>10 ga.</GageName>
+      <Thickness>0.135</Thickness>
+      <IsMetricMaterial>false</IsMetricMaterial>
+    </Gage>
+    <Gage>
+      <GageName>12 ga.</GageName>
+      <Thickness>0.105</Thickness>
+      <IsMetricMaterial>false</IsMetricMaterial>
+    </Gage>
+    <Gage>
+      <GageName>14 ga.</GageName>
+      <Thickness>0.075</Thickness>
+      <IsMetricMaterial>false</IsMetricMaterial>
+    </Gage>
+    <Gage>
+      <GageName>2 mm</GageName>
+      <Thickness>0.07874</Thickness>
+      <IsMetricMaterial>true</IsMetricMaterial>
+    </Gage>
+    <Gage>
+      <GageName>2.5 mm</GageName>
+      <Thickness>0.09843</Thickness>
+      <IsMetricMaterial>true</IsMetricMaterial>
+    </Gage>
+    <Gage>
+      <GageName>2.7 mm</GageName>
+      <Thickness>0.1063</Thickness>
+      <IsMetricMaterial>true</IsMetricMaterial>
+    </Gage>
+    <Gage>
+      <GageName>3 mm</GageName>
+      <Thickness>0.11811</Thickness>
+      <IsMetricMaterial>true</IsMetricMaterial>
+    </Gage>
+    <Gage>
+      <GageName>3.5 mm</GageName>
+      <Thickness>0.1378</Thickness>
+      <IsMetricMaterial>true</IsMetricMaterial>
+    </Gage>
+  </Gages>
+</MaterialsGages>

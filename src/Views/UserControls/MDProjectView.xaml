@@ -1,0 +1,789 @@
+﻿<UserControl x:Class="UOP.WinTray.UI.Views.MDProjectView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:UOP.WinTray.UI.Views"  
+        xmlns:cadfx="clr-namespace:UOP.DXFGraphicsControl;assembly=UOP.DXFGraphicsControl"
+        xmlns:viewModellocator ="clr-namespace:UOP.WinTray.UI"
+        xmlns:cntrls="clr-namespace:UOP.WinTray.UI.CustomControls.UserControls"
+        xmlns:conv="clr-namespace:UOP.WinTray.UI.Converters"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        viewModellocator:ViewModelLocator.IsAutomaticLocator="True"
+        md:DialogServiceViews.IsRegistered="True" 
+               xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MDProjectViewModel}"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        Loaded="UserControl_Loaded" 
+             Unloaded="UserControl_Unloaded"
+        Visibility="{Binding VisibilityMDProject, UpdateSourceTrigger=PropertyChanged}"
+             IsEnabled="{Binding IsEnabled}"
+        mc:Ignorable="d"
+             GotFocus="UserControl_GotFocus"
+             
+        >
+
+    <UserControl.Resources>
+        <conv:TextToColorConverter x:Key="textToColorConverter"/>
+
+        <ContextMenu x:Key="dxfViewerContextMenu">
+
+            <MenuItem Header="Zoom Extent" Command="{Binding ZoomExtentCommand}"/>
+            <MenuItem Header="Zoom In" Command="{Binding ZoomInCommand}"/>
+            <MenuItem Header="Zoom Out" Command="{Binding ZoomOutCommand}"/>
+            <MenuItem Header="Zoom Window" Command="{Binding ZoomWindowCommand}"/>
+            <MenuItem Header="Zoom Previous" Command="{Binding ZoomPreviousCommand}"/>
+            <Separator/>
+            <MenuItem Header="Regenerate" Command="{Binding RegenerateCommand}"/>
+            <!--<Separator/>
+            <MenuItem Header="Save" Command="{Binding SaveCommand}"/>
+            <MenuItem Header="Save and Open" Command="{Binding SaveAndOpenCommand}"/>
+            <Separator/>
+            <MenuItem Header="Close" Command="{Binding CloseCommand}"/>
+            <MenuItem Header="Close All" Command="{Binding CloseAllCommand}"/>-->
+        </ContextMenu>
+        <Style x:Key="LabelStyle" TargetType="Label" BasedOn="{StaticResource LabelStyle}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style TargetType="Button"  x:Key="WrapButton">
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="10,19,0,0"/>
+            <Setter Property="Height" Value="20"/>
+        </Style>
+        <Style x:Key="MetroButton" TargetType="{x:Type Button}" BasedOn="{StaticResource WrapButton}">
+            <Setter Property="Margin" Value="10,19,0,0"/>
+            <Setter Property="Padding" Value="10 0 10 0" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Name="ButtonBorder" CornerRadius="2" BorderThickness="1">
+                            <Border.BorderBrush>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Color="#C9C7BA" />
+                                        <GradientStop Color="#D3D3D3" />
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Border.BorderBrush>
+                            <Grid Name="ButtonGrid" Background="Transparent">
+                                <Border Name="HoverRectangle" CornerRadius="2" BorderThickness="0">
+                                    <ContentPresenter Name="Content" VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="ButtonBase.IsEnabled" Value="False">
+                                <Setter Property="Background" TargetName="ButtonBorder" Value="#F5F4EA" />
+                                <Setter Property="BorderBrush" TargetName="HoverRectangle" Value="#C9C7BA" />
+                                <Setter Property="BorderThickness" TargetName="HoverRectangle" Value="1.2" />
+                            </Trigger>
+                            <Trigger Property="ButtonBase.IsEnabled" Value="True">
+                                <Setter Property="BorderBrush" TargetName="HoverRectangle" Value="#003C74" />
+                                <Setter Property="BorderThickness" TargetName="HoverRectangle" Value="1" />
+                            </Trigger>
+                            <Trigger Property="ButtonBase.IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" TargetName="HoverRectangle" Value="#FDBD57" />
+                                <Setter Property="BorderThickness" TargetName="HoverRectangle" Value="2,1,2,2" />
+                                <Setter Property="BorderBrush" TargetName="ButtonBorder" Value="#003C74" />
+                                <Setter Property="Background" TargetName="ButtonBorder"
+                                    Value="{StaticResource NormalBrush}" />
+
+                                <Setter Property="BorderThickness" TargetName="ButtonBorder" Value="1" />
+                                <Setter Property="Margin" TargetName="ButtonBorder" Value="1" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" TargetName="ButtonBorder" Value="#E3E3DB" />
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderThickness" TargetName="HoverRectangle" Value="1" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ComboBoxStyle" TargetType="ComboBox" BasedOn="{StaticResource ComboBoxStyle}">
+            <Setter Property="Width" Value="150"/>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Style.Setters>
+                <Setter Property="MinColumnWidth" Value="60"/>
+                <Setter Property="Height" Value="150"/>
+                <Setter Property="AutoGenerateColumns" Value="False"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            </Style.Setters>
+        </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
+            <Setter Property="Width" Value="50"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style TargetType="TabControl" x:Key="tabControlStyle">
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+        <Style TargetType="TabItem" x:Key="tabItemStyle">
+            <Setter Property="Padding" Value="25,5,25,5"/>
+        </Style>
+        <Style TargetType="Label" x:Key="txt_label">
+            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="txt_labe">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="txt_value">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="views:UOPPropertyListView" x:Key="lstProperties">
+
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="5,0,5,0" />
+            <Setter Property="MinWidth" Value="175" />
+            <Setter Property="MaxHeight" Value="260" />
+
+        </Style>
+
+        <conv:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+
+    </UserControl.Resources>
+
+    <!--<GroupBox Style="{StaticResource GlobalGroupBoxStyle}" BorderThickness="1.5" HorizontalAlignment="Stretch">-->
+
+    <!--<ContentControl
+            DockPanel.Dock="Top"
+            VerticalAlignment="Stretch"
+            VerticalContentAlignment="Stretch"
+            Content="{Binding CurrentPageItemViewModel}"/>-->
+    <Grid x:Name="Main_Grid" 
+        HorizontalAlignment="Left"
+         VerticalAlignment="Top"
+          Margin="0,5,0,0"
+          >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="849*"/>
+            <RowDefinition Height="169*"/>
+        </Grid.RowDefinitions>
+
+        <TabControl x:Name="MainTabControl" 
+                    Style="{StaticResource tabControlStyle}" 
+                    SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}"
+                    Grid.Row="0"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                 MinHeight="875"
+                 MinWidth="1132" 
+                 Grid.RowSpan="2"
+                    >
+            <!-- TRAYS TAB -->
+            <TabItem  x:Name="FirstTab" Header="Trays" Style="{StaticResource tabItemStyle}">
+                <Border x:Name="BorderControl" Grid.RowSpan="2" BorderBrush ="Black" BorderThickness="1.5" Margin="5,5,5,5"   VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+                    <Grid Margin="5,5,5,5" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                          
+                          >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="{Binding ElementName=Stack_TopRow, Path=Height}" />
+                            <RowDefinition Height="*"/>
+
+                        </Grid.RowDefinitions>
+
+
+                        <StackPanel x:Name="Stack_TopRow" Orientation="Horizontal" VerticalAlignment="Stretch" HorizontalAlignment="Left"  Margin="0,0,0,10">
+                            <StackPanel Orientation="Vertical" Margin="10,10,10,5" Grid.RowSpan="2">
+                                <!-- TRAY COMBO BOX -->
+                                <StackPanel Grid.Row="0" Orientation="Horizontal" >
+
+                                    <StackPanel Orientation="Vertical" >
+                                        <Label Content="Select Tray Range" Style="{StaticResource txt_label}"/>
+                                        <!--<userControls:MDSpoutProjectHeaderView />-->
+                                        <!--<ComboBox Style="{StaticResource ComboBoxStyle}" 
+                                            DisplayMemberPath="Name" 
+                                            ItemsSource="{Binding Path=RangeData}"
+                                            SelectedIndex="{Binding Path=SelectedRangeIndex, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  
+                                            SelectedItem="{Binding Path=SelectedWTRange, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                            />-->
+
+                                        <ComboBox
+                                        ItemsSource="{Binding TrayList, UpdateSourceTrigger=PropertyChanged}"
+                                        Style="{StaticResource ComboBoxStyle}" 
+                                        DisplayMemberPath="SelectName" 
+                                        SelectedIndex="{Binding SelectedRangeIndex, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"    
+                                        Width="200"
+                                            MinWidth="175"
+                                            Text="{Binding SelectedRangeName, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                                     />
+                                        <!--SelectedValue="{Binding SelectedRangeGUID , Mode=TwoWay}"
+       SelectedValuePath="GUID"-->
+                                        <!--Converter={StaticResource trayCollectionConverter}-->
+                                        <!--SelectedValue="{Binding SelectedRangeGUID, Mode=TwoWay}"-->
+                                        <!--SelectedItem="{Binding SelectedRangeListItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+                                        <!--SelectedValuePath="Item2" 
+                                    DisplayMemberPath="Item1"-->
+
+                                        <Button Content="Excel" x:Uid="btnExcel" Name="btnExcel" Visibility="Collapsed" Click="btnExcel_Click"/>
+                                    </StackPanel>
+                                    <!-- UNITS SELECTOR -->
+                                    <StackPanel Orientation="Vertical" Margin="50,0,0,0">
+                                        <Label Content="Units" Style="{StaticResource txt_label}"/>
+                                        <ToggleButton 
+                                            IsChecked="{Binding IsEnglishSelected,Mode=TwoWay }"
+                                            CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                            Style="{StaticResource UnitsToggleButtonStyle_Large}" 
+                                            HorizontalAlignment="Left" Checked="ToggleButton_Checked" 
+                                            />
+                                    </StackPanel>
+
+
+                                </StackPanel>
+
+                                <!-- SPOUT GRID -->
+                                <StackPanel Name="dataStackPanel1"  Orientation="Vertical">
+                                    <Label Content="Spout Properties" Style="{StaticResource txt_label}"/>
+                                    <views:MDSpoutGroupsDataGridView  x:Name="Grid_Spouts" 
+                                                                      HorizontalAlignment="Left" 
+                                                                      Loaded="Grid_Spouts_Loaded" />
+                                </StackPanel>
+                                <StackPanel Name="Stack_DCS_PANELS" Orientation="Horizontal" VerticalAlignment="Stretch">
+
+                                    <StackPanel Name="dataStackPanel2" Orientation="Vertical">
+                                        <Label Content="Downcomers" Style="{StaticResource txt_label}"/>
+                                        <views:MDDowncomersDataGridView x:Name="Grid_Downcomers" HorizontalAlignment="Stretch" Loaded="Grid_Downcomers_Loaded"/>
+                                    </StackPanel>
+                                    <!-- DECK PANELS GRID -->
+
+                                    <StackPanel Name="dataStackPanel3" 
+                                            Orientation="Vertical" 
+                                            Visibility ="{Binding VisibilityMDSpout, UpdateSourceTrigger=PropertyChanged}" 
+                                            Margin="20,0,0,0"
+                                            >
+                                        <Label Content="Deck Panels" Style="{StaticResource txt_label}"/>
+                                        <views:MDDeckPanelsDataGridView  x:Name="Grid_DeckPanels"  HorizontalAlignment="Stretch" Loaded="Grid_DeckPanels_Loaded"/>
+                                    </StackPanel>
+
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!--Drawing-->
+                            <Grid x:Name="Drawing_AND_ButtonBar" >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <!--<StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1" Width="Auto">-->
+                                <!-- SECOND ROW COLUMN 2-->
+
+
+                                <Border
+                                            Margin="10,5,0,0"
+                                            Background="Gray"
+                                            Loaded="cadfxTrayDxfViewer_Loaded" 
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Top"
+                                            BorderBrush="Gray"
+                                            BorderThickness="1"
+                                            Width="580"
+                                            Height="580">
+
+                                    <Grid>
+                                        <Viewbox 
+                                        Width="100" 
+                                        Height="100"
+                                        Grid.Column="0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                     Margin="5"
+                                    >
+
+                                            <cntrls:CircularProgressBar 
+                                        Background="Transparent" 
+                                          Visibility="{Binding Visibility_ViewerProgress, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"        
+                                      />
+                                        </Viewbox>
+
+                                        <cadfx:DXFViewer 
+                                            Name="CadFxViewer_InputSketch"   
+                                            Background="Gray"
+                                            Loaded="cadfxTrayDxfViewer_Loaded" 
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            BorderBrush="Black"
+                                            BorderThickness="1"
+                                            Width="580"
+                                            Height="580"
+                                        Visibility="{Binding Visibility_Viewer,Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                            DXFImageSource="{Binding Image, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    />
+                                    </Grid>
+                                </Border>
+
+                                <WindowsFormsHost Grid.Row="0"  Name="winFormsHost" Background="Gray" Margin="0,0,0,0" VerticalAlignment="Top" Visibility="Hidden" />
+
+
+                                <!-- BUTTON BAR -->
+
+                                <StackPanel Orientation="Vertical" Grid.Row ="1" Grid.Column ="1" HorizontalAlignment="Center" Margin="10,0,10,0">
+                                    <Button Content="Warnings"  
+                                    Command="{Binding Command_ShowWarnings}" Style="{StaticResource MetroButton}" Width="80" 
+                                    ToolTip="View Project Warnings" Foreground="{Binding WarningButtonColor, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource textToColorConverter}}"
+                                
+                                    />
+                                    <Button Content="Reports" Style="{StaticResource MetroButton}" Width="80" 
+                                    Command="{Binding Command_Reports}"
+                                    ToolTip="View and Execute Available Reports For The Project"
+                                    />
+                                    <Button Content="Constraints"  Style="{StaticResource MetroButton}" 
+                                    Command="{Binding Command_EditConstraints}" Width="80" Visibility="{Binding VisibilityMDSpout}"
+                                    ToolTip="Edit Spout Group Properties Tray Wide"
+                                    />
+                                    <Button Content="Distribution" Style="{StaticResource MetroButton}" 
+                                    Command="{Binding Command_EditSpoutArea}"  Width="80"  Visibility="{Binding VisibilityMDSpout}" 
+                                    ToolTip="Edit Tray Wide Spout Area Distribution"
+                                    />
+                                    <Button Content="Splicing" Style="{StaticResource MetroButton}" 
+                                    Command="{Binding Command_Edit_Splicing}" Width="80" Visibility="{Binding VisibilityMDDraw}" 
+                                    ToolTip="Edit Tray Deck Splice Locations"
+                                    />
+                                    <Button Content="Stiffeners" Style="{StaticResource MetroButton}" 
+                                    Command="{Binding Command_EditStiffeners}" Width="80" Visibility="{Binding VisibilityMDDraw}" 
+                                     ToolTip="Edit Tray Downcomer Stiffener Locations"
+                                    />
+                                    <Button Content="Slotting" Style="{StaticResource MetroButton}"
+                                    Command="{Binding Command_EditSlotting}" Width="80" Visibility="{Binding VisibilityECMDDraw}" 
+                                     ToolTip="Edit Tray ECMD Slot Configuration"
+                                    />
+
+                                </StackPanel>
+                                <!--</StackPanel>-->
+                            </Grid>
+                            <!-- END FIRST ROW -->
+                        </StackPanel>
+
+                        <!--</Grid>-->
+                        <!-- END FIRST ROW -->
+
+                        <!-- SECOND ROW -->
+                        <Grid x:Name="PropertyList_Grid"  Grid.Row="1" 
+                                 HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="10,0,0,10"
+                           
+                                  >
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!--<StackPanel x:Name="PropertyLists" Orientation="Horizontal"  Grid.Row="1"   
+                                 HorizontalAlignment="Left"  VerticalAlignment="Top"
+                                Height="220"
+                                >-->
+
+                            <views:UOPPropertyListView x:Name="Props_Range" PartType="TrayRange" Grid.Column="0" 
+                                Style="{StaticResource lstProperties}"
+                                ListCaption="Range Properties"  ListFooter=""
+                                ToolTip="Double Click To Edit Property Values"
+                                MouseDoubleClick="PropertyList_MouseDoubleClick"         
+                                  />
+
+                            <views:UOPPropertyListView x:Name="Props_Downcomer" PartType="Downcomer" Grid.Column="1" 
+                                Style="{StaticResource lstProperties}"
+                                ListCaption="Downcomer Properties" ListFooter=""
+                                ToolTip="Double Click To Edit Property Values"
+                                MouseDoubleClick="PropertyList_MouseDoubleClick"
+                                VerticalAlignment="Top" HorizontalAlignment="Left"
+                                
+                                Margin="0,0,10,0"
+                                />
+
+                            <views:UOPPropertyListView x:Name="Props_Deck" PartType="Deck" Grid.Column="2" 
+                                        Style="{StaticResource lstProperties}"
+                                        ListCaption="Deck Properties" ListFooter=""
+                                        ToolTip="Double Click To Edit Property Values"
+                                        MouseDoubleClick="PropertyList_MouseDoubleClick"
+                                />
+
+                            <views:UOPPropertyListView x:Name="Props_DesignOptions" PartType="DesignOptions" Grid.Column="3"
+                                        Style="{StaticResource lstProperties}"
+                                        ListCaption="Design Info"  ListFooter=""
+                                        ToolTip="Double Click To Edit Property Values"
+                                        MouseDoubleClick="PropertyList_MouseDoubleClick" 
+                                />
+                            <!--<StackPanel Orientation="Vertical" Grid.Column="4" 
+                                            VerticalAlignment="Top" HorizontalAlignment="Left"
+                                            Margin="10,0,10,10">-->
+                            <!--<Grid x:Name="PropertyList_GridStack"  Grid.Column="4"   
+                                 
+                                >
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="125"/>
+                                    <RowDefinition Height="*"/>
+
+                                </Grid.RowDefinitions>-->
+
+
+
+
+                            <views:UOPPropertyListView x:Name="Props_Startups" PartType="StartupSpouts" Grid.Column ="4"
+                                    Style="{StaticResource lstProperties}"
+                                    ListCaption="Startup Spouts"  ListFooter=""
+                                    MinWidth="{Binding ElementName=Props_Materials, Path=ActualWidth}"
+                                    ToolTip="Double Click To Edit Property Values"
+                                    MouseDoubleClick="PropertyList_MouseDoubleClick"
+                                    />
+                            <StackPanel Grid.Column="5" Orientation="Vertical" >
+                                <views:UOPPropertyListView x:Name="Props_Materials" PartType="Materials" Grid.Column="5"
+                                    VerticalAlignment="Top" HorizontalAlignment="Left"
+                                    Style="{StaticResource lstProperties}"
+                                    ListCaption="Materials"  ListFooter=""
+                                    ToolTip="Double Click To Edit Property Values"
+                                    MouseDoubleClick="PropertyList_MouseDoubleClick" 
+                                    
+                                    />
+
+                                <views:UOPPropertyListView x:Name="Props_Beam" PartType="TraySupportBeam" 
+Style="{StaticResource lstProperties}"
+ListCaption="Beam Properties"  ListFooter=""
+ToolTip="Double Click To Edit Property Values"
+MouseDoubleClick="PropertyList_MouseDoubleClick"
+Visibility="{Binding DataContext.IsBeamPropertiesVisible, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}"
+  />
+                            </StackPanel>
+                            <!--</Grid>-->
+                            <!--</StackPanel>-->
+                        </Grid>
+                        <!--</Border>-->
+                        <!-- END THIRD ROW -->
+
+                    </Grid>
+                </Border>
+
+            </TabItem>
+
+            <!-- DISTRIBUTORS TAB -->
+            <TabItem Header="Distributors" Style="{StaticResource tabItemStyle}" Margin="-2,-2,-2,2"    >
+                <Border x:Name="Border_Distributor_Tab" BorderBrush="{Binding ElementName=BorderControl, Path=BorderBrush}"  
+                    BorderThickness="{Binding ElementName=BorderControl, Path=BorderThickness}"
+                    MinWidth="{Binding ElementName=BorderControl, Path=ActualWidth}"
+                    Margin="{Binding ElementName=BorderControl, Path=Margin}"
+                    >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="75*"/>
+                            <ColumnDefinition Width="75*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Expander  Header="Property Explorer"  Grid.Column="0" Grid.Row="0"
+                              VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch" 
+                                HorizontalContentAlignment="Center" 
+                                             
+                                Foreground="Black"
+                                ExpandDirection="Right" 
+                             
+                                IsExpanded="False"  
+                                SnapsToDevicePixels="True" Background="{x:Null}" 
+                                Visibility="Visible"
+                                Style="{StaticResource ExplorerExpander}" Width="Auto" Margin="10,0,0,0"
+                            >
+                            <Expander.Content>
+                                <Grid Width="Auto" Height="Auto" Grid.Column="0" Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Border x:Name="bdrProjectTree_Distributors" Grid.Row="0" BorderBrush ="Black" BorderThickness="0.5" Margin="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+
+                                        <views:UOPPropertyTreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding Tree_Distributors}"  />
+                                    </Border>
+                                    <GridSplitter 
+                                                    Grid.Column="1" 
+                                                    Grid.RowSpan="2" 
+                                                    Background="#FFCBCBCB" 
+                                                    ResizeBehavior="PreviousAndCurrent" 
+                                                    ResizeDirection="Columns"
+                                                    Width="6" 
+                                                    Margin="0,0,0,0">
+                                    </GridSplitter>
+                                </Grid>
+                            </Expander.Content>
+                        </Expander>
+
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Visibility="{Binding Visibility_CurrentDistributor}" Margin="0,5,0,5">
+                                <TextBlock x:Name="SelectDLabel" Text="Select Active Distributor: " Style="{StaticResource GlobalUnitsCaption}" />
+                                <ComboBox Name="cboDistribs" ItemsSource="{Binding OwnerListD}" SelectedIndex="{Binding Selected_DistributorIndex}" MinWidth="200"/>
+                            </StackPanel>
+
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="1" >
+                                <views:MDCaseOwnerView x:Name="OwnerD" DataContext="{Binding Selected_Distributor, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="5"  MinWidth="{Binding ElementName=CaseDetailsD, Path =ActualWidth}" MinHeight="{Binding ElementName=DControlsBorder, Path =ActualHeight}" Visibility="{Binding Visibility}" />
+                                <Border x:Name="DControlsBorder"  BorderBrush="Black" BorderThickness="0.5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,0,5" Visibility="{Binding VisibilityMDSpout}" >
+                                    <StackPanel Orientation="Vertical" >
+                                        <Button  x:Name="cmdAddDistrib" Content="Add" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Add}" ToolTip="Add Project Distributor" HorizontalAlignment="Left" Margin="5,2,5,2" VerticalAlignment="Center" Width="35" Height="20"/>
+                                        <Button Content="Edit" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Edit}" ToolTip="Edit Current Distributor Properties" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Delete" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Delete}" ToolTip="Delete The Current Distributor" HorizontalAlignment="Left"  VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Copy" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Copy}" ToolTip ="Copy Project Distributor" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Sort" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Sort}" ToolTip ="Sort Project Distributors" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Rename" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Rename}" ToolTip ="Rename Project Distributor" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                    </StackPanel>
+
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+
+                            </Grid.RowDefinitions>
+                            <StackPanel x:Name="stackDCaseSelector" Orientation="Horizontal" Grid.Row="0" Visibility="{Binding Visibility_CurrentDistributor}">
+                                <TextBlock x:Name="SelectDCaseLabel" Text="Select Active Case: " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <ComboBox Name="cboDCases" ItemsSource="{Binding CaseListD}" SelectedIndex="{Binding Selected_DistributorCaseIndex}" MinWidth="200"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="1"  Visibility="{Binding ElementName=stackDCaseSelector, Path=Visibility}">
+                                <views:MDCaseView  x:Name="CaseDetailsD" DataContext="{Binding Selected_DistributorCase, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="5" MinHeight="{Binding ElementName=DCaseControlsBorder, Path =ActualHeight}"  />
+                                <Border x:Name="DCaseControlsBorder" BorderBrush="Black" BorderThickness="0.5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,0,5" Visibility="{Binding VisibilityMDSpout}">
+                                    <StackPanel Orientation="Vertical" >
+                                        <Button Content="Add" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Add}" ToolTip="Add Project Distributor Load Case" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Edit" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Edit}" ToolTip="Edit Current Distributor Load Case Properties" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Delete" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Delete}" ToolTip="Delete The Current Load Case Distributor" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Copy" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Copy}" ToolTip ="Copy Project Distributor" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Sort" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Sort}" ToolTip ="Sort Project Distributor Load Cases" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                        <Button Content="Rename" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Rename}" ToolTip ="Rename Project Distributor Case" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                    </StackPanel>
+
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+
+                </Border>
+            </TabItem>
+
+            <!-- CHIMNEY TRAYS TAB -->
+            <TabItem Header="Chimney Trays" Style="{StaticResource tabItemStyle}"   >
+                <Border x:Name="Border_ChimneyTrays_Tab" BorderBrush="{Binding ElementName=BorderControl, Path=BorderBrush}"  
+                    BorderThickness="{Binding ElementName=BorderControl, Path=BorderThickness}"
+                    MinWidth="{Binding ElementName=BorderControl, Path=ActualWidth}"
+                    Margin="{Binding ElementName=BorderControl, Path=Margin}"
+                    >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="75*"/>
+                            <ColumnDefinition Width="75*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Expander  Header="Property Explorer"  Grid.Column="0" Grid.Row="0"
+                              VerticalAlignment="Stretch"
+                                HorizontalAlignment="Stretch" 
+                                HorizontalContentAlignment="Center" 
+                                             
+                                Foreground="Black"
+                                ExpandDirection="Right" 
+                             
+                                IsExpanded="False"  
+                                SnapsToDevicePixels="True" Background="{x:Null}" 
+                                Visibility="Visible"
+                                Style="{StaticResource ExplorerExpander}" Width="Auto" Margin="10,0,0,0"
+                            >
+                            <Expander.Content>
+                                <Grid Width="Auto" Height="Auto" Grid.Column="0" Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Border x:Name="bdrProjectTree_CTs" Grid.Row="0" BorderBrush ="Black" BorderThickness="0.5" Margin="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  >
+
+                                        <views:UOPPropertyTreeView HorizontalAlignment="Stretch" VerticalAlignment="Stretch" DataContext="{Binding Tree_ChimneyTrays}"  MaxHeight="{Binding ElementName=bdrProjectTree_CTs, Path=ActualHeight}"/>
+                                    </Border>
+                                    <GridSplitter 
+                                                    Grid.Column="1" 
+                                                    Grid.RowSpan="2" 
+                                                    Background="#FFCBCBCB" 
+                                                    ResizeBehavior="PreviousAndCurrent" 
+                                                    ResizeDirection="Columns"
+                                                    Width="6" 
+                                                    Margin="0,0,0,0">
+                                    </GridSplitter>
+                                </Grid>
+                            </Expander.Content>
+                        </Expander>
+                        <!--<views:UOPPropertyTreeView Width="350" Grid.Column="0" HorizontalAlignment="Left" DataContext="{Binding Tree_ChimneyTrays}"  MaxHeight="{Binding ElementName=BorderControl, Path=ActualHeight}"  />-->
+                        <Grid Grid.Column="1">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+
+                            </Grid.RowDefinitions>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="0" Visibility="{Binding Visibility_CurrentCT}" Margin="0,5,0,5">
+                                <TextBlock x:Name="SelectCLabel" Text="Select Active Chimney Tray: " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <ComboBox Name="cboCTs" ItemsSource="{Binding OwnerListC}" SelectedIndex="{Binding Selected_ChimneyTrayIndex}" MinWidth="200"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                                <views:MDCaseOwnerView x:Name="OwnerC" DataContext="{Binding Selected_ChimneyTray, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"  MinWidth="{Binding ElementName=CaseDetailsC, Path =ActualWidth}" MinHeight="{Binding ElementName=DControlsBorder, Path =ActualHeight}" Visibility="{Binding Visibility}"/>
+                                <Border x:Name="CTControlsBorder" BorderBrush="Black" BorderThickness="0.5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,0,5" Visibility="{Binding VisibilityMDSpout}">
+                                    <StackPanel Orientation="Vertical" >
+                                        <Button x:Name="cmdAddCT" Content="Add" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Add}" ToolTip="Add Project Chimney Tray" HorizontalAlignment="Left" Margin="5,2,5,2" VerticalAlignment="Center" Width="35" Height="20"/>
+                                        <Button Content="Edit" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Edit}" ToolTip="Edit Current Chimney Tray Properties" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Delete" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Delete}" ToolTip="Delete The Current Chimney Tray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Copy" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Copy}" ToolTip ="Copy Project Chimney Tray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Sort" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Sort}" ToolTip ="Copy Project Chimney Tray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Rename" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_CaseOwner_Rename}" ToolTip ="Rename Project Chimney Tray" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                    </StackPanel>
+
+                                </Border>
+
+                            </StackPanel>
+                        </Grid>
+                        <Grid Grid.Column="2">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+
+                            </Grid.RowDefinitions>
+
+                            <StackPanel x:Name="stackCCaseSelector" Orientation="Horizontal" Grid.Row="0"  Grid.Column="0" Visibility="{Binding Visibility_CurrentCT}">
+                                <TextBlock x:Name="SelectCCaseLabel" Text="Select Active Case: " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <ComboBox Name="cboCCases" ItemsSource="{Binding CaseListC}" SelectedIndex="{Binding Selected_ChimneyTrayCaseIndex}" MinWidth="200"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Grid.Row="3" Visibility="{Binding Visibility_CurrentCT}" >
+                                <views:MDCaseView  x:Name="CaseDetailsC" DataContext="{Binding Selected_ChimneyTrayCase, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="5"  MinHeight="{Binding ElementName=CTCaseControlsBorder, Path =ActualHeight}" />
+                                <Border x:Name="CTCaseControlsBorder" BorderBrush="Black" BorderThickness="0.5" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="5,5,0,5" Visibility="{Binding VisibilityMDSpout}">
+                                    <StackPanel Orientation="Vertical" >
+                                        <Button Content="Add" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Add}" ToolTip="Add Project Chimney Tray Case" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Edit" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Edit}" ToolTip="Edit Current Chimney Tray Properties Case" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Delete" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Delete}" ToolTip="Delete The Current Chimney Tray Case" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Copy" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Copy}" ToolTip ="Copy Project Chimney Tray Case" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Sort" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Sort}" ToolTip ="Copy Project Chimney Tray Case" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddCT, Path=Margin}" Width="{Binding ElementName=cmdAddCT, Path=Width}" Height="{Binding ElementName=cmdAddCT, Path=Height}"/>
+                                        <Button Content="Rename" Style="{StaticResource GlobalButtonStyle}" Command="{Binding Command_Case_Rename}" ToolTip ="Rename Project Chimney Tray Case" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="{Binding ElementName=cmdAddDistrib, Path=Margin}" Width="{Binding ElementName=cmdAddDistrib, Path=Width}" Height="{Binding ElementName=cmdAddDistrib, Path=Height}"/>
+                                    </StackPanel>
+
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </TabItem>
+
+
+            <!-- DRAWINGS TAB -->
+            <TabItem Header="Drawings" Style="{StaticResource tabItemStyle}" 
+               >
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <ToolBarTray>
+                        <ToolBar Visibility="{Binding VisibilityMDDraw}" >
+                            <Button Command="{Binding Command_OpenBatchProcessingWindow}" Content="Batch Drawing Generator"/>
+                        </ToolBar>
+                        <ToolBar Visibility="{Binding Visibility_DrawingScaleControl}">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock VerticalAlignment="Center" Margin="5,0,5,0">Border Scale:</TextBlock>
+                                <ComboBox IsEditable="True" IsReadOnly="True" ItemsSource="{Binding DrawingScales}" SelectedItem="{Binding DrawingScale_Current}" IsEnabled="{Binding DrawingScale_Enabled}" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="5,0,5,0" MinWidth="50">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="SelectionChanged">
+                                            <i:InvokeCommandAction Command="{Binding Command_DrawingScale_Change}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                </ComboBox>
+                                <Button Padding="5,0" Margin="5,0,5,0" Command="{Binding Command_DrawingScale_Custom}" IsEnabled="{Binding DrawingScale_Enabled}" VerticalContentAlignment="Center" VerticalAlignment="Center" MinWidth="50">Input</Button>
+                            </StackPanel>
+                        </ToolBar>
+                    </ToolBarTray>
+                    <Border BorderBrush="{Binding ElementName=BorderControl, Path=BorderBrush}"  
+                    BorderThickness="{Binding ElementName=BorderControl, Path=BorderThickness}"
+                    MinWidth="{Binding ElementName=BorderControl, Path=ActualWidth}"
+                    MinHeight="{Binding ElementName=BorderControl, Path=ActualHeight}"
+                    Margin="{Binding ElementName=BorderControl, Path=Margin}"
+                    >
+                        <TabControl x:Name="drawingsTabControl" 
+                            SelectionChanged="drawingsTabControl_SelectionChanged" 
+                            Style="{StaticResource tabControlStyle}" 
+                            ItemsSource="{Binding UOPDocumentTabs}" 
+                            SelectedIndex="{Binding DrawingTab_SelectedIndex}"
+                           
+                            >
+                            <TabControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Label Content="{Binding Header}" ToolTip="{Binding ToolTip}" ContextMenu="{Binding DocMenu }" />
+                                        <Button Content="x" Height="17" Width="17"  BorderThickness="0" BorderBrush="Transparent" Command="{Binding Command_Close}"/>
+                                    </StackPanel>
+
+                                </DataTemplate>
+                            </TabControl.ItemTemplate>
+                            <TabControl.ContentTemplate>
+                                <DataTemplate>
+
+
+                                    <cadfx:DXFViewer
+                                   Name="cadfxViewer"
+                                Background="Gray"
+                                DataContext="{Binding ViewModel}" 
+                                Loaded="cadfxViewer_Loaded" 
+                                ContextMenu="{StaticResource dxfViewerContextMenu}"
+                                />
+
+                                </DataTemplate>
+                            </TabControl.ContentTemplate>
+                        </TabControl>
+                    </Border>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        <!--</ContentControl>-->
+        <!--</GroupBox>-->
+    </Grid>
+</UserControl>

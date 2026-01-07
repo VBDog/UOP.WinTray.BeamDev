@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="UOP.WinTray.UI.Views.ElevationView"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:CC="clr-namespace:UOP.WinTray.UI.CustomControls"
+              xmlns:conv="clr-namespace:UOP.WinTray.UI.Converters"
+             
+             xmlns:local="clr-namespace:UOP.WinTray.UI.Views"
+                   xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:ElevationViewModel}"
+             mc:Ignorable="d" 
+            >
+    
+    <UserControl.Resources>
+        <conv:EnumToCollectionConverter x:Key="enumToCollectionConverter"/>
+
+        <Style x:Key="caption" TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Medium"></Setter>
+            <Setter Property="FontSize" Value="12"/>
+
+        </Style>
+        <Style x:Key="unitlabel" TargetType="{x:Type Label}" >
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property ="Width" Value="Auto" />
+            <Setter Property ="HorizontalAlignment" Value="Left" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="MinWidth" Value="15" />
+
+            <Setter Property="Visibility" Value="Visible" />
+
+        </Style>
+        <Style x:Key="inputCombo" TargetType="{x:Type ComboBox}" >
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property ="Width" Value="Auto" />
+            <Setter Property ="HorizontalAlignment" Value="Center" />
+            <Setter Property="FontStyle" Value="Normal" />
+            <Setter Property="MinWidth" Value="50" />
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="Height" Value="25"/>
+        </Style>
+        <!--SpaceOverride Numeric text Box Style-->
+        <Style x:Key="inputbox" TargetType="TextBox">
+            <Setter Property="BorderThickness" Value="1.5"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="1,1,5,1"/>
+            <Setter Property="Width" Value="45"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="MinWidth" Value="65"/>
+            <Setter Property="FontSize" Value="12"/>
+            <!--<Setter Property="ValidatesOnDataErrors" Value="True"/>-->
+            <!--<Setter Property="UpdateSourceTrigger" Value="LostFocus"/>-->
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#FFD500"/>
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+    </UserControl.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="75*"/>
+            <ColumnDefinition Width="25*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Column="0" >
+            <TextBlock x:Name="tbCaption" 
+                      Text="Type: " 
+                      Style="{StaticResource caption}" />
+
+            <ComboBox x:Name="TypeList" 
+                      Style="{StaticResource inputCombo}"
+                     
+                       ItemsSource="{Binding ElevationTypes, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                      SelectedIndex="{Binding SelectedTypeIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       Text="{Binding ElevationTypes}" 
+                      SelectionChanged="TypeList_SelectionChanged"
+                     
+                      VerticalContentAlignment="Center"
+                                MinWidth="100"
+                                    Width="Auto"
+             />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Column="1" >
+            <TextBlock x:Name="tbCaption2" 
+                      Text="  Above: " 
+                      Style="{StaticResource caption}"
+                       />
+
+            <CC:NumericTextBox  x:Name="ReadOnlyBox" 
+                                    Text=""
+                                    PrecisionLimit="1"
+                                    Style="{StaticResource inputbox}" 
+                                    IsReadOnly="True"
+                                    FreeForm="True"
+                                    ToolTip="Above"
+                                    ZerosAsNullString ="False"
+                                    BorderBrush="Transparent"
+                                    TextAlignment="Center"
+                                    HighlightOnFocus="False"
+                                   MinWidth="50"
+                                    Width="Auto"
+                              
+                                   HorizontalAlignment="Stretch"
+                                    Visibility ="Visible"
+                                    GotFocus="Property_GotFocus"
+                                    MouseDoubleClick="Property_MouseDoubleClick"
+                                    Height="{Binding ElementName=TypeList, Path=Height}"
+                                />
+        </StackPanel>
+
+    </Grid>
+</UserControl>

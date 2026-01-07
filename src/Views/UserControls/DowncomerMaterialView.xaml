@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="UOP.WinTray.UI.Views.UserControls.DowncomerMaterialView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UOP.WinTray.UI.Views.UserControls"
+             xmlns:CC="clr-namespace:UOP.WinTray.UI.CustomControls"
+             xmlns:converter="clr-namespace:UOP.WinTray.UI.Converters"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+       
+        <Style TargetType="{x:Type Button}" x:Key="WrapButton"  BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Margin" Value="1 0 1 0"></Setter>
+
+            <Setter Property="MinHeight" Value="25"></Setter>
+
+            <Setter Property="Width" Value="70"></Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            <Setter Property="Background" Value="AliceBlue"></Setter>
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock TextAlignment="Center" Text="{TemplateBinding Content}" TextWrapping="Wrap" />
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="Local_CheckBoxStyle" TargetType="CheckBox">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="ComboBoxItem">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="Local_TextBoxStyleFamily" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
+            <Setter Property="Width" Value="130"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsFamilyReadOnly,UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="Foreground" Value="Gray" />
+                    <Setter Property="Background" Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="Local_TextBoxStyleGage" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
+            <Setter Property="Width" Value="130"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsGageReadOnly,UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="Foreground" Value="Gray" />
+                    <Setter Property="Background" Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="Local_TextBoxStyleGageWhenMetric" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
+            <Setter Property="Width" Value="130"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsGageReadOnly,UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="Foreground" Value="Gray" />
+                    <Setter Property="Background" Value="White"/>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding IsMetricMaterial,UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="Foreground" Value="Gray" />
+                    <Setter Property="Background" Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="Local_TextBoxStyleGageThick" TargetType="TextBox" BasedOn="{StaticResource TextBoxStyle}">
+            <Setter Property="Width" Value="130"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsGageThicknessReadonly,UpdateSourceTrigger=PropertyChanged}" Value="True">
+                    <Setter Property="Foreground" Value="Gray" />
+                    <Setter Property="Background" Value="White"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <GroupBox Style="{StaticResource GlobalGroupBoxStyle}" BorderThickness="2">
+        <!--Upper Section-->
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="lblErrorName" Foreground="Red"  Content="{Binding DataContext.ErrorMessage ,RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Center" FontSize="12" FontWeight="Medium" Grid.Row="0">
+                <Label.Style>
+                    <Style TargetType="Label">
+                        <Setter Property="Visibility" Value="Visible" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DataContext.ErrorMessage}" Value="">
+                                <Setter Property="Visibility" Value="Hidden"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+            <GroupBox Style="{StaticResource GlobalGroupBoxStyle}" Header="Material Family Information" Grid.Row="1">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Style="{StaticResource LabelStyle}" Content="Family: " Grid.Row="0" Grid.Column="0"/>
+                    <ComboBox Width="170" Style="{StaticResource ComboBoxStyle}" DisplayMemberPath="Name" SelectedItem="{Binding DataContext.SelectedFamily,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataContext.FamilyList,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1"/>
+
+                    <Label Style="{StaticResource LabelStyle}" Content="Family Name: " Grid.Row="1" Grid.Column="0"/>
+
+                    <TextBox KeyDown="OnKeyPressHandler" KeyUp="OnKeyPressHandler" x:Name="tdFamilyName" IsReadOnly="{Binding DataContext.IsFamilyReadOnly,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource Local_TextBoxStyleFamily}" Text="{Binding DataContext.Name,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Grid.Row="1" Grid.Column="1"/>
+
+
+                    <Label Style="{StaticResource LabelStyle}" Content="Density: " Grid.Row="2" Grid.Column="0"/>
+                    <WrapPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                        <CC:NumericTextBox PrecisionLimit="5" KeyDown="OnKeyPressHandler" KeyUp="OnKeyPressHandler" x:Name="tbDensity" ZerosAsNullString="True" IsReadOnly="{Binding DataContext.IsFamilyReadOnly,StringFormat=f4,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource Local_TextBoxStyleFamily}" Text="{Binding DataContext.Density,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}"/>
+                        <TextBlock FontWeight="Bold" Margin="2">
+                        lb/in<Run BaselineAlignment="Superscript" FontSize="10">3</Run>
+                        </TextBlock>
+
+                    </WrapPanel>
+
+
+                    <Label Style="{StaticResource LabelStyle}" Content="Stainless Steel: " Grid.Row="3" Grid.Column="0"/>
+                    <CheckBox IsEnabled="{Binding DataContext.IsStainlessSteelEnabled,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource Local_CheckBoxStyle}" IsChecked="{Binding DataContext.IsStainlessSteel,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Margin="-150,0,0,0"/>
+                </Grid>
+            </GroupBox>
+            <!--Lower Section-->
+            <GroupBox Style="{StaticResource GlobalGroupBoxStyle}" Header="Material Gage Information" Grid.Row="2">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="90"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Style="{StaticResource LabelStyle}" Content="Gage: " Grid.Row="0" Grid.Column="0"/>
+                    <ComboBox  Width="170" Style="{StaticResource ComboBoxStyle}" DisplayMemberPath="Gage"  SelectedItem="{Binding DataContext.SelectedGage,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DataContext.GageList,RelativeSource={RelativeSource AncestorType=Window},UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1"/>
+
+                    <Label Style="{StaticResource LabelStyle}" Content="Gage Number: " Grid.Row="1" Grid.Column="0"/>
+                    <CC:NumericTextBox IsWholeNumber="True" MaxLength="3" KeyDown="OnKeyPressHandler" KeyUp="OnKeyPressHandler" IsReadOnly="{Binding DataContext.IsGageNumberReadOnly,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource Local_TextBoxStyleGageWhenMetric}" Width="50" Text="{Binding DataContext.Gage,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Grid.Row="1" Grid.Column="1"/>
+
+                    <Label Style="{StaticResource LabelStyle}" Content="Metric Material: " Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Right"/>
+                    <CheckBox IsEnabled="{Binding DataContext.IsMetricMaterialEnabled,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Style="{StaticResource Local_CheckBoxStyle}" IsChecked="{Binding DataContext.IsMetricMaterial,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="2"
+                              HorizontalAlignment="Left"/>
+
+                    <Label Style="{StaticResource LabelStyle}" Content="Gage Thickness: " Grid.Row="2" Grid.Column="0"/>
+                    <WrapPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                        <CC:NumericTextBox PrecisionLimit="5" IsReadOnly="{Binding IsGageThicknessReadonly}" KeyDown="OnKeyPressHandler" KeyUp="OnKeyPressHandler" ZerosAsNullString="True" Style="{StaticResource Local_TextBoxStyleGageThick}" Text="{Binding DataContext.GageThickness,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay,UpdateSourceTrigger=LostFocus}" Width="50"/>
+                        <Label Style="{StaticResource LabelStyle}" Content="{Binding DataContext.TxtUnits,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}"/>
+                    </WrapPanel>
+                    <Button Command="{Binding DataContext.CancelCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource WrapButton}" Content="Cancel" MinWidth="85" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="1"  HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="30" IsCancel="True"/>
+                    <Button Name="OKButton" IsDefault="True" IsEnabled="{Binding DataContext.IsSaveButtonEnabled,RelativeSource={RelativeSource AncestorType=Window},Mode=TwoWay}" Command="{Binding DataContext.SaveCommand,RelativeSource={RelativeSource AncestorType=Window}}" Style="{StaticResource WrapButton}" Content="Save" MinWidth="85" Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2"  HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="30" />
+
+                </Grid>
+            </GroupBox>
+
+
+        </Grid>
+
+
+    </GroupBox>
+
+</UserControl>

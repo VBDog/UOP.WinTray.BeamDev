@@ -1,0 +1,111 @@
+﻿<Window x:Class="UOP.WinTray.UI.Views.Windows.CADfx.DrawingsBatchProcessView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UOP.WinTray.UI.Views.Windows.CADfx"
+        xmlns:vm="clr-namespace:UOP.WinTray.UI.ViewModels.CADfx.Windows"
+         xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels.CADfx.Windows"
+        d:DataContext="{d:DesignInstance Type=viewmodels:DrawingsBatchProcessViewModel}"
+        mc:Ignorable="d"
+        Style="{StaticResource PopUpWindowTheme}"
+        Title="Batch Drawing Generator"
+        Height="800"
+        Width="600"
+        WindowStartupLocation="CenterScreen"
+        Closing="Window_Closing">
+    <Grid Margin="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <GroupBox Grid.Row="0" Header="{Binding Heading}" Margin="5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Orientation="Vertical" HorizontalAlignment="Stretch">
+                    <Label>Please select the drawings:</Label>
+                    <ListBox SelectionMode="Extended"  ItemsSource="{Binding DrawingWrappers}" Height="450" ScrollViewer.VerticalScrollBarVisibility="Auto" IsEnabled="{Binding GeneralUIComponentIsEnabled}">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListBoxItem}">
+                                <Setter Property="IsSelected" Value="{Binding Selected, Mode=TwoWay}" />
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding ItemName}"/>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0" Command="{Binding DrawingsSetSelectedForAllCommand}" CommandParameter="True" Margin="5,15,5,15" IsEnabled="{Binding GeneralUIComponentIsEnabled}">Select All</Button>
+                    <Button Grid.Column="2" Command="{Binding DrawingsSetSelectedForAllCommand}" CommandParameter="False" Margin="5,15,5,15" IsEnabled="{Binding GeneralUIComponentIsEnabled}">Clear All</Button>
+                </Grid>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <ToggleButton 
+                         CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                        Style="{StaticResource UnitsToggleButtonStyle_Small}"  
+                        IsChecked="{Binding IsEnglishSelected,Mode=TwoWay }"
+                        Height="20"
+                        FontSize="8"
+                        HorizontalAlignment="Center" 
+                            Margin="2"
+                        />
+
+            <Label Grid.Row="1" VerticalContentAlignment="Center">Save To:</Label>
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="2*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding SaveToPath}" IsEnabled="{Binding GeneralUIComponentIsEnabled}" Margin="5"></TextBox>
+                <Button Grid.Column="1" Command="{Binding ShowFolderBrowserDialogCommand}" Margin="5" IsEnabled="{Binding GeneralUIComponentIsEnabled}">Browse</Button>
+            </Grid>
+        </Grid>
+        
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" Content="{Binding CancelPromptText}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Foreground="Red" FontWeight="Heavy"/>
+
+            <Button x:Name="processButton" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="5,10,5,10" IsEnabled="{Binding ProcessButtonIsEnabled}" Click="processButton_Click">Process Drawings</Button>
+
+            <Button x:Name="cancelButton" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,10,5,10" Foreground="Salmon" IsEnabled="{Binding CancelButtonIsEnabled}" Click="cancelButton_Click">Cancel Process</Button>
+
+            <ProgressBar Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="5,10,5,10" Minimum="0" Maximum="100" Value="{Binding ProgressCurrentValue}"  Visibility="{Binding ProgressVisibility}" Style="{DynamicResource ProgressBarRoundedCornerStyle}"/>
+            <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Margin="15,10,15,10" HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding CurrentDrawingProgressText}" Visibility="{Binding ProgressVisibility}"/>
+
+            <Button Grid.Row="2" Grid.Column="4" Command="{Binding CloseCommand}" Margin="5,10,5,10">Close</Button>
+        </Grid>
+    </Grid>
+</Window>

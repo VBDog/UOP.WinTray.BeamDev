@@ -1,0 +1,325 @@
+﻿<Window x:Class="UOP.WinTray.UI.Views.Edit_MDDowncomer_View"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:UOP.WinTray.UI.Views.UserControls"
+        xmlns:conv="clr-namespace:UOP.WinTray.UI.Converters"
+        xmlns:winTrayUI="clr-namespace:UOP.WinTray.UI"
+        xmlns:md="https://github.com/fantasticfiasco/mvvm-dialogs"
+        xmlns:waitIndicator="clr-namespace:UOP.WinTray.UI.CustomControls.AdornerControl"
+        xmlns:CC="clr-namespace:UOP.WinTray.UI.CustomControls" 
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:dxfgraphiccontrol="clr-namespace:UOP.DXFGraphicsControl;assembly=UOP.DXFGraphicsControl"
+        xmlns:viewmodels="clr-namespace:UOP.WinTray.UI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:Edit_MDDowncomer_ViewModel}"
+        xmlns:CustomProperty="clr-namespace:UOP.WinTray.UI.Behaviors"
+        md:DialogServiceViews.IsRegistered="True"
+        mc:Ignorable="d"
+        MaxHeight="{x:Static SystemParameters.MaximizedPrimaryScreenHeight}"
+        Width="740"
+        Title="Edit Downcomer Properties" SizeToContent="Height"
+        Style="{StaticResource PopUpWindowTheme}" WindowStartupLocation="CenterOwner"
+           Loaded="Window_Loaded"
+     Unloaded="Window_Unloaded"
+        Closing="Window_Closing"
+        >
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <!--<xceed:BusyIndicator IsBusy="{Binding IsBusyVisible,Mode=TwoWay}" Grid.Column="0">
+            <xceed:BusyIndicator.BusyContent>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Margin="5,0">
+                        <waitIndicator:LoadingWait/>
+                        <TextBlock Text="{Binding BusyMessage, Mode=TwoWay}" FontSize="20" HorizontalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </xceed:BusyIndicator.BusyContent>
+            <xceed:BusyIndicator.OverlayStyle>
+                <Style TargetType="Rectangle">
+                    <Setter Property="Fill" Value="Black" />
+                    <Setter Property="Opacity" Value="0.3" />
+                </Style>
+            </xceed:BusyIndicator.OverlayStyle>
+            <xceed:BusyIndicator.ProgressBarStyle>-->
+                <!--<Style TargetType="ProgressBar">
+                    <Setter Property="Visibility" Value="Collapsed" />
+                </Style>
+            </xceed:BusyIndicator.ProgressBarStyle> -->
+            <Grid Margin="5,5,5,5" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="420"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!--0th Row-->
+                <Border Grid.Row="0" Style="{StaticResource GlobalBorderStyle}" >
+                    <dxfgraphiccontrol:DXFViewer  
+               
+                Background="DarkGray" 
+                Margin="10,10,10,10" 
+                Name="cadfxDXFViewer"
+                            Loaded="cadfxDXFViewer_Loaded"
+                />
+                </Border>
+                <Border Grid.Row="1" Style="{StaticResource GlobalBorderStyle}" Visibility="{Binding VisibilityErrorMessage}">
+                    <Grid >
+                        <TextBlock
+                            x:Name="ErrorMessage"
+                            Text="{Binding ErrorMessage, Mode=OneWay}"
+                            Style="{StaticResource GlobalErrorMessageStyle}"
+                        />
+
+
+                    </Grid>
+                </Border>
+
+                <Border Grid.Row="2" Style="{StaticResource GlobalBorderStyle}" Visibility="{Binding VisibilityGlobal}" IsEnabled="{Binding IsEnabled}">
+                    <Grid >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="75"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel  Grid.Column="1" Margin="10,0,0,0">
+
+                            <!--  No of Downcomers  -->
+                            <StackPanel x:Name="stackCount" Style="{StaticResource GlobalPropertyStackStyle}" Margin="2,10,0,0" Visibility="{Binding VisibilityGlobal}" >
+                                <TextBlock Text="No. of Downcomers : " Style="{StaticResource GlobalUnitsCaption}"  />
+
+                                <CC:NumericTextBox  x:Name="Count" 
+                                    Text="{Binding Count, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                    ToolTip="Number of Downcomers"
+                                    IsWholeNumber="True" 
+                                    MaxLength="2" 
+                                    Style="{StaticResource GlobalNumericInputStyle}" 
+                                    Margin="3,0,0,0" 
+                                    VerticalAlignment="Center"/>
+                            </StackPanel>
+
+                            <!--  Ideal Spout Area  -->
+                        <StackPanel x:Name="stackIdealSpoutArea" Style="{StaticResource GlobalPropertyStackStyle}" Margin="22,0,0,0" Visibility="{Binding VisibilityGlobal}" >
+                                <TextBlock Text="Ideal Spout Area : " Style="{StaticResource GlobalUnitsCaption}"  />
+
+                                <CC:NumericTextBox x:Name="IdealSpoutArea"
+                                    Text="{Binding Asp, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                    ToolTip="Ideal Spout Area"
+                                    PreDecimalLengthLimit="{Binding PreDecimalDigitCountArea}" 
+                                    PrecisionLimit="{Binding DecimalDigitCountArea}" 
+                                    Style="{StaticResource GlobalNumericInputStyle}" 
+                                               
+                                    />
+
+                                <Label  Content = "{Binding  AreaUnitsLabel}"  Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+
+                            <!--  Override Space  -->
+                            <StackPanel   x:Name="stackOverrideSpacing" Style="{StaticResource GlobalPropertyStackStyle}" Visibility="{Binding VisibilitySpaceOverride}" Margin="30,0,0,0">
+                                <TextBlock Text="Override Space : " Style="{StaticResource GlobalUnitsCaption}" Foreground="{Binding ForegroundColor_Spacing}" />
+
+                                <CC:NumericTextBox  x:Name="OverrideSpacing"
+                                Text="{Binding OverrideSpacing, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                ToolTip ="{Binding ToolTip_Spacing}"
+                                ZerosAsNullString="True"
+                                Style="{StaticResource GlobalNumericInputStyle}" 
+                                Foreground="{Binding ForegroundColor_Spacing}"
+                                />
+                                <Label  Content = "{Binding  LinearUnitsLabel}"  Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+                            <!--  OPtimized Space  -->
+                            <Label Content="{Binding OptimumSpaceString}"  Style="{StaticResource  GlobalUnitsLabel}" Visibility="{Binding VisibilityGlobal}"  />
+                        </StackPanel>
+                        <StackPanel x:Name="stackInsideHeight" Grid.Row="0" Grid.Column="2" Margin="10,0,0,0" Visibility="{Binding VisibilityGlobal}">
+                            <!--  Height  -->
+                            <StackPanel  Style="{StaticResource GlobalPropertyStackStyle}" Margin="0,10,0,0">
+                                <TextBlock Text="Height : " Style="{StaticResource GlobalUnitsCaption}"  />
+
+                                <CC:NumericTextBox  x:Name="InsideHeight"
+                                        Text="{Binding InsideHeight, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                        ToolTip="Inside Downcomer Height"
+                                        PrecisionLimit="{Binding DecimalDigitCountOtherField}" 
+                                        Style="{StaticResource GlobalNumericInputStyle}" 
+                                        Margin="1,1,5,0" 
+                                        PreDecimalLengthLimit="{Binding PreDecimalDigitCountOtherProp}"/>
+                                <Label  Content = "{Binding LinearUnitsLabel}"  Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+                            <!--  Width  -->
+                            <StackPanel x:Name="stackWidth" Style="{StaticResource GlobalPropertyStackStyle}" Margin="3,0,0,0" Visibility="{Binding VisibilityGlobal}">
+                                <TextBlock Text="Width : " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <CC:NumericTextBox  x:Name="ntbWidth"
+                                        Text="{Binding InsideWidth, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                        ToolTip="Inside Downcomer Width"
+                                        PrecisionLimit="{Binding DecimalDigitCountOtherField}" 
+                                        Style="{StaticResource GlobalNumericInputStyle}" 
+                                        Margin="1,1,5,0" 
+                                        PreDecimalLengthLimit="{Binding PreDecimalDigitCountOtherProp}"/>
+                                <Label  Content = "{Binding LinearUnitsLabel}"  Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+
+                            <!--  How  -->
+                            <StackPanel  x:Name="stackHow" Style="{StaticResource GlobalPropertyStackStyle}" Margin="11,0,0,0" Visibility="{Binding VisibilityGlobal}">
+                                <TextBlock Text="How : " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <CC:NumericTextBox  x:Name="How"
+                                        Text="{Binding How, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                        ToolTip="Weir Height"
+                                        PrecisionLimit="{Binding DecimalDigitCountOtherField}" 
+                                        Style="{StaticResource GlobalNumericInputStyle}" 
+                                        Margin="1,1,5,0" 
+                                        PreDecimalLengthLimit="{Binding PreDecimalDigitCountOtherProp}"/>
+                                <Label  Content = "{Binding LinearUnitsLabel}" Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+
+                        </StackPanel>
+
+                    </Grid>
+                </Border>
+                <Border Grid.Row="3" Style="{StaticResource GlobalBorderStyle}" Visibility="{Binding VisibilityMechanical}" IsEnabled="{Binding IsEnabled}">
+                    <Grid >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="75"/>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="100"/>
+
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Vertical" Grid.Column="1" Margin="0,10,0,0"  >
+                            <!--triangular endplates -->
+                            <StackPanel x:Name="stackHasTriangularEndPlate" Style="{StaticResource GlobalPropertyStackStyle}" Margin="0,3,0,0"  Visibility="{Binding VisibilityTriangularEP}">
+                                <TextBlock Text="Triangular End Plates : " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <CheckBox  x:Name="HasTriangularEndPlate"
+                                     ToolTip="Has Triangular Endplates"
+                                           
+                                    CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                    Style="{StaticResource YesNoSlider}"  
+                                    IsChecked="{Binding HasTriangularEndPlate,Mode=TwoWay, ValidatesOnDataErrors=True}" 
+                                />
+                            </StackPanel>
+
+                            <!--gussets endplates -->
+                            <StackPanel x:Name="stackGussetedEndPlate" Style="{StaticResource GlobalPropertyStackStyle}" Margin="4,8,0,0"  Visibility="{Binding VisibilityMDDraw}">
+                                <TextBlock Text="Gusseted End Plates : " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <CheckBox  x:Name="GussetedEndplates"
+                                     ToolTip="Has Gusseted Endplates"
+                                           
+                                    CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                    Style="{StaticResource YesNoSlider}"  
+                                    IsChecked="{Binding GussetedEndplates,Mode=TwoWay, ValidatesOnDataErrors=True}" 
+                                />
+                            </StackPanel>
+                            <!--gussets endplates -->
+                            <StackPanel x:Name="stackBoltOnEndplates" Style="{StaticResource GlobalPropertyStackStyle}" Margin="13,8,0,0"  Visibility="{Binding VisibilityMDDraw}">
+                                <TextBlock Text="Bolt On End Plates : " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <CheckBox  x:Name="BoltOnEndplates"
+                                     ToolTip="Has Bolt On Endplates"
+                                           
+                                    CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                    Style="{StaticResource YesNoSlider}"  
+                                    IsChecked="{Binding BoltOnEndplates,Mode=TwoWay, ValidatesOnDataErrors=True}" 
+                                />
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Grid.Column="2" Margin="0,10,0,0"  >
+                            <!--  INset  -->
+                            <StackPanel x:Name="stackEndplateInset" Style="{StaticResource GlobalPropertyStackStyle}" Margin="65,0,0,0"  Visibility="{Binding VisibilityMechanical}" Grid.ColumnSpan="3">
+                                <TextBlock Text="Inset : " Style="{StaticResource GlobalUnitsCaption}" Foreground="{Binding ForegroundColor_Inset}" />
+                                <CC:NumericTextBox x:Name="EndplateInset"
+                                            Text="{Binding EndplateInset, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                            ToolTip= "{Binding ToolTip_Inset}"
+                                            PrecisionLimit="{Binding DecimalDigitCountOtherField}" 
+                                            Style="{StaticResource GlobalNumericInputStyle}" 
+                                            Margin="1,0,5,0" 
+                                            Foreground="{Binding ForegroundColor_Inset}"
+                                            PreDecimalLengthLimit="{Binding PreDecimalDigitCountOtherProp}"/>
+                                            
+                                <Label  Content = "{Binding  LinearUnitsLabel}"  Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+                            <!--  Foldover Height  -->
+                            <StackPanel x:Name="stackFoldoverHeight" Style="{StaticResource GlobalPropertyStackStyle}" Margin="4,0,0,0"  Visibility="{Binding VisibilityMDDraw}" Grid.ColumnSpan="3">
+                                <TextBlock Text="Foldover Height : " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <CC:NumericTextBox  x:Name="FoldoverHeight"
+                                    Text="{Binding FoldOverHeight, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                            ToolTip="Foldover Height"
+                                            PrecisionLimit="{Binding DecimalDigitCountOtherField}" 
+                                            Style="{StaticResource GlobalNumericInputStyle}" 
+                                            Margin="1,0,5,0" 
+                                            IsEnabled="True" 
+                                            ZerosAsNullString="True"
+                                            PreDecimalLengthLimit="{Binding PreDecimalDigitCountOtherProp}"/>
+                                <Label  Content = "{Binding  LinearUnitsLabel}"  Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+                            <!--  Supplemental Deflector Height  -->
+                            <StackPanel x:Name="stackSupplementalDeflectorHeight" Style="{StaticResource GlobalPropertyStackStyle}" Margin="0,0,0,0"  Visibility="{Binding VisibilityMDDraw}" Grid.ColumnSpan="3">
+                                <TextBlock Text="Supl. Def. Height : " Style="{StaticResource GlobalUnitsCaption}"  />
+                                <CC:NumericTextBox  x:Name="SupplementalDeflectorHeight"
+                                            Text= "{Binding SupplementalDeflectorHeight, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                            ToolTip="Supplemental Deflector Height"
+                                            PrecisionLimit="{Binding DecimalDigitCountOtherField}" 
+                                            Style="{StaticResource GlobalNumericInputStyle}" 
+                                            Margin="1,0,5,0" 
+                                            IsEnabled="True"
+                                            ZerosAsNullString="True"
+                                            PreDecimalLengthLimit="{Binding PreDecimalDigitCountOtherProp}"/>
+                                <Label  Content = "{Binding  LinearUnitsLabel}"  Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+                            <StackPanel x:Name="stackOverrideClipClearance" Style="{StaticResource GlobalPropertyStackStyle}" Margin="15,0,0,0">
+                                <TextBlock Text="Clip Clearance : " Style="{StaticResource GlobalUnitsCaption}" Foreground="{Binding ForegroundColor_Clearance}" />
+                                <CC:NumericTextBox  x:Name="OverrideClipClearance"
+                                            Text="{Binding OverrideClipClearance, Mode=TwoWay, ValidatesOnDataErrors=True, UpdateSourceTrigger=LostFocus}"
+                                            ToolTip= "{Binding ToolTip_Clearance}"
+                                            PrecisionLimit="{Binding DecimalDigitCountOtherField}" 
+                                            Style="{StaticResource GlobalNumericInputStyle}" 
+                                            Margin="1,0,5,0" 
+                                            IsEnabled="True" 
+                                                    Foreground="{Binding ForegroundColor_Clearance}"
+                                            PreDecimalLengthLimit="{Binding PreDecimalDigitCountOtherProp}"/>
+                                <Label  Content = "{Binding  LinearUnitsLabel}"  Style="{StaticResource  GlobalUnitsLabel}"  />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+                <!-- BUTTON BAR -->
+                <Border Grid.Row="4" Style="{StaticResource GlobalBorderStyle}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="CancelButton" Content="Cancel" Grid.Column="0" Command="{Binding  Command_Cancel}" Style="{StaticResource GlobalButtonStyle}" IsCancel="True" IsEnabled="{Binding IsEnabled}"/>
+                        <Button x:Name="OKButton" Content="OK" Grid.Column="3" Command="{Binding Command_Ok}" Style="{StaticResource GlobalButtonStyle}"  IsEnabled="{Binding IsOkBtnEnable}" />
+
+                    </Grid>
+                </Border>
+                <Border MinHeight="35" Grid.Row="5" Style="{StaticResource GlobalBorderStyle}">
+                    <Grid >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Content="{Binding GlobalProjectTitle}"  HorizontalAlignment="Left" Width="auto" Grid.ColumnSpan="2" />
+                        <ToggleButton 
+                         CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                        Style="{StaticResource UnitsToggleButtonStyle_Small}"  
+                        IsChecked="{Binding IsEnglishSelected,Mode=TwoWay }"
+                        Height="20"
+                        FontSize="8"
+                        HorizontalAlignment="Right" 
+                            Margin="0,6,20,7" Grid.Column="2"
+                        />
+
+                    </Grid>
+                </Border>
+            </Grid>
+            <!--</GroupBox>-->
+        <!--</xceed:BusyIndicator>-->
+    </ScrollViewer>
+</Window>
+

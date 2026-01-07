@@ -1,0 +1,362 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:winTrayUI="clr-namespace:UOP.WinTray.UI"
+                    xmlns:converters="clr-namespace:UOP.WinTray.UI.Converters"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                    xmlns:CC="clr-namespace:UOP.WinTray.UI.CustomControls"
+    xmlns:views="clr-namespace:UOP.WinTray.UI.Views">
+    
+    <converters:UniversalValueConverter x:Key="UniversalValueConverter"/>
+    <Style x:Key="FontProperties" >
+        <Setter Property="Control.FontSize" Value="8.25pt" />
+        <Setter Property="Control.FontWeight" Value="Black" />
+        <Setter Property="Control.FontFamily" Value="Tahoma" />
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource FontProperties}">
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Control.FontWeight" Value="Normal"/>
+                <Setter Property="Control.Foreground" Value="Gray"/>
+            </Trigger>
+        </Style.Triggers>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Name="ButtonBorder" CornerRadius="2" BorderThickness="1">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#C9C7BA" />
+                                    <GradientStop Color="#D3D3D3" />
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Color="#F0F0EA"  Offset="0"/>
+                                <GradientStop Color="#FEFEFE" Offset="0.1"/>
+                                <GradientStop Color="#FDFDFC" Offset="0.2"/>
+                                <GradientStop Color="#FCFCFB" Offset="0.3"/>
+                                <GradientStop Color="#FAFAF9" Offset="0.4"/>
+                                <GradientStop Color="#F8F8F5" Offset="0.5"/>
+                                <GradientStop Color="#F3F3EE" Offset="0.6"/>
+                                <GradientStop Color="#F1F1EB" Offset="0.7"/>
+                                <GradientStop Color="#ECEBE6" Offset="0.8"/>
+                                <GradientStop Color="#E2DFD6" Offset="0.9"/>
+                                <GradientStop Color="#D6D0C5" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Grid Name="ButtonGrid" Background="Transparent">
+                            <Border Name="HoverRectangle" CornerRadius="1" BorderThickness="0">
+                                <ContentPresenter Name="Content" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ButtonBase.IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="ButtonBorder" Value="#F5F4EA"/>
+                            <Setter Property="BorderBrush" TargetName="HoverRectangle" Value="#C9C7BA"/>
+                            <Setter Property="BorderThickness" TargetName="HoverRectangle" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="ButtonBase.IsEnabled" Value="True">
+                            <Setter Property="BorderBrush" TargetName="HoverRectangle" Value="#003C74"/>
+                            <Setter Property="BorderThickness" TargetName="HoverRectangle" Value="1"/>
+                        </Trigger>
+                        <Trigger Property="ButtonBase.IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" TargetName="HoverRectangle" Value="#FDBD57"/>
+                            <Setter Property="BorderThickness" TargetName="HoverRectangle" Value="1,1,1,1"/>
+                            <Setter Property="BorderBrush" TargetName="ButtonBorder" Value="#003C74"/>
+                            <Setter Property="BorderThickness" TargetName="ButtonBorder" Value="1"/>
+                            <Setter Property="Margin" TargetName="ButtonBorder" Value="0"/>
+                        </Trigger>
+
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="ButtonBorder" Value="#E3E3DB"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderThickness" TargetName="HoverRectangle" Value="1"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style TargetType="{x:Type Button}" x:Key="WrapButton"  BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Margin" Value="1 0 1 0"></Setter>
+
+        <Setter Property="MinHeight" Value="25"></Setter>
+
+        <Setter Property="Width" Value="100"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Background" Value="AliceBlue"></Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock TextAlignment="Center" Text="{TemplateBinding Content}" TextWrapping="Wrap" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="TextBoxStyle" TargetType="TextBox">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="MinWidth" Value="80"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
+        <Setter Property="Margin" Value="1,1,5,1"/>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="#FFD500"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="NumericTextBox" TargetType="TextBox">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="80"/>
+        <Setter Property="MinWidth" Value="80"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
+        <Setter Property="Margin" Value="1,1,5,1"/>
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="#FFD500"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="LabelStyle" TargetType="Label">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+    </Style>
+    <Style x:Key="LabelStyle1" TargetType="Label">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Top"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Margin" Value="1 1 1 1"/>
+
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Height" Value="24"/>
+    </Style>
+
+    <Style x:Key="GridHeader" TargetType="TextBlock">
+          <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+   
+    </Style>
+
+   
+    <DataTemplate x:Key="Label">
+        <Border Background="#99ccff" BorderBrush="Gray" BorderThickness="1">
+            <Label Style="{StaticResource LabelStyle1}"  Content="{Binding Path=Tag,RelativeSource={RelativeSource AncestorType=ContentControl}}"/>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="LabelWithGreenBackGrnd">
+        <Border Background="#33B7FF" BorderBrush="Gray" BorderThickness="1">
+            <Label Style="{StaticResource LabelStyle1}"  Content="{Binding Path=Tag,RelativeSource={RelativeSource AncestorType=ContentControl}}"/>
+        </Border>
+    </DataTemplate>
+    <Style x:Key="ComboBoxStyle" TargetType="ComboBox">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="BorderThickness" Value="1.5"/>
+        <Setter Property="Margin" Value="1,1,5,1"/>
+        <Setter Property="MinWidth" Value="80"/>
+        
+    </Style>
+    <Style TargetType="ComboBoxItem">
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--<DataTemplate DataType="{x:Type ValidationError}">
+        <Button Width="17" BorderBrush="Transparent" BorderThickness="0">
+            <Button.Content>
+                <Image Source="/UOP.WinTray.UI;component/Utilities/Images/ValidationError.png" Width="16" Height="10" />
+            </Button.Content>
+            <Button.ToolTip>
+                <TextBlock
+                    Margin="0"
+                    HorizontalAlignment="Left"
+                    FontStyle="Italic"
+                    FontWeight="Bold">
+                    <TextBlock.Style>
+                        --><!--Styles for error messages of different severity--><!--
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextWrapping" Value="Wrap" />
+                            <Setter Property="Foreground" Value="Red" />
+                            <Style.Triggers>
+                                --><!--Warning messages are Dark orange--><!--
+                                <DataTrigger Binding="{Binding ErrorContent.Severity}" Value="{x:Static winTrayUI:Severity.WARNING}">
+                                    <Setter Property="Text" Value="{Binding Path=ErrorContent.ValidationMessage}" />
+                                    <Setter Property="Foreground" Value="DarkOrange" />
+                                </DataTrigger>
+                                --><!--Error messagesa are red--><!--
+                                <DataTrigger Binding="{Binding ErrorContent.Severity}" Value="{x:Static winTrayUI:Severity.ERROR}">
+                                    <Setter Property="Text" Value="{Binding Path=ErrorContent.ValidationMessage}" />
+                                    <Setter Property="Foreground" Value="Red" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </Button.ToolTip>
+        </Button>
+    </DataTemplate>-->
+    <!-- Global Group Box STyle-->
+    <Style x:Key="GlobalGroupBoxStyle" TargetType="GroupBox">
+        <Setter Property="BorderBrush" Value="Gray"/>
+
+        <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+    </Style>
+    <!--Global Boder Style-->
+    <Style x:Key="GlobalBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="MinHeight" Value="35" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="Margin" Value="4,1,4,1" />
+    </Style>
+
+    <!--Global Numeric text Box Style-->
+    <Style x:Key="GlobalErrorMessageStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="Margin" Value="4"/>
+
+    </Style>
+
+    <!-- Global Property Input stack style-->
+    <Style x:Key="GlobalPropertyStackStyle" TargetType="{x:Type StackPanel}">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="Margin" Value="1,10,0,0" />
+    </Style>
+
+   <Style TargetType="views:UOPPropertyListView" x:Key="GlobalPropertyListStyle">
+
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+            <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="MinWidth" Value="175" />
+            <Setter Property="MinHeight" Value="175" />
+        <Setter Property="ToolTip" Value="Double Click To Edit Property Values"/>
+
+        </Style>
+    <!--Global Numeric text Box Style-->
+    <Style x:Key="GlobalNumericInputStyle" TargetType="TextBox">
+        <Setter Property="BorderThickness" Value="1.5"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="1,1,5,1"/>
+        <Setter Property="Width" Value="45"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="MinWidth" Value="65"/>
+        <!--<Setter Property="ValidatesOnDataErrors" Value="True"/>-->
+        <!--<Setter Property="UpdateSourceTrigger" Value="LostFocus"/>-->
+        <Style.Triggers>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="Background" Value="#FFD500"/>
+            </Trigger>
+        </Style.Triggers>
+        
+    </Style>
+    <!--Global Units label style-->
+    <Style x:Key="GlobalUnitsLabel" TargetType="{x:Type Label}" >
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="Medium"/>
+        <Setter Property ="Width" Value="Auto" />
+        <Setter Property ="HorizontalAlignment" Value="Left" />
+        <Setter Property="FontStyle" Value="Normal" />
+        <Setter Property="MinWidth" Value="25" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Medium" />
+        <Setter Property="Visibility" Value="Visible" />
+    </Style>
+    <!--Wrap Button style-->
+    <Style x:Key="GlobalButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Margin" Value="0 6 0 6"></Setter>
+        <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="Width" Value="100"></Setter>
+        <Setter Property="MinWidth" Value="70"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Background" Value="AliceBlue"></Setter>
+        <Setter Property="ContentTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <TextBlock TextAlignment="Center" Text="{TemplateBinding Content}" TextWrapping="Wrap" />
+                </DataTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--Global  caption text style-->
+    <Style x:Key="GlobalUnitsCaption" TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="Medium"></Setter>
+    </Style>
+
+    <!--Popup Window Style-->
+    <Style TargetType="Window" x:Key="PopUpWindowTheme">
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="WindowStyle" Value="ToolWindow"/>
+        <Setter Property="ResizeMode" Value="NoResize"/>
+    </Style>
+
+    <Style TargetType="TextBlock" x:Key="TextBlockstyle">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+    </Style>
+
+    <DataTemplate x:Key="KeyValuePairTemplate">
+        <StackPanel>
+            <TextBlock Text="{Binding Path=DisplayName}" />
+            <TextBlock Text="{Binding Path=DisplayValueStringFormatted}"/>
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="Header">
+        <TextBlock FontWeight="Bold" Text="{Binding}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DisplayName">
+        <TextBlock Text="{Binding DisplayName}" Foreground="{Binding DisplayColor,Converter={StaticResource UniversalValueConverter}}"/>
+    </DataTemplate>
+
+    <DataTemplate x:Key="Value">
+        <TextBlock Text="{Binding Value}" Foreground="{Binding DisplayColor,Converter={StaticResource UniversalValueConverter}}"/>
+    </DataTemplate>
+    <DataTemplate x:Key="Source">
+        <TextBlock Text="{Binding Source}" Foreground="{Binding ForegroundColor, Converter={StaticResource UniversalValueConverter}}"/>
+    </DataTemplate>
+
+
+    <DataTemplate x:Key="Data">
+        <Border  BorderBrush="Gray" BorderThickness="1">
+            <TextBlock Text="{Binding Path=Tag,RelativeSource={RelativeSource AncestorType=ContentControl}}" TextAlignment="Center"/>
+        </Border>
+    </DataTemplate>
+   
+</ResourceDictionary>

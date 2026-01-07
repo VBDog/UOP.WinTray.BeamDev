@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-16"?>
+<Configuration xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <DeployedProjects>
+    <string>UOP.WinTray.UI.csproj</string>
+  </DeployedProjects>
+  <DirectoryMappings>
+    <Item Key="" Value="ProgramFilesFolder" />
+    <Item Key="fr" Value="INSTALLFOLDER" />
+    <Item Key="Resources" Value="DATA" />
+  </DirectoryMappings>
+  <FileMappings>
+    <Item Key="Vanara.PInvoke.Gdi32.dll" Value="Vanara.PInvoke.Gdi32.DLL" />
+    <Item Key="MDXFIcon.ico" Value="MDXFICON.ICO" />
+    <Item Key="Vanara.PInvoke.Kernel32.dll" Value="Vanara.PInvoke.Kernel32.DLL" />
+    <Item Key="Vanara.PInvoke.User32.dll" Value="Vanara.PInvoke.User32.DLL" />
+    <Item Key="DocumentFormat.OpenXml.dll" Value="DOCUMENTFORMAT.OPENXML.DLL" />
+    <Item Key="ExcelNumberFormat.dll" Value="EXCELNUMBERFORMAT.DLL" />
+    <Item Key="System.IO.Packaging.dll" Value="SYSTEM.IO.PACKAGING.DLL" />
+    <Item Key="BouncyCastle.Crypto.dll" Value="BOUNCYCASTLE.CRYPTO.DLL" />
+    <Item Key="Common.Logging.Core.dll" Value="COMMON.LOGGING.CORE.DLL" />
+    <Item Key="itext.io.dll" Value="ITEXT.IO.DLL" />
+    <Item Key="Common.Logging.dll" Value="COMMON.LOGGING.DLL" />
+    <Item Key="System.Buffers.dll" Value="System.Buffers.DLL" />
+    <Item Key="System.Numerics.Vectors.dll" Value="System.Numerics.Vectors.DLL" />
+    <Item Key="System.Runtime.CompilerServices.Unsafe.dll" Value="SYSTEM.RUNTIME.COMPILERSERVICES.UNSAFE.DLL" />
+    <Item Key="Vanara.Core.dll" Value="Vanara.Core.DLL" />
+    <Item Key="Vanara.PInvoke.Shared.dll" Value="Vanara.PInvoke.Shared.DLL" />
+    <Item Key="DeepCloner.dll" Value="DEEPCLONER.DLL" />
+    <Item Key="DotNetProjects.Wpf.Extended.Toolkit.dll" Value="DotNetProjects.Wpf.Extended.Toolkit.DLL" />
+    <Item Key="log4net.dll" Value="LOG4NET.DLL" />
+    <Item Key="System.Threading.Tasks.Extensions.dll" Value="SYSTEM.THREADING.TASKS.EXTENSIONS.DLL" />
+    <Item Key="MvvmDialogs.dll" Value="MVVMDIALOGS.DLL" />
+    <Item Key="System.Windows.Interactivity.dll" Value="SYSTEM.WINDOWS.INTERACTIVITY.DLL" />
+    <Item Key="Newtonsoft.Json.dll" Value="NEWTONSOFT.JSON.DLL" />
+    <Item Key="Unity.Abstractions.dll" Value="UNITY.ABSTRACTIONS.DLL" />
+    <Item Key="System.Memory.dll" Value="System.Memory.DLL" />
+    <Item Key="Unity.Container.dll" Value="UNITY.CONTAINER.DLL" />
+    <Item Key="Microsoft.Expression.Interactions.dll" Value="MICROSOFT.EXPRESSION.INTERACTIONS.DLL" />
+    <Item Key="ClosedXML.dll" Value="CLOSEDXML.DLL" />
+    <Item Key="itext.kernel.dll" Value="ITEXT.KERNEL.DLL" />
+    <Item Key="itext.layout.dll" Value="ITEXT.LAYOUT.DLL" />
+  </FileMappings>
+  <DeploySymbols>false</DeploySymbols>
+  <DeployLocalizations>true</DeployLocalizations>
+  <DeployExternalLocalizations>true</DeployExternalLocalizations>
+  <ExcludedProjectItems>-</ExcludedProjectItems>
+</Configuration>
