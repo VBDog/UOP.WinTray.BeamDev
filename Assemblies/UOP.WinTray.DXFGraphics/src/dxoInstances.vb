@@ -238,18 +238,20 @@ Namespace UOP.DXFGraphics
         End Function
 
         Friend Function Apply(aPaths As TPATHS) As TPATHS
-            Dim rPaths As TPATHS = aPaths
-            If aPaths.Count <= 0 Then Return rPaths
-            If Count <= 0 Then Return rPaths
 
-            Dim bPaths As New TPATHS(aPaths)
+
+            Dim rPaths As TPATHS = Force.DeepCloner.DeepClonerExtensions.DeepClone(Of TPATHS)(aPaths)
+            If aPaths.Count <= 0 Or Count <= 0 Then Return rPaths
+
+            Dim leg1 As String = aPaths.Item(1).Looop(1).Coordinates
+
 
             For i As Integer = 1 To Count
                 Dim aTrs As TTRANSFORMS = Transforms(i)
-                Dim cPaths As New TPATHS(bPaths)
+                Dim cPaths As New TPATHS(aPaths)
                 TTRANSFORMS.Apply(aTrs, cPaths, bMirDirs:=False, bNoDirections:=False, bConvertToWorld:=False)
                 For j As Integer = 1 To cPaths.Count
-                    Dim aPath As TPATH = rPaths.Item(j)
+                    Dim aPath As TPATH = Force.DeepCloner.DeepClonerExtensions.DeepClone(Of TPATH)(rPaths.Item(j))
                     Dim cPath As TPATH = cPaths.Item(j)
                     If aPath.Relative Then
                         cPath = cPath.ToRelative(Nothing)
@@ -258,6 +260,7 @@ Namespace UOP.DXFGraphics
                         Dim lcnt As Integer = aPath.LoopCount
                         lcnt += cPath.LoopCount
                         If lcnt < Integer.MaxValue Then
+                            'rPaths.Add(cPath)
                             For k As Integer = 1 To cPath.LoopCount
                                 aPath.AddLoop(cPath.Looop(k))
                             Next k
@@ -269,6 +272,9 @@ Namespace UOP.DXFGraphics
                 Next j
                 'Application.DoEvents()
             Next i
+
+            Dim leg2 As String = rPaths.Item(1).Looop(1).Coordinates
+
             Return rPaths
         End Function
 

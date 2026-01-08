@@ -1015,7 +1015,8 @@ Namespace UOP.DXFGraphics
                     'we could see if the entity paths are completely off the device screen but .... nothing yet
                     If Not bOffScreen And entPaths.Count > 0 Then
                         If Not UsingDxfViewer And aEnt.Instances.Count >= 1 Then
-                            entPaths = aEnt.Instances.Apply(entPaths)
+                            Dim instPaths As TPATHS = aEnt.Instances.Apply(entPaths)
+                            entPaths = instPaths
                         End If
 
                         'render the paths to the image bitmap
@@ -1225,8 +1226,8 @@ Done:
             '#4flag to suppress the drawing of the entities bounding rectangle
             '^used to draw an entity to the images display
             If aEntity Is Nothing Then Return _rVal
-            Dim ePaths As TPATHS
-            Dim dPaths As TPATHS
+
+
             Dim aDisplay As TDISPLAY = obj_DISPLAY
             Dim entRecs As Boolean
             Dim aScrn As TSCREEN = obj_SCREEN
@@ -1236,8 +1237,10 @@ Done:
                 'draw to the bitmap
                 If bSuppressRectangles Then entRecs = False
                 aEntity.UpdatePath(False, Me)
-                ePaths = aEntity.Paths
-                dPaths = New TPATHS(ePaths, bNoMembers:=True)
+                Dim ePaths As TPATHS = aEntity.Paths
+
+
+                Dim dPaths As TPATHS
                 If Not Erasing Then
                     aEntity.ImageGUID = GUID
                     '        ePaths.PixelSize = ascrn.GetPropVal( scrn_PointSize)
@@ -1253,7 +1256,7 @@ Done:
                     aEntity.DrawnPaths = dPaths
                     If Not bExcludeFromExtents Then
                         aDisplay.rec_EXTENTS = TVECTORS.Appended(ePaths.ExtentVectors, aDisplay.rec_EXTENTS.Corners).Bounds(aDisplay.rec_EXTENTS)
-                        aDisplay.UpdateImage(Me, New TPROPERTIES(""), aRedraw:=False, bSuppressViewChange:=True)
+                        aDisplay.UpdateImage(Me, TPROPERTIES.Null, aRedraw:=False, bSuppressViewChange:=True)
                     End If
                 Else
                     dPaths = aEntity.DrawnPaths
@@ -1289,7 +1292,7 @@ Done:
             'If ioTransFormB Is Nothing Then ioTransFormB = obj_DISPLAY.ViewTransform
             'If ioTransFormS Is Nothing Then ioTransFormS = obj_SCREEN.ViewTransform
             '_rVal = Force.DeepCloner.DeepClonerExtensions.DeepClone(Of TPATHS)(aPaths)
-            Dim dPath As TPATH = Nothing
+            Dim dPath As TPATH = New TPATH("")
             For i As Integer = 1 To aPaths.Count
                 If Render_Path(ioPens, aPaths, i, bIgnoreVisibility, bIsDeviceCoords, bScreenPath, ioTransFormB, ioTransFormS, rPath:=dPath) Then
                     _rVal.Add(dPath)
@@ -1377,13 +1380,7 @@ Done:
 
                 'convert world points to device points
                 For li = 1 To rPath.LoopCount
-
-
-
                     Dim vWorldPts As TVECTORS = rPath.Looop(li)
-
-
-
                     If Not bIsDeviceCoords Or rPath.Relative Then
                         vPath = New TVECTORS(vWorldPts.Count)
                         For vi = 1 To vWorldPts.Count

@@ -289,7 +289,7 @@ namespace UOP.WinTray.Projects.Parts
         {
             get
             {
-                if (IsCenter) return 0;
+               
                 mdTrayAssembly aAssy = GetMDTrayAssembly();
                 return (aAssy == null) ? 0 : uopUtils.OpposingIndex(Index, aAssy.PanelCount);
             }

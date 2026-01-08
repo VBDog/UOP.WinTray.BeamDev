@@ -638,55 +638,78 @@ namespace UOP.WinTray.Projects.Parts
             right.Move(-Thickness);
             sidelimits = new uopLinePair(left, right);
 
-            if (bot.Points.Count > 0)
+            if (top.Points.Count > 0)
             {
                 uopVector u1 = top.Points.Item(1, bSuppressIndexErrors: true);
                 uopVector u2 = top.Points.Item(2, bSuppressIndexErrors: true);
-                if (u1.X > u2.X)
+                if (u2 == null)
                 {
-                    uopVector u3 = u1;
-                    u1 = u2;
-                    u2 = u3;
-                    if (u2 == null)
+                    rHoleCnt = 1;
+                    rClrc1 = u1.DistanceTo(left);
+                }
+                else
+                {
+                    if (u1.X > u2.X)
                     {
-                        rHoleCnt = 1;
-                        rClrc1 = u1.DistanceTo(left);
+                        uopVector u3 = u1;
+                        u1 = u2;
+                        u2 = u3;
+                        if (u2 == null)
+                        {
+                            rHoleCnt = 1;
+                            rClrc1 = u1.DistanceTo(left);
+                        }
+                        else
+                        {
+                            rHoleCnt = 2;
+                            rClrc1 = u1.DistanceTo(left);
+                            rClrc2 = u2.DistanceTo(right);
+
+                        }
                     }
-                    else
-                    {
-                        rHoleCnt = 2;
-                        rClrc1 = u1.DistanceTo(left);
-                        rClrc2 = u2.DistanceTo(right);
-                      
-                    }
+
                 }
 
                 return;
            
             }
 
+
+
             if (bot.Points.Count > 0)
             {
                 uopVector u1 = bot.Points.Item(1, bSuppressIndexErrors: true);
                 uopVector u2 = bot.Points.Item(2, bSuppressIndexErrors: true);
-                if (u1.X > u2.X)
-                {
-                    uopVector u3 = u1;
-                    u1 = u2;
-                    u2 = u3;
-                    if (u2 == null)
-                    {
-                        rHoleCnt = 1;
-                        rClrc1 = u1.DistanceTo(left);
-                    }
-                    else
-                    {
-                        rHoleCnt = 2;
-                        rClrc1 = u1.DistanceTo(left);
-                        rClrc2 = u2.DistanceTo(right);
 
-                    }
+                if (u2 == null)
+                {
+                    rHoleCnt = 1;
+                    rClrc1 = u1.DistanceTo(left);
                 }
+                else
+                {
+                    if (u1.X > u2.X)
+                    {
+                        uopVector u3 = u1;
+                        u1 = u2;
+                        u2 = u3;
+                        if (u2 == null)
+                        {
+                            rHoleCnt = 1;
+                            rClrc1 = u1.DistanceTo(left);
+                        }
+                        else
+                        {
+                            rHoleCnt = 2;
+                            rClrc1 = u1.DistanceTo(left);
+                            rClrc2 = u2.DistanceTo(right);
+
+                        }
+                    }
+
+                }
+
+               
 
                 return;
 

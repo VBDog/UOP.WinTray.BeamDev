@@ -399,10 +399,8 @@ namespace UOP.WinTray.Projects.Parts
         {
             get
             {
-            
-                mdDeckPanel aDP = DeckPanel;
-                 return aDP != null ? aDP.OpposingIndex : 0;
-               
+                mdTrayAssembly aAssy = GetMDTrayAssembly();
+                return (aAssy == null) ? 0 : uopUtils.OpposingIndex(PanelIndex, aAssy.PanelCount);
             }
         }
 

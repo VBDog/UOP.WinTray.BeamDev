@@ -908,6 +908,10 @@ namespace UOP.WinTray.Projects.Utilities
         {
             UHOLEARRAY _rVal = new UHOLEARRAY(false);
             if (aSpoutGroups == null) return _rVal;
+            foreach(var sg in aSpoutGroups)
+            {
+                _rVal.Add(sg.GetSpoutGroupSpouts(bReturnQuad2, bReturnQuad3, bReturnQuad4, aDepth, aZ));
+            }
             List<mdSpoutGroup> groups = aSpoutGroups.ToList();
             mdSpoutGroup aSG;
             for (int i = 1; i <= groups.Count; i++)

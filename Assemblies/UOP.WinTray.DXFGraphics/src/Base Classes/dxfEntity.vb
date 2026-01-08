@@ -1942,11 +1942,18 @@ Namespace UOP.DXFGraphics
 
 
         Friend Overridable Sub SavePaths(aPaths As TPATHS, aSegments As TSEGMENTS, Optional aReactorEntity As dxfEntity = Nothing, Optional aPathEntities As dxfEntities = Nothing)
+
+            State = dxxEntityStates.GeneratingPath
             aPaths.EntityGUID = GUID
             aPaths.GraphicType = GraphicType
             aPaths.Identifier = Identifier
+            'If Me.Instances.Count > 0 Then
+            '    aPaths = Instances.Apply(aPaths)
+            'End If
+
             _Components.Paths = aPaths
             _Components.Segments = aSegments
+
 
             State = dxxEntityStates.Steady
             If HasSubEntities Then

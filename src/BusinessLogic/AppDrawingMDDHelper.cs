@@ -14236,9 +14236,8 @@ namespace UOP.WinTray.UI.BusinessLogic
                 dxfBlock block = new dxfBlock( $"{Assy.TrayName().Replace("-","_").ToUpper()}_SLOTS");
                 block.Entities.Add(slotinsert);
                 block = Image.Blocks.Add(block);
-                double? yscale = null;
-               // if (rotated) yscale = -1;
-                Image.Draw.aInsert(block.Name ,uopVector.Zero,!rotated ?0 :180, aDisplaySettings:dsp,aScaleFactor:1, aYScale: yscale );
+
+                Image.Draw.aInsert(block.Name ,uopVector.Zero,!rotated ?0 :180, aDisplaySettings:dsp );
 
             }
 

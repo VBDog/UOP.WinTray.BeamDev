@@ -12004,6 +12004,7 @@ namespace UOP.WinTray.Projects.Structures
             _Init = true;
             Name = aName;
             _Bounds = new URECTANGLE(0, 0, 0, 0);
+            _DontUpdateBounds = false;
         }
         public UVECTORS(UVECTOR[] aMembers)
         {
@@ -12015,6 +12016,7 @@ namespace UOP.WinTray.Projects.Structures
             if (_Init) _Count = aMembers.Length;
             Name = string.Empty;
             _Bounds = new URECTANGLE(0, 0, 0, 0);
+            _DontUpdateBounds = false;
             _Bounds = UVECTORS.ComputeBounds(this);
         }
         public UVECTORS(IEnumerable<iVector> aMembers)
@@ -12026,12 +12028,15 @@ namespace UOP.WinTray.Projects.Structures
             _Init = true;
             Name = string.Empty;
             _Bounds = new URECTANGLE(0, 0, 0, 0);
+            _DontUpdateBounds = false;
             if (aMembers == null) return;
 
+            _DontUpdateBounds = true;
             foreach (iVector item in aMembers)
             {
                 Add(new UVECTOR(item));
             }
+            _DontUpdateBounds = false;
             _Bounds = UVECTORS.ComputeBounds(this);
         }
         public UVECTORS(UVECTORS aMembers, bool bClear = false,  iVector aDisplacement = null)
@@ -12043,25 +12048,29 @@ namespace UOP.WinTray.Projects.Structures
             _Members = new UVECTOR[0];
             _Bounds = new URECTANGLE(0, 0, 0, 0);
             Name = aMembers.Name;
-
+            _DontUpdateBounds = false;
             if (_Count > 0)
             {
                 if (aDisplacement != null)
                 {
+                    Array.Resize<UVECTOR>(ref _Members, _Count);
+
                     for (int i = 1; i <= _Count; i++)
                     {
                         UVECTOR v1 = new UVECTOR(aMembers.Item(i));
                         v1.Move(aDisplacement.X, aDisplacement.Y);
-                        Add(v1);
+                        _Members[i - 1] = v1;
+                        if (i == 1) { _Bounds = new URECTANGLE(v1.X, v1.Y, v1.X, v1.Y); } else { _Bounds.Update(v1); }
                     }
                 }
                 else
                 {
                     _Members = Force.DeepCloner.DeepClonerExtensions.DeepClone<UVECTOR[]>(aMembers._Members);
+                    UpdateBounds();
                 }
-              
-                
-                _Bounds = new URECTANGLE(aMembers._Bounds);
+                //UpdateBounds();
+                //_DontUpdateBounds = false;
+             
             }
 
         }
@@ -12076,12 +12085,17 @@ namespace UOP.WinTray.Projects.Structures
             _Init = true;
             Name = string.Empty;
             _Bounds = new URECTANGLE(0, 0, 0, 0);
+            _DontUpdateBounds = true;
             if (aDisplacement != null)
             {
                 aVector = new UVECTOR(aVector);
                 aVector.Move(aDisplacement.X, aDisplacement.Y);
             }
             Add(aVector);
+
+
+            UpdateBounds();
+            _DontUpdateBounds = false;
         }
 
         public UVECTORS(UVECTOR aVector, UVECTOR bVector)
@@ -12093,8 +12107,11 @@ namespace UOP.WinTray.Projects.Structures
             _Init = true;
             _Bounds = new URECTANGLE(0, 0, 0, 0);
             Name = string.Empty;
+            _DontUpdateBounds = true;
             Add(aVector);
             Add(bVector);
+            UpdateBounds();
+            _DontUpdateBounds = false;
         }
 
 
@@ -12107,9 +12124,13 @@ namespace UOP.WinTray.Projects.Structures
             _Bounds = new URECTANGLE(0, 0, 0, 0);
             _Init = true;
             Name = string.Empty;
+            _DontUpdateBounds = true;
             Add(aVector);
             Add(bVector);
             Add(cVector);
+            UpdateBounds();
+            _DontUpdateBounds = false;
+            
 
         }
 
@@ -12123,10 +12144,15 @@ namespace UOP.WinTray.Projects.Structures
             _Init = true;
             _Bounds = new URECTANGLE(0, 0, 0, 0);
             Name = string.Empty;
+            _DontUpdateBounds = true;
             Add(aVector);
             Add(bVector);
             Add(cVector);
             Add(dVector);
+            UpdateBounds();
+            _DontUpdateBounds = false;
+
+        
         }
         public UVECTORS(UVECTOR aVector, UVECTOR bVector, UVECTOR cVector, UVECTOR dVector, UVECTOR eVector)
         {
@@ -12137,11 +12163,14 @@ namespace UOP.WinTray.Projects.Structures
             _Init = true;
             _Bounds = new URECTANGLE(0, 0, 0, 0);
             Name = string.Empty;
+            _DontUpdateBounds = true;
             Add(aVector);
             Add(bVector);
             Add(cVector);
             Add(dVector);
             Add(eVector);
+            UpdateBounds();
+            _DontUpdateBounds = false;
         }
         public UVECTORS(UVECTOR? aVector = null, UVECTOR? bVector = null, UVECTOR? cVector = null, UVECTOR? dVector = null, UVECTOR? eVector = null, UVECTOR? fVector = null)
         {
@@ -12152,12 +12181,16 @@ namespace UOP.WinTray.Projects.Structures
             _Init = true;
             _Bounds = new URECTANGLE(0, 0, 0, 0);
             Name = string.Empty;
+            _DontUpdateBounds = true;
             if (aVector.HasValue) Add(aVector.Value);
             if (bVector.HasValue) Add(bVector.Value);
             if (cVector.HasValue) Add(cVector.Value);
             if (dVector.HasValue) Add(dVector.Value);
             if (eVector.HasValue) Add(eVector.Value);
             if (fVector.HasValue) Add(fVector.Value);
+            UpdateBounds();
+            _DontUpdateBounds = false;
+
         }
 
         #endregion
@@ -12846,15 +12879,21 @@ namespace UOP.WinTray.Projects.Structures
             return _rVal;
         }
 
+        private bool _DontUpdateBounds;
 
-        public void Append(IEnumerable<iVector> bVectors, string aTag = null,double? aValue = null, string aFlag = null, double? aRadius = null) { if (bVectors == null) return; foreach (var item in bVectors) { Add(item,aTag: aTag, aValue: aValue, aFlag: aFlag, aRadius: aRadius); } }
+        public void Append(IEnumerable<iVector> bVectors, string aTag = null,double? aValue = null, string aFlag = null, double? aRadius = null) { if (bVectors == null || bVectors.Count() ==0) return; foreach (var item in bVectors) { Add(item,aTag: aTag, aValue: aValue, aFlag: aFlag, aRadius: aRadius); } }
 
         /// <summary>
         /// Append vectors
         /// </summary>
         /// <param name="aVectors"></param>
-        /// <param name="bVectors"></param>
-        public void Append(UVECTORS bVectors, double? aValue = null) { for (int i = 1; i <= bVectors.Count; i++) { Add(bVectors.Item(i), aValue: aValue); } }
+        /// <param name="aValue"></param>
+        public void Append(UVECTORS aVectors, double? aValue = null) 
+        { 
+            for (int i = 1; i <= aVectors.Count; i++) 
+            { Add(aVectors.Item(i), aValue: aValue); } 
+        
+        }
 
         public void AppendMirrors(double? aX, double? aY, double? aValue = null)
         {

@@ -257,6 +257,7 @@ namespace UOP.WinTray.UI.BusinessLogic
                 bool ZoomExtents;
                 //string sUnlock;
                 //bool bCanelOps = false;
+                //if (argDrawing.DrawingType == uppDrawingTypes.TraySketch) BackColor = System.Drawing.Color.White;
                 if (!BackColor.HasValue) BackColor = appApplication.SketchColor;
                 if (aImageSize.IsEmpty)
                     aImageSize = argDrawing.DeviceSize;
@@ -547,8 +548,8 @@ namespace UOP.WinTray.UI.BusinessLogic
 
             if (string.IsNullOrWhiteSpace(aLayerName)) aLayerName = "SPOUTS";
             List<mdSpoutGroup> aSGs = Assy.SpoutGroups.GetByVirtual(aVirtualValue: false).FindAll((x) => x.SpoutCount(Assy) > 0);
-            dxfDisplaySettings dsp = new(!string.IsNullOrEmpty(aLayerName) ? aLayerName : aLayerName, dxxColors.BlackWhite, dxfLinetypes.Continuous);
-
+            dxfDisplaySettings dsp = new( aLayerName, dxxColors.BlackWhite, dxfLinetypes.Continuous);
+           
 
             // set SpoutGroup
 
@@ -984,12 +985,17 @@ namespace UOP.WinTray.UI.BusinessLogic
                 Draw_Downcomers(uppViews.LayoutPlan, bIncludeShelfAngles: true, bIncludeEndPlates: true, bIncludeEndSupports: true, bShowVirtualBoxes: false, bIncludeSpouts:false);
                 Draw_DeckPanels("DECK_PANELS", dxxColors.BlackWhite, dxfLinetypes.Continuous, bDrawVirtuals: false);
                 Draw_SpoutGroups("SPOUTS");
-                Draw_DowncomersBelow(uppViews.Plan, false);
+                Draw_DowncomersBelow(uppViews.Plan, Assy.DesignFamily.IsStandardDesignFamily());
                 Draw_BubblePromoters(uppViews.Plan);
                 Draw_Startups();
 
-                //Bitmap bmp = Image.GetImage(false);
-                //bmp.Save(@"C:\Junk\Test.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                if(appApplication.User.NetworkName =="E342367" && System.IO.Directory.Exists(@"C:\Junk\Test.bmp"))
+                {
+
+                    dxfBitmap dmap = Image.Bitmap(false);
+                    Bitmap bmap = (Bitmap)dmap.Image;
+                    bmap.Save(@"C:\Junk\Test.bmp");
+                }
             }
             catch (Exception e) { HandleError(System.Reflection.MethodBase.GetCurrentMethod(), e); }
             finally { Status = string.Empty; DrawinginProgress = false; }
@@ -2483,21 +2489,31 @@ namespace UOP.WinTray.UI.BusinessLogic
             {
                 dxoDrawingTool draw = Image.Draw;
                 Status = "Drawing Downcomers Below";
-
                 if (View == uppViews.Plan)
                 {
-                    List<mdDowncomer> dcomers = Assy.Downcomers.GetByVirtual(aVirtualValue: false);
-                    foreach (var dcomer in dcomers)
-                    {
-                        foreach (var box in dcomer.Boxes)
-                        {
-                            if (!showVirtual && box.IsVirtual) continue;
 
-                            colDXFVectors verts = box.ExtractDowncomerBelowVertices();
+                    dxfBlock block = mdBlocks.DowncomersBelow_View_Plan(Image, Assy, $"DCS_BELOW", bBothSides: showVirtual);
+                    Image.Draw.aInsert(block, null,aDisplaySettings:dxfDisplaySettings.Null(aLayer: block.LayerName));
 
-                            draw.aPolyline(verts, true, aDisplaySettings: dxfDisplaySettings.Null(aLinetype: dxfLinetypes.Hidden));
-                        }
-                    }
+                    bool mirrorthem = Assy.DesignFamily.IsStandardDesignFamily();
+
+                    //List<mdDowncomer> dcomers = Assy.Downcomers.GetByVirtual(aVirtualValue: false);
+                    //foreach (var dcomer in dcomers)
+                    //{
+                    //    foreach (var box in dcomer.Boxes)
+                    //    {
+                    //        if (!showVirtual && box.IsVirtual) continue;
+
+                    //        colDXFVectors verts = box.ExtractDowncomerBelowVertices();
+
+                    //        draw.aPolyline(verts, true, aDisplaySettings: dxfDisplaySettings.Null(aLinetype: dxfLinetypes.Hidden));
+                    //        if (mirrorthem && dcomer.OccuranceFactor >1)
+                    //        {
+                    //            verts.MirrorPlanar(null, 0);
+                    //            draw.aPolyline(verts, true, aDisplaySettings: dxfDisplaySettings.Null(aLinetype: dxfLinetypes.Hidden));
+                    //        }
+                    //    }
+                    //}
                 }
             }
             catch (Exception e) { HandleError(System.Reflection.MethodBase.GetCurrentMethod(), e); }

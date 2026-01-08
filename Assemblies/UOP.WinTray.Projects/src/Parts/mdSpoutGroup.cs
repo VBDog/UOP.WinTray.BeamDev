@@ -1048,40 +1048,38 @@ public override void SubPart(mdDowncomerBox aBox, string aCategory = null, bool?
         /// <returns></returns>
         public uopProperties ReportProperties(int aTableIndex, List<string> spoutLengthNotes)
         {
-            uopProperties _rVal = new uopProperties();
+           
 
             mdTrayAssembly aAssy = GetMDTrayAssembly();
 
-            if (aAssy == null || IsVirtual) return _rVal;
+            if (aAssy == null || IsVirtual) return new uopProperties();
             if (Invalid)
-            {
                 UpdateSpouts(aAssy);
-            }
-
-
+            
             mdDeckPanel aDP = GetMDPanel(aAssy, null, PanelIndex);
             mdDowncomer aDC = GetMDDowncomer(aAssy, null, DowncomerIndex);
 
             if (aTableIndex == 2)
             {
-                _rVal = DowncomerReportProperties(out mdConstraint _, out uopProperties _, out uopProperty _, aAssy, aDP, aDC);
+                return DowncomerReportProperties(out _, out _, out _, aAssy, aDP, aDC);
             }
             else if (aTableIndex == 1)
             {
-                DeckPanelReportProperties(out _rVal, aAssy, Spout, aDP, aDC, spoutLengthNotes);
+                DeckPanelReportProperties(out uopProperties _rVal, aAssy, Spout, aDP, aDC, spoutLengthNotes);
+                return _rVal;
             }
             else
             {
                 return null;
             }
-            return _rVal;
+           
 
         }
 
         /// <summary>
         /// Deck Panel Report Properties
         /// </summary>
-        /// <param name="properties"></param>
+        /// <param name="_rVal"></param>
         /// <param name="aAssy"></param>
         /// <param name="aSpout"></param>
         /// <param name="aDP"></param>

@@ -2627,10 +2627,7 @@ namespace UOP.WinTray.Projects.Generators
         private static void xMD_Page_SpoutDetails(uopDocReportPage aPage)
         {
 
-
             uopTableCell aCell;
-
-
             string dcStr = string.Empty;
             string dcRows = string.Empty;
             aPage.Title = "Spouting Details";
@@ -2711,7 +2708,7 @@ namespace UOP.WinTray.Projects.Generators
 
                     SetValueDetails(ref dcStr, aTable, iR, Props, aPage.Units);
                     uopProperty aProp = Props.Item(1);
-                    if (aProp.Value != dcStr)
+                    if (aProp.ValueS  != dcStr)
                     {
                         mzUtils.ListAdd(ref dcRows, iR + 2);
                         for (int j = iR + 2; j >= k + 1; j--)
@@ -2720,7 +2717,7 @@ namespace UOP.WinTray.Projects.Generators
                         }
                         k = iR + 3;
                     }
-                    dcStr = Convert.ToString(aProp.Value);
+                    dcStr = aProp.ValueS;
 
                     iR++;
                 }

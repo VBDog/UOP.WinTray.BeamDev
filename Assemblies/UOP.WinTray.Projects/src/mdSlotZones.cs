@@ -251,8 +251,7 @@ namespace UOP.WinTray.Projects
                 {
                     if (DesignFamily.IsStandardDesignFamily())
                     {
-                        bool specialcase = aAssy.HasAlternateDeckParts;
-                        if(!specialcase)
+                        if(!aAssy.HasAlternateDeckParts)
                             zPts = zPts.FindAll((x) => x.X >= 0);
                     }
                     

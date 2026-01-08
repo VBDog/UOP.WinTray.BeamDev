@@ -693,7 +693,6 @@ namespace UOP.WinTray.Projects.Generators
                 bool slotsasinserts = bIncludeSlotting && aImage != null && hasslots;
                 dxePolygon pg = mdPolygons.DeckSection_View_Plan(aPart, aAssy, bObscured, bIncludePromoters, bIncludeHoles, bIncludeSlotting: hasslots && !slotsasinserts, bRegeneratePerimeter: bRegeneratePerimeter, aCenter: dxfVector.Zero, aRotation: 0, aLayerName, bHalfSideSlots, bRegenSlots, bSolidHoles);
                 aBlockName = string.IsNullOrWhiteSpace(aBlockName) ? $"DECK_SECTION_{pn}_PLAN_VIEW" : aBlockName.Trim();
-
                 _rVal = pg.Block(aBlockName, aImage: aImage, aLTLSettings: aLTLSetting, aLayerName: aLayerName);
                 pg.Dispose();
 

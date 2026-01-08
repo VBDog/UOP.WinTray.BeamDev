@@ -1780,8 +1780,6 @@ Namespace UOP.DXFGraphics.Structures
         End Sub
         Public Shared Sub Apply(aTransform As TTRANSFORM, ByRef ioPath As TPATH, bMirDirs As Boolean, bNoDirections As Boolean, Optional bConvertToWorld As Boolean = False)
             If ioPath.LoopCount <= 0 Then Return
-            Dim li As Integer
-            Dim vi As Integer
             Dim v1 As TVECTOR
             Dim v2 As TVECTOR
             Dim aLoop As TVECTORS
@@ -1792,9 +1790,9 @@ Namespace UOP.DXFGraphics.Structures
                     '===================================================================
                     ioPath.Plane.RotateAbout(aTransform.RotationCenter, aTransform.RotationAxis, aTransform.Angle, aTransform.Radians, True, Not bNoDirections, True)
                     If Not ioPath.Relative Then
-                        For li = 1 To ioPath.LoopCount
+                        For li As Integer = 1 To ioPath.LoopCount
                             aLoop = ioPath.Looop(li)
-                            For vi = 1 To aLoop.Count
+                            For vi As Integer = 1 To aLoop.Count
                                 v1 = aLoop.Item(vi)
                                 v1.RotateAbout(aTransform.RotationCenter, aTransform.RotationAxis, aTransform.Angle, aTransform.Radians, True)
                                 aLoop.SetItem(vi, v1)
@@ -1808,7 +1806,7 @@ Namespace UOP.DXFGraphics.Structures
                     '===================================================================
                     ioPath.Plane.Origin += aTransform.Translation
                     If Not ioPath.Relative Then
-                        For li = 1 To ioPath.LoopCount
+                        For li As Integer = 1 To ioPath.LoopCount
                             aLoop = ioPath.Looop(li)
                             aLoop.Translate(aTransform.Translation)
                             ioPath.SetLoop(li, aLoop)
@@ -1819,9 +1817,9 @@ Namespace UOP.DXFGraphics.Structures
                 Case dxxTransformationTypes.Scale
                     '===================================================================
                     'v1 = ioPath.Plane.Origin
-                    For li = 1 To ioPath.LoopCount
+                    For li As Integer = 1 To ioPath.LoopCount
                         aLoop = ioPath.Looop(li)
-                        For vi = 1 To aLoop.Count
+                        For vi As Integer = 1 To aLoop.Count
                             v2 = aLoop.Item(vi)
                             If ioPath.Relative Then
                                 v2.X *= aTransform.ScaleFactor
@@ -1841,9 +1839,9 @@ Namespace UOP.DXFGraphics.Structures
                     '===================================================================
                     ioPath.Plane.Mirror(aTransform.MirrorAxis.SPT, aTransform.MirrorAxis.EPT, True, bMirDirs, True)
                     If Not ioPath.Relative Then
-                        For li = 1 To ioPath.LoopCount
+                        For li As Integer = 1 To ioPath.LoopCount
                             aLoop = ioPath.Looop(li)
-                            For vi = 1 To aLoop.Count
+                            For vi As Integer = 1 To aLoop.Count
                                 v2 = aLoop.Item(vi)
                                 v2.Mirror(aTransform.MirrorAxis, True)
                                 aLoop.SetItem(vi, v2)
@@ -2101,14 +2099,11 @@ Namespace UOP.DXFGraphics.Structures
         End Sub
         Public Shared Sub Apply(aTransforms As TTRANSFORMS, ByRef ioPaths As TPATHS, bMirDirs As Boolean, bNoDirections As Boolean, Optional bConvertToWorld As Boolean = False)
             If aTransforms.Count <= 0 Then Return
-            Dim i As Integer
-            Dim j As Integer
-            Dim aTr As TTRANSFORM
-            Dim aPth As TPATH
-            For i = 1 To aTransforms.Count
-                aTr = aTransforms.Item(i)
-                For j = 1 To ioPaths.Count
-                    aPth = ioPaths.Item(j)
+
+            For i As Integer = 1 To aTransforms.Count
+                Dim aTr As TTRANSFORM = aTransforms.Item(i)
+                For j As Integer = 1 To ioPaths.Count
+                    Dim aPth As TPATH = ioPaths.Item(j)
                     If bConvertToWorld Then aPth.ConvertToWorld()
                     TTRANSFORM.Apply(aTr, aPth, bMirDirs, bNoDirections, False)
                     ioPaths.SetItem(j, aPth)
@@ -2118,8 +2113,8 @@ Namespace UOP.DXFGraphics.Structures
         Public Shared Function Apply(aTransforms As TTRANSFORMS, ByRef ioVertex As TVERTEX) As Boolean
             Dim _rVal As Boolean
             If aTransforms.Count <= 0 Then Return _rVal
-            Dim i As Integer
-            For i = 1 To aTransforms.Count
+
+            For i As Integer = 1 To aTransforms.Count
                 If TTRANSFORM.Apply(aTransforms.Item(i), ioVertex) Then _rVal = True
             Next i
             Return _rVal

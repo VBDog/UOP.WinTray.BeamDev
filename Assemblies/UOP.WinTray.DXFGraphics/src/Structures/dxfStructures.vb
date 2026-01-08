@@ -8820,8 +8820,7 @@ Done:
             Return _rVal
         End Function
         Public Function AddLoop(aLoop As TVECTORS) As Boolean
-            Dim _rVal As Boolean
-            _rVal = True
+            Dim _rVal As Boolean = True
             If Not _Init Then
                 ReDim _Loops(0)
                 _Loops(0) = aLoop
@@ -8838,7 +8837,7 @@ Done:
         End Function
         Public Function Looop(aIndex As Integer) As TVECTORS
             'base 1
-            If aIndex < 1 Or aIndex > LoopCount Then Return Nothing
+            If aIndex < 1 Or aIndex > LoopCount Then Return TVECTORS.Zero
             Return _Loops(aIndex - 1)
         End Function
         Public Sub AppendToLooop(aIndex As Integer, aPathVectors As TVECTORS)
@@ -9411,16 +9410,16 @@ Done:
             'init ---------------------------
             Color = dxxColors.ByBlock
             Domain = dxxDrawingDomains.Model
-            EntityGUID = ""
+            EntityGUID = String.Empty
             ExtentVectors = TVECTORS.Zero
-            Identifier = ""
-            Linetype = ""
+            Identifier = String.Empty
+            Linetype = String.Empty
             LineWeight = dxxLineWeights.ByDefault
             LTScale = 1
             PenWidth = 0
             _PixelSize = 1
             Suppressed = False
-            _LayerName = ""
+            _LayerName = String.Empty
             GraphicType = dxxGraphicTypes.Undefined
             _Init = True
             ReDim _Members(-1)
@@ -9429,7 +9428,7 @@ Done:
             'Bounds As new TPLANE("")
             ReDim _Members(-1)
             _Init = True
-            EntityGUID = Trim(aEntityGUID)
+            EntityGUID = aEntityGUID.Trim()
         End Sub
 
         Public Sub New(aPaths As TPATHS, Optional bNoMembers As Boolean = False)
@@ -9450,22 +9449,25 @@ Done:
             _Init = True
             ReDim _Members(-1)
             'init ---------------------------
-            If aPaths._Init And Not bNoMembers Then _Members = aPaths._Members.Clone()
+            If aPaths._Init And Not bNoMembers And aPaths.Count > 0 Then
+                _Members = Force.DeepCloner.DeepClonerExtensions.DeepClone(Of TPATHS)(aPaths)._Members
+                '_Members = aPaths._Members.Clone()
+            End If
         End Sub
         Public Sub New(aDomain As dxxDrawingDomains, aPaths As List(Of TPATH), Optional aEntityGUID As String = "")
             'init ---------------------------
             Color = dxxColors.ByBlock
             Domain = dxxDrawingDomains.Model
-            EntityGUID = ""
+            EntityGUID = String.Empty
             ExtentVectors = TVECTORS.Zero
-            Identifier = ""
-            Linetype = ""
+            Identifier = String.Empty
+            Linetype = String.Empty
             LineWeight = dxxLineWeights.ByDefault
             LTScale = 1
             PenWidth = 0
             _PixelSize = 1
             Suppressed = False
-            _LayerName = ""
+            _LayerName = String.Empty
             _Init = True
             GraphicType = dxxGraphicTypes.Undefined
             ReDim _Members(-1)
